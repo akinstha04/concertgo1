@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Concert go</title>
+  <meta name='viewport' content='width=Ddevice-width, initial-scale=1'>
+  <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <section class="main">
+        <div class="wrapper">
+            <class class="left-col">
+                <div class="post">
+                    <div class="info">
+                        <div class="user">
+                            <div class="profile-pic">
+                                <img src ="{% static 'img/cover 1.PNG' %}"alt=""></div>
+                            <p class="username">joe satriani</p>
+                        </div>
+                        <!-- <img src ="{% static 'img/option.PNG' %}" class="options" alt=""> -->
+                    </div>
+                    <img src ="{% static 'img/cover 1.PNG' %}" class="post-image" alt="">
+                    <div class = "post-content">
+                        <div class = "reaction-wrapper">
+                            <img src="{% static 'img/like.PNG' %}" class ="icon" alt="">
+                            <img src="{% static 'img/comment.PNG' %}" class ="icon" alt="">
+                            <img src="{% static 'img/save.PNG' %}" class ="icon" alt="">
+                        </div>
+                        <p class = "likes">1222 likes</p>
+                        <p class = "description"><span>username </span>hey hshshshs</p>
+                        <p class = "post-time">3 mins ago</p>
+                    </div>
+                    <div class="comment-wrapper">
+                        <img src="img/smile.PNG" class="icon" alt="">
+                        <input type="text" class="comment-box" placeholder="Add a comment">
+                        <button class = "comment-btn">post</button>
+                    </div>
+                </div>
+                <div class = "right-col">
+                </div>
+
+
+            </class>
+            </div>
+            </section>
+            {% if request.user.is_authenticated %}
+            <p>Hello {{request.user}}</p>
+            <a href ="{% url 'logout' %}">Logout</a>
+            {% else %}
+
+            <a href ="{% url 'login' %}">Login</a>
+            {% endif %}
+
+
+
+    {% block content %}
+
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
