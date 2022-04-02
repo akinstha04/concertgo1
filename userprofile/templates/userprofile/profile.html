@@ -5,12 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.84.0">
-    <title>Signin Template · Bootstrap v5.0</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>ConcertGo</title>
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -18,92 +15,57 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <body>
         {% include 'navbar.html' %}
-
-        <section class="section about-section gray-bg" id="about">
-            <div class="container">
-                <div class="row align-items-center flex-row-reverse">
-                    <div class="col-lg-6">
-                        <div class="about-text go-to">
-                            <h3 class="dark-color">{{user.username}}</h3>
-                            <h6 class="theme-color lead">A Lead Guitarist at Djentlabs</h6>
-                            <p>Currently learning and testing out different genres. Studying in Kathmandu Music College and Kathmandu Jazz conservatory. Working with artists like Joe satriani and John Petrucci</p>
-                            <a href = "{% url 'profileUpdate' %}"><p>Update profile</p></a>
-                            <!-- <div class="row about-list">
-                                <div class="col-md-6">
-                                    <div class="media">
-                                        <label>Birthday</label>
-                                        <p>4th april 1998</p>
-                                    </div>
-                                    <div class="media">
-                                        <label>Age</label>
-                                        <p>22 Yr</p>
-                                    </div>
-                                    <div class="media">
-                                        <label>Residence</label>
-                                        <p>Canada</p>
-                                    </div>
-                                    <div class="media">
-                                        <label>Address</label>
-                                        <p>California, USA</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="media">
-                                        <label>E-mail</label>
-                                        <p>info@domain.com</p>
-                                    </div>
-                                    <div class="media">
-                                        <label>Phone</label>
-                                        <p>820-885-3321</p>
-                                    </div>
-                                    <div class="media">
-                                        <label>Skype</label>
-                                        <p>skype.0404</p>
-                                    </div>
-                                    <div class="media">
-                                        <label>Freelance</label>
-                                        <p>Available</p>
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="about-avatar">
-                            <img src="{{ user.profile.image.url }}" class="icon" alt="">
-                        </div>
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<div class="container bootstrap snippets bootdey">
+    <div class="col-md-12">
+        <div class="profile-container">
+            <div class="profile-header row">
+                <div class="col-md-4 col-sm-12 text-center">
+                  <img src="{{ user.profile.image.url }}" alt="" class="header-avatar">
+                </div>
+                <div class="col-md-8 col-sm-12 profile-info">
+                    <div class="header-fullname">{{user.username}}</div>
+                    <a href="{% url 'profileUpdate' %}" class="btn btn-palegreen btn-sm  btn-follow">
+                        <!-- <i class="fa fa-check"></i> -->
+                        Update profile
+                    </a>
+                    <div class="header-information">
+                      {{user.profile.bio}}
                     </div>
                 </div>
-                <div class="counter">
+                <div class="col-md-12 col-sm-12 col-xs-12 profile-stats">
                     <div class="row">
-                        <div class="col-6 col-lg-4">
-                            <div class="count-data text-center">
-                                <h6 class="count h2" data-to="500" data-speed="500">500</h6>
-                                <p class="m-0px font-w-600">Followers</p>
-                            </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
+                            <div class="stats-value">284</div>
+                            <div class="stats-title">FOLLOWING</div>
                         </div>
-                        <div class="col-6 col-lg-4">
-                            <div class="count-data text-center">
-                                <h6 class="count h2" data-to="150" data-speed="150">150</h6>
-                                <p class="m-0px font-w-600">Following</p>
-                            </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
+                            <div class="stats-value">803</div>
+                            <div class="stats-title">FOLLOWERS</div>
                         </div>
-                        <div class="col-6 col-lg-4">
-                            <div class="count-data text-center">
-                                <h6 class="count h2" data-to="3" data-speed="3">6</h6>
-                                <p class="m-0px font-w-600">Posts</p>
-                            </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
+                            <div class="stats-value">9</div>
+                            <div class="stats-title">POSTS</div>
                         </div>
-                        <!-- <div class="col-6 col-lg-3">
-                            <div class="count-data text-center">
-                                <h6 class="count h2" data-to="190" data-speed="190">190</h6>
-                                <p class="m-0px font-w-600">Telephonic Talk</p>
-                            </div>
-                        </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                            <i class="glyphicon glyphicon-map-marker"></i> Boston
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                            Rate: <strong>$250</strong>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                            Age: <strong>24</strong>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>  
+            </div>   
+        </div>
+    </div>
+</div>
+  
+        
             
 
           
@@ -117,63 +79,73 @@
           
 
           
-            <div class="wrapper-grey padded">
               <div class="container">
-                <!-- <h2 class="text-center">Posts</h2> -->
-                <div class="col-xs-12 col-sm-4">
-                  <div class="card" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://i1.wp.com/handluggageonly.co.uk/wp-content/uploads/2015/05/IMG_2813-s.jpg?w=1600&ssl=1');">
-                    <div class="card-description">
-                    </div>
-                    <a class="card-link" href="#"></a>
-                  </div>
-                </div>
-                <div class="col-xs-12 col-sm-4">
-                  <div class="card" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://i0.wp.com/handluggageonly.co.uk/wp-content/uploads/2016/04/IMG_5589.jpg?w=1600&ssl=1');">
-                    <div class="card-description">
-                    </div>
-                    <a class="card-link" href="#"></a>
-                  </div>
-                </div>
-                <div class="col-xs-12 col-sm-4">
-                  <div class="card" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://i0.wp.com/handluggageonly.co.uk/wp-content/uploads/2016/03/Positano-Weather.jpg?w=1600&ssl=1');">
-                    <div class="card-description">
-                    </div>
-                    <a class="card-link" href="#"></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-
-            <div class="wrapper-grey padded">
-                <div class="container">
-                  <div class="col-xs-12 col-sm-4">
-                    <div class="card" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://i1.wp.com/handluggageonly.co.uk/wp-content/uploads/2015/05/IMG_2813-s.jpg?w=1600&ssl=1');">
-
-                      <div class="card-description">
+                <h1>Posts</h1>
+                <hr>
+                  <div class="row">
+                    <div class="col-lg-4 col-sm-6">
+                      <div class="thumbnail img-responsive">
+                        <a href="#" title="Image 1"><img src="https://images.unsplash.com/photo-1494719019271-7bfff81660d2?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=74496a215491b1529d6702f146901970&auto=format&fit=crop&w=500&q=60"> </a>
                       </div>
-                      <a class="card-link" href="#"></a>
                     </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-4">
-                    <div class="card" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://i0.wp.com/handluggageonly.co.uk/wp-content/uploads/2016/04/IMG_5589.jpg?w=1600&ssl=1');">
-
-                      <div class="card-description">
+                    <div class="col-lg-4 col-sm-6">
+                      <div class="thumbnail img-responsive">
+                        <a href="#" title="Image 1"><img src="https://images.unsplash.com/photo-1523357585206-175e971f2ad9?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4d4e050da1c691f01f0643abe9cd5f94&auto=format&fit=crop&w=500&q=60"></a>
                       </div>
-                      <a class="card-link" href="#"></a>
                     </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-4">
-                    <div class="card" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://i0.wp.com/handluggageonly.co.uk/wp-content/uploads/2016/03/Positano-Weather.jpg?w=1600&ssl=1');">
-
-                      <div class="card-description">
+                    <div class="col-lg-4 col-sm-6 ">
+                      <div class="thumbnail">
+                        <a href="#" title="Image 1"><img src="https://images.unsplash.com/photo-1523359366921-4c14294ff5bd?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6010b5b8bc1f6916d652fb48b9e039a6&auto=format&fit=crop&w=500&q=60"></a>
                       </div>
-                      <a class="card-link" href="#"></a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                      <div class="thumbnail img-responsive">
+                        <a href="#" title="Image 1"><img src="https://images.unsplash.com/photo-1523282310917-57c94215f54f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9562049492c4c1c28014be6b4d372fa8&auto=format&fit=crop&w=500&q=60"></a>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                      <div class="thumbnail img-responsive">
+                        <a href="#" title="Image 1"><img src="https://images.unsplash.com/photo-1523279719030-9806e8392152?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=83ec2854d04d0f08312dec44bf645e2d&auto=format&fit=crop&w=500&q=60"></a>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                      <div class="thumbnail img-responsive">
+                        <a href="#" title="Image 1"><img src="https://images.unsplash.com/photo-1523264629844-40dd6bf17c2b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c7ff0286ae72f4dfed2bfee5fc8a53fe&auto=format&fit=crop&w=500&q=60"></a>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                      <div class="thumbnail img-responsive">
+                        <a href="#" title="Image 1"><img src="https://images.unsplash.com/photo-1523133892278-d324fa6b326b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1ba6e3178a138e7dcbdd241499378449&auto=format&fit=crop&w=500&q=60"></a>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                      <div class="thumbnail img-responsive">
+                        <a href="#" title="Image 1"><img src="https://images.unsplash.com/photo-1523326350151-473dc3e5215b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=aa765415933dbcd55bc27e0726bfd1f5&auto=format&fit=crop&w=500&q=60"></a>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                      <div class="thumbnail img-responsive">
+                        <a href="#" title="Image 1"><img src="https://images.unsplash.com/photo-1523086686757-5cda47c78492?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0da31c54dc3e5fd28da519b2cde2c98d&auto=format&fit=crop&w=500&q=60"></a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              </div>
+                <div id="modal" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                      </div>
+                      <div class="modal-body">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <script
+                  src="https://code.jquery.com/jquery-3.3.1.js"
+                  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                  crossorigin="anonymous"></script>
           
     <!-- Including Bootstrap JS (with its jQuery dependency) so that dynamic components work -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -181,6 +153,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/prof.js"></script>
     </body>
     {% endblock content %}
 </html>

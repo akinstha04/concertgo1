@@ -11,12 +11,20 @@ class UserUpdateForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ['username', 'email',]
+        fields = ['username', 'email']
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
+        fields = ['bio']
+
+class ProfilePicUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
         fields = ['image']
+
+        # fields = '__all__'
+        # exclude = ['user']
 
 class LoginForm(AuthenticationForm):
     username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True,'class':'form-control'}))

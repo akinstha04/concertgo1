@@ -8,6 +8,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import MyPasswordResetForm, ProfileUpdateForm, RegistrationForms, UserUpdateForm
 from django.views import View
 
+from userprofile.models import Post
+from django.views.generic import ListView
 
 # from django.views.generic import CreateView
 # from django.shortcuts import render
@@ -62,7 +64,15 @@ def logoutUser(request):
 
 
 def main(request):
-    return render(request, 'main.html')
+    context = {
+        'posts': Post.objects.all()
+    }
+    return render(request, 'main.html', context)
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'main.html'
+    context_object_name = 'posts'
 
 def ticketPage(request):
     return render(request, 'ticket.html')
@@ -92,3 +102,5 @@ class registerpageView(View):
 #             form.save()
 #         return render(request,'myapp/registervenuemanager.html',{'form':form})
 
+def ticketAddPage(request):
+    return render(request, 'ticket_add.html')

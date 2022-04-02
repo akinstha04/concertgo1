@@ -1,32 +1,47 @@
 {% extends "base.html" %}
-{% include 'navbar.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% include 'navbar.html' %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
-<div class="container mt-5 mb-5 d-flex justify-content-center">
-    <div class="card px-1 py-4">
-        <div class="card-body">
-          <img class="mb-4" src="{% static 'img/logo.PNG' %}" alt="" width="350" height="110">
-          <form method = "POST" action = "" enctype="multipart/form-data">
-          {% csrf_token %}
-            <h6 class="information mt-4">Update profile</h6>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        {{ u_form|crispy }}
-                        {{ p_form|crispy }}
-                      </div>
-                </div>
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-lg-10">
+        <div class="wrap d-md-flex">
+          <div class="img" style="background-image: url({{user.profile.image.url}});">
+          </div>
+          <div class="login-wrap p-4 p-md-5">
+            <div class="d-flex">
+              <div class="w-100">
+                <h3 class="mb-4">Profile Update</h3>
+              </div>
             </div>
-          </div> <button class="btn btn-primary btn-block confirm-button">Confirm</button>
-            {% if messages %}
-            {% for message in messages %}
-              <p {% if message.tags %} class = "alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
-            {% endfor %}
-            {% endif %}
-          </form>
+            <form method = "POST" action = "" enctype="multipart/form-data">
+            <form action="#" class="signin-form">
+              <div class="form-group mb-3">
+                {% csrf_token %}
+                  {{ u_form|crispy }}
+                  {{ p_form|crispy }}
+                  {{ pp_form|crispy }}
+              </div>
+              {% if messages %}
+              {% for message in messages %}
+                <p {% if message.tags %} class = "alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
+              {% endfor %}
+              {% endif %}
+              <div class="form-group">
+                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Done</button>
+              </div>
+              <div class="form-group d-md-flex">
+              </div>
+            </form>
+            <p class="text-center"><a data-toggle="tab" href="{% url 'profile' %}">Back to profile</a></p>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+</section>            
 {% endblock content %}

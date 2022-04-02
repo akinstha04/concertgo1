@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from myapp.forms import ProfileUpdateForm, UserUpdateForm
-
+from myapp.forms import ProfilePicUpdateForm, ProfileUpdateForm, UserUpdateForm, ProfilePicUpdateForm
+from .models import Post
+from django.views.generic import ListView
 # Create your views here.
 def profilePage(request):
     return render(request, 'userprofile/profile.html')
@@ -12,21 +13,35 @@ def profileUpdate(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,request.FILES, instance=request.user.profile)
+        pp_form = ProfilePicUpdateForm(request.POST, request.FILES, instance=request.user.profile)
 
-        if u_form.is_valid() and p_form.is_valid():
+        if u_form.is_valid() and p_form.is_valid() and pp_form.is_valid:
             u_form.save()
             p_form.save()
-            messages.sucess(request, 'Your account has been updated')
-            return redirect('profileUpdate')
+            pp_form.save()
+            # messages.success(request, 'Your account has been updated')
+            return redirect('profile')
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
+        pp_form = ProfilePicUpdateForm()
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'pp_form': pp_form
     }
-    return render(request, 'userprofile/profile_update.html')
+    return render(request, 'userprofile/profile_update.html', context)
 
-# def profileUpdate(request):
-#     return render(request, 'userprofile/profile_update.html')
+def postUpload(request):
+    if request.method == 'POST':
+        data = request.POST
+        image = request.FILES.get('image')
+        
+    return render(request, 'userprofile/post_upload.html')
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'main.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted']

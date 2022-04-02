@@ -4,6 +4,7 @@ from myapp.forms import MyPasswordResetForm, MySetPasswordForm, LoginForm
 from . import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth import views as auth_views
+from .views import PostListView
 
 urlpatterns = [
     path('', views.loginPage, name = "login"),
@@ -15,11 +16,14 @@ urlpatterns = [
     # path('register_venuemanager/', views.registerManagerpageView.as_view(), name = "register_venuemanager"),
     path('passwordreset/', auth_views.PasswordResetView.as_view(template_name='myapp/password_reset.html', form_class = MyPasswordResetForm), name = "password_reset"),
     path('password-reset/done/',auth_views.PasswordResetDoneView.as_view(template_name='myapp/password_resetdone.html'),name='password_reset_done'),
-    path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='myapp/password_resetconfirm.html',form_class=MySetPasswordForm),name='password_reset_confirm'),
+    path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='myapp/password_resetconfirm.html'),name='password_reset_confirm'),
     path('password-reset-complete/',auth_views.PasswordResetCompleteView.as_view(template_name='myapp/password_resetcomplete.html'),name='password_reset_complete'),
     
 
     path('ticket/', views.ticketPage, name = "ticket"),
-    path('main/', views.main, name="main")
+    path('ticket-add/', views.ticketAddPage, name = "ticketAdd"),
+    # path('main/', views.main, name="main")
+    path('main/', PostListView.as_view(), name = 'main')
+    
 ]
 urlpatterns += staticfiles_urlpatterns()

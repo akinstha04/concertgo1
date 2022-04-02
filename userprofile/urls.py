@@ -1,13 +1,14 @@
 from django.urls import path
-from django.urls.resolvers import URLPattern
-from myapp.forms import MyPasswordResetForm, MySetPasswordForm, LoginForm
 from . import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.contrib.auth import views as auth_views
+from . views import PostListView, postUpload
+from myapp.forms import ProfileUpdateForm, UserUpdateForm
 
 urlpatterns = [
+    # path('', PostListView.as_view(), name = 'home'),
     path('profile/', views.profilePage, name = "profile"),
-    path('profile_update/', views.profileUpdate, name = "profileUpdate")
+    path('profile_update/', views.profileUpdate, name = "profileUpdate"),
+    path('post_upload/', views.postUpload, name = "postUpload")
     # path('main/', views.main, name="main")
 ]
 urlpatterns += staticfiles_urlpatterns()
