@@ -9,7 +9,7 @@ from .forms import MyPasswordResetForm, ProfileUpdateForm, RegistrationForms, Us
 from django.views import View
 
 from userprofile.models import Post
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, CreateView
 
 # from django.views.generic import CreateView
 # from django.shortcuts import render
@@ -73,6 +73,19 @@ class PostListView(ListView):
     model = Post
     template_name = 'main.html'
     context_object_name = 'posts'
+    ordering = ['-date_posted']
+
+class PostDetail(DetailView):
+    model=Post
+
+class PostUpload(CreateView):
+    model = Post
+    fields = ['image','detail']
+
+    def form_valid(self,form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
 
 def ticketPage(request):
     return render(request, 'ticket.html')
@@ -85,8 +98,9 @@ class registerpageView(View):
     def post(self,request):
         form = RegistrationForms(request.POST)
         if form.is_valid():
-            messages.success(request,'You have been succesfully registered!')
+            # messages.success(request,'You have been succesfully registered!')
             form.save()
+            return redirect('login')
         return render(request,'myapp/register.html',{'form':form})
 
 # class registerManagerpageView(View):

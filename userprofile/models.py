@@ -33,11 +33,11 @@ class Profile(models.Model):
 class Post(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='posts')
-    description = models.TextField(max_length=300)
+    detail = models.TextField(max_length=300)
     date_posted = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.description
+        return self.detail
 
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
+        return reverse('postDetail', kwargs={'pk': self.pk})

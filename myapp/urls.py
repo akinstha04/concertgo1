@@ -4,7 +4,7 @@ from myapp.forms import MyPasswordResetForm, MySetPasswordForm, LoginForm
 from . import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth import views as auth_views
-from .views import PostListView
+from .views import PostListView, PostUpload
 
 urlpatterns = [
     path('', views.loginPage, name = "login"),
@@ -23,6 +23,8 @@ urlpatterns = [
     path('ticket/', views.ticketPage, name = "ticket"),
     path('ticket-add/', views.ticketAddPage, name = "ticketAdd"),
     # path('main/', views.main, name="main")
+    path('post_upload/', PostUpload.as_view(), name = 'postUpload'),
+    path('post/<int:pk>/', views.PostDetail.as_view(), name = "postDetail"),
     path('main/', PostListView.as_view(), name = 'main')
     
 ]

@@ -8,6 +8,9 @@ from django.views.generic import ListView
 def profilePage(request):
     return render(request, 'userprofile/profile.html')
 
+# def postDetail(request):
+#     return render(request, 'userprofile/post_detail.html')
+
 @login_required
 def profileUpdate(request):
     if request.method == 'POST':
@@ -33,15 +36,29 @@ def profileUpdate(request):
     }
     return render(request, 'userprofile/profile_update.html', context)
 
-def postUpload(request):
-    if request.method == 'POST':
-        data = request.POST
-        image = request.FILES.get('image')
+# def postUpload(request):
+#     if request.method == 'POST':
+#         ph_form = PostUploadForm(request.POST,request.FILES)
+#         if ph_form.is_valid():
+#             ph_form.save()
+#         return redirect('main')
+#     else:
+#             ph_form = PostUploadForm()
+#     context = {
+#         'ph_form': ph_form
+#     }
         
-    return render(request, 'userprofile/post_upload.html')
+#     return render(request, 'userprofile/post_upload.html', context)
+
+    # def postUpload(request):
+    #     if request.method == 'POST':
+    #         data = request.POST
+    #         image = request.FILES.get('image')
+                
+    #     return render(request, 'userprofile/post_upload.html')
 
 class PostListView(ListView):
     model = Post
-    template_name = 'main.html'
+    template_name = 'main.html','profile.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']

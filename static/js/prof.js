@@ -11,3 +11,4 @@ $('#modal').on('show.bs.modal', function () {
 $('#modal').on('hide.bs.modal', function () {
    $('.col-6,.row .thumbnail').removeClass('blur');
 })
+

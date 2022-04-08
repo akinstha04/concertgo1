@@ -1,11 +1,72 @@
 {% extends "base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% include 'navbar.html' %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
-<section class="ftco-section">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% include 'navbar.html' %}
+<div class="container bootstrap snippets bootdey">
+  <div class="col-md-12">
+      <div class="profile-container">
+          <div class="profile-header row">
+              <div class="col-md-4 col-sm-12 text-center">
+                <img src="{{ user.profile.image.url }}" alt="" class="header-avatar">
+                <form method = "POST" action = "" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ pp_form|crispy }}
+              </div>
+              <div class="col-md-8 col-sm-12 profile-info">
+                  <div class="header-fullname">{{u_form}}</div>
+                  <div class="header-information">
+                    {{p_form}}
+                    {% if messages %}
+                    {% for message in messages %}
+                      <p {% if message.tags %} class = "alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="form-group">
+                      <button type="submit" class="form-control btn btn-primary rounded submit px-3">Done</button>
+                    </div>
+                    <div class="form-group d-md-flex">
+                    </div>
+                  </div>
+              </div>
+            </form>
+              <!-- <div class="col-md-12 col-sm-12 col-xs-12 profile-stats">
+                  <div class="row">
+                      <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
+                          <div class="stats-value">284</div>
+                          <div class="stats-title">FOLLOWING</div>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
+                          <div class="stats-value">803</div>
+                          <div class="stats-title">FOLLOWERS</div>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
+                          <div class="stats-value">9</div>
+                          <div class="stats-title">POSTS</div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                          <i class="glyphicon glyphicon-map-marker"></i> Boston
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                          Rate: <strong>$250</strong>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
+                          Age: <strong>24</strong>
+                      </div>
+                  </div>
+              </div> -->
+          </div>   
+      </div>
+  </div>
+</div>
+
+<!-- <section class="ftco-section">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12 col-lg-10">
@@ -43,5 +104,5 @@
       </div>
     </div>
   </div>
-</section>            
+</section> -->
 {% endblock content %}
