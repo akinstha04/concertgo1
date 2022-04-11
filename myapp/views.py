@@ -130,7 +130,12 @@ def main(request):
     return render(request, 'main.html')
 
 def search(request):
-    return render(request, 'myapp/search.html')
+    if request.method == "POST":
+        searched = request.POST['searched']
+        results = User.objects.filter(username__contains = searched)
+        return render(request, 'myapp/search.html', {'searched':searched,'results':results})
+    else:
+        return render(request, 'myapp/search.html')
 
 # def main(request):
 #     context = {
