@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+{% include 'navbar.html' %}
+
+<div class="container">
+    <div class="row activity">
+        <div class="col-md-6">
+            <!-- left column -->
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <img src="{{ user.profile.image.url }}" class="user-profile">
+                    <div class="pull-right text-right">
+                        <i class="fa fa-calendar"></i><br> {{ post.date_posted }}
+                    </div>
+                    <div><strong>{{ post.owner}}</strong></div>
+                    <!-- <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div> -->
+                </div>
+                <div class="panel-body">
+                    
+                    <div class="video-container">
+                        <image src="{{ post.image.url }}" width="524" frameborder="0"></image>
+                    </div>
+                    
+                    <div class="actions">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-link"><i class="fa fa-thumbs-o-up"></i> Like</button>
+                            <button type="button" class="btn btn-link"><i class="fa fa-share"></i> Share</button>
+                        </div>
+                        <div class="pull-right"><strong>1.789</strong> Likes</div>      
+                    </div>  
+                    
+                </div>
+            </div>
+            
+            
+            
+            
+        </div><!--/.col-->
+        <div class="col-md-6">
+            <!-- right column -->
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <img src="{{ user.profile.image.url }}" class="user-profile">
+                    <!-- <div class="pull-right text-right">
+                        <i class="fa fa-calendar"></i><br> 3 hours ago
+                    </div> -->
+                    <div><strong>{{ post.owner }}</strong></div>
+                    <!-- <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div> -->
+                </div>
+                <div class="panel-body">
+                    <blockquote>{{ post.detail }}</blockquote>
+                    <!-- comments -->
+                    <p>Comments</p>
+                    <div class="media">
+                        
+                        <!-- <a class="pull-left" href="#">
+                            <img class="media-object img-rounded" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                        </a> -->
+                        <div class="media-body">
+                            <div class="pull-right small">3 hours ago</div>
+                            <h4 class="media-heading">Media heading</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <!-- <a class="pull-left" href="#">
+                            <img class="media-object img-rounded" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                        </a> -->
+                        <div class="media-body">
+                            <div class="pull-right small">3 hours ago</div>
+                            <h4 class="media-heading">Media heading</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                        </div>
+                    </div>
+                <div class="panel-footer">
+                    <input type="email" class="form-control" placeholder="Write a comment...">
+                </div>
+            </div>
+
+
+        </div><!--/.col-->
+        
+    </div>
+</div>
+        <!-- {% if request.user.is_authenticated %}
+        <p>Hello {{request.user}}</p>
+        <a href ="{% url 'logout' %}">Logout</a>
+        {% else %}
+
+        <a href ="{% url 'login' %}">Login</a>
+        {% endif %} -->
+
+
+
+
+{% endblock %}
