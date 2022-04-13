@@ -88,10 +88,4 @@ class MySetPasswordForm(SetPasswordForm):
         widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Password confirmation'}),
     )
 
-# class PostUpload(CreateView):
-#     model = Post
-#     fields = ['image','description']
 
-#     def form_valid(self,form):
-#         form.instance.owner = self.request.user
-#         return super().form_valid(form)

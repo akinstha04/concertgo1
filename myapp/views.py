@@ -1,3 +1,5 @@
+from audioop import reverse
+import datetime
 from multiprocessing import context
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -8,8 +10,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterForm
 from django.views import View
-from userprofile.models import Post
+from userprofile.models import Post, Profile
 
+from itertools import chain
 
 from django.views.generic import ListView, DetailView, CreateView
 
@@ -126,8 +129,8 @@ def ticketAddPage(request):
     return render(request, 'myapp/ticket_add.html')
 
     
-def main(request):
-    return render(request, 'main.html')
+# def main(request):
+#     return render(request, 'main.html')
 
 def search(request):
     if request.method == "POST":
@@ -157,6 +160,24 @@ class PostUpload(CreateView):
     fields = ['image','detail']
 
     def form_valid(self,form):
-        form.instance.owner = self.request.user
+        form.instance.owner = self.request.user.profile
         return super().form_valid(form)
 
+
+def main(request):
+    profile = Profile.objects.get(user=request.user)
+    users = [user for user in profile.following.all()]
+    posts = []
+    qs = None
+    # get posts of people who are followed
+    for u in users:
+        p = Profile.objects.get(user=u)
+        p_posts = p.post_set.all()
+        p_posts.append(p_posts)
+    # sekf oists
+    my_posts = profile.profile_posts()
+    posts.append(my_posts)
+    # sort and chain querys and unpack the posts list
+    if len(posts)>0:
+        qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
+    return render(request,'main.html',{'profile':profile,'posts':qs})

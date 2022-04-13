@@ -26,6 +26,7 @@ urlpatterns = [
     path('post_upload/', views.PostUpload.as_view(), name = 'postUpload'),
     path('post/<int:pk>/', views.PostDetail.as_view(), name = "postDetail"),
     # path('main/', PostListView.as_view(), name = 'main')
+    # path('main/', views.main, name = "main")
     path('main/', views.main, name = "main")
     # path('post_upload/', PostUpload.as_view(), name = 'postUpload'),
     # path('post/<int:pk>/', views.PostDetail.as_view(), name = "postDetail"),

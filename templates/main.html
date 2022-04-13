@@ -11,47 +11,50 @@
     <div class="row activity">
         <div class="col-md-6">
             <!-- left column -->
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <img src="{{ user.profile.image.url }}" class="user-profile">
-                    <div class="pull-right text-right">
-                        <i class="fa fa-calendar"></i><br> 3 hours ago
-                    </div>
-                    <div><strong>{{ user.username }}</strong></div>
-                    <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div>
-                </div>
-                <div class="panel-body">
-                    <p>Hey</p>
-                    <div class="video-container">
-                        <image src="{{ user.profile.image.url }}" width="524" frameborder="0"></image>
-                    </div>
-                    
-                    <div class="actions">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-link"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                            <button type="button" class="btn btn-link"><i class="fa fa-share"></i> Share</button>
-                        </div>
-                        <div class="pull-right"><strong>1.789</strong> Likes</div>      
-                    </div>  
-                    
-                    <div class="media">
-                        <a class="pull-left" href="#">
-                            <img class="media-object img-rounded" src="https://bootdey.com/img/Content/avatar/avatar1.png">
-                        </a>
-                        <div class="media-body">
-                            <div class="pull-right small">3 hours ago</div>
-                            <h4 class="media-heading">Media heading</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <input type="email" class="form-control" placeholder="Write a comment...">
-                </div>
-            </div>
+            {% for post in posts %}
             
-            <div class="panel panel-default">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <img src="{{ user.profile.image.url }}" class="user-profile">
+                        <div class="pull-right text-right">
+                            <i class="fa fa-calendar"></i><br> 3 hours ago
+                        </div>
+                        <div><strong>{{ post.owner }}</strong></div>
+                        <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div>
+                    </div>
+                    <div class="panel-body">
+                        <p>{{ post.detail }}</p>
+                        <div class="video-container">
+                            <image src="{{ post.image.url }}" width="524" frameborder="0"></image>
+                        </div>
+                        
+                        <div class="actions">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-link"><i class="fa fa-thumbs-o-up"></i> Like</button>
+                                <button type="button" class="btn btn-link"><i class="fa fa-share"></i> Share</button>
+                            </div>
+                            <div class="pull-right"><strong>1.789</strong> Likes</div>      
+                        </div>  
+                        
+                        <!-- commentsection -->
+
+                        <!-- <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-rounded" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                            </a>
+                            <div class="media-body">
+                                <div class="pull-right small">3 hours ago</div>
+                                <h4 class="media-heading">Media heading</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="panel-footer">
+                        <input type="email" class="form-control" placeholder="Write a comment...">
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- <div class="panel panel-default">
                 <div class="panel-heading">
                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-rounded">
                     <div class="pull-right text-right">
@@ -87,10 +90,10 @@
                 <div class="panel-footer">
                     <input type="email" class="form-control" placeholder="Write a comment...">
                 </div>
-            </div>
-            
-            
-        </div><!--/.col-->
+            </div> -->
+                
+        </div>
+        <!--/.col-->
         <div class="col-md-6">
             <!-- right column -->
 

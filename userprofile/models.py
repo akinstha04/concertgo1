@@ -12,9 +12,15 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default = 'profile_pics\default.jpg', upload_to='profile_pics')
     bio = models.TextField(default="hi")
+    following = models.ManyToManyField(User, related_name='following', blank=True)
+
+
+    def profile_posts(self):
+        return self.post_set.all()
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        # return f'{self.user.username} Profile'
+        return str(self.user.username)
 
     # def save(self):
     #     super().save()
@@ -27,7 +33,7 @@ class Profile(models.Model):
     #         img.save(self.image.path)
     
 class Post(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='posts')
     detail = models.TextField(max_length=300)
     date_posted = models.DateTimeField(default=timezone.now)
@@ -37,3 +43,4 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('postDetail', kwargs={'pk': self.pk})
+    
