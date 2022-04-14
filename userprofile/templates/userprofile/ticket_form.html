@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'navbar.html' %}
+{% load crispy_forms_tags %}
+
+<!-- <div class="text-center">
+  <h1>Issue Ticket</h1>
+  <div class="height-100 d-flex justify-content-center align-items-center">
+    <button type="button" class="btn btn-primary modalTrigger" data-toggle="modal" data-target="#exampleModal">
+      Launch modal
+      </button>
+  </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+                Issuing a new ticket</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+        </div>
+        <div class="modal-body">
+            <p class="body-desc">You can upload the image in JPG, GIF or PNG format.</p>
+            <form method = "POST" action = "" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form|crispy}}
+            </div> <button class="btn btn-primary btn-block confirm-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container py-5">
+  <!-- For demo purpose -->
+  <div class="row mb-4">
+      <div class="col-lg-8 mx-auto text-center">
+          <h1>Create ticket</h1>
+      </div>
+  </div> <!-- End -->
+  <div class="row">
+      <div class="col-lg-6 mx-auto">
+          <div class="card ">
+              <div class="card-header">
+                  <!-- Credit card form content -->
+                  <div class="tab-content">
+                      <!-- credit card info-->
+                      <div id="credit-card" class="tab-pane fade show active pt-3">
+                          <form role="form" action = "POST" enctype="multipart/form-data" onsubmit="event.preventDefault()">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                              <!-- <div class="form-group"> <label for="username">
+                                      <h6>Card Owner</h6>
+                                  </label> <input type="text" name="username" placeholder="Card Owner Name" required class="form-control "> </div> -->
+                              <div class="card-footer"> <button type="button" class="subscribe btn btn-primary btn-block shadow-sm"> Confirm </button>
+                          </form>
+                      </div>
+                  </div> <!-- End -->
+                  <!-- End -->
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+{% endblock content %}

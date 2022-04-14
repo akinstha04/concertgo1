@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterForm
 from django.views import View
-from userprofile.models import Post, Profile
+from userprofile.models import Post, Profile, Ticket
 
 from itertools import chain
 
@@ -140,6 +140,8 @@ def search(request):
     else:
         return render(request, 'myapp/search.html')
 
+
+
 # def main(request):
 #     context = {
 #         'posts': Post.objects.all()
@@ -164,6 +166,24 @@ class PostUpload(CreateView):
         return super().form_valid(form)
 
 
+class TicketListView(ListView):
+    model = Ticket
+    template_name = 'main.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+
+class TicketDetail(DetailView):
+    model=Ticket
+
+class TicketUpload(CreateView):
+    model = Ticket
+    fields = ['title','detail','date','ex_date','price','image','quantity']
+
+    def form_valid(self,form):
+        form.instance.seller = self.request.user.profile
+        return super().form_valid(form)
+
+
 def main(request):
     profile = Profile.objects.get(user=request.user)
     users = [user for user in profile.following.all()]
@@ -174,7 +194,7 @@ def main(request):
         p = Profile.objects.get(user=u)
         p_posts = p.post_set.all()
         p_posts.append(p_posts)
-    # sekf oists
+    # self posts
     my_posts = profile.profile_posts()
     posts.append(my_posts)
     # sort and chain querys and unpack the posts list

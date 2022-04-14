@@ -43,4 +43,20 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('postDetail', kwargs={'pk': self.pk})
-    
+
+class Ticket(models.Model):
+    seller = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    detail = models.TextField(max_length=200)
+    date = models.DateField()
+    ex_date = models.DateTimeField()    #the time after which the ticket cannot be purchased.
+    price = models.FloatField(max_length=255)
+    image = models.ImageField(default = 'ticket_pics\default.jpg',upload_to='ticket_pics')
+    quantity = models.IntegerField(default=1)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('ticketDetail', kwargs={'pk': self.pk})

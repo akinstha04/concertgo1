@@ -4,6 +4,8 @@ import re
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
+from myapp.models import User
 from .forms import ProfilePicUpdateForm, ProfileUpdateForm, UserUpdateForm, ProfilePicUpdateForm
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, Profile
@@ -18,12 +20,11 @@ def profilePage(request):
     users = [user for user in profile.following.all()]
     posts = []
     qs = None
-    
+    count= profile.following.all().count()
     # get posts of people who are followed
     
     for u in users:
         p = Profile.objects.get(user=u)
-        count=users.count()
         # p_posts = p.post_set.all()
         # p_posts.append(p_posts)
         # c= u.count()
@@ -36,7 +37,33 @@ def profilePage(request):
         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
     return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'count':count})
 
+
+
+
+# def profilePage(request):
+#     profile = Profile.objects.get(user=request.user)
+#     users = [user for user in profile.following.all()]
+#     posts = []
+#     qs = None
     
+#     # get posts of people who are followed
+    
+#     for u in users:
+#         p = Profile.objects.get(user=u)
+#         # p_posts = p.post_set.all()
+#         # p_posts.append(p_posts)
+#         # c= u.count()
+    
+#     # self posts
+#     my_posts = profile.profile_posts()
+#     posts.append(my_posts)
+#     # sort and chain querys and unpack the posts list
+#     if len(posts)>0:
+#         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
+#     return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs})
+
+
+
 @login_required
 def profileUpdate(request):
     if request.method == 'POST':
@@ -81,7 +108,7 @@ class ProfileListView(ListView):
 
 class ProfileVisit(DetailView):
     model = Profile
-    template_name = 'userprofile/profile_visit.html','myapp/search.html'
+    template_name = 'userprofile/profile_visit.html'
 
     def get_object(self, **kwargs):
         pk = self.kwargs.get('pk')
@@ -98,6 +125,26 @@ class ProfileVisit(DetailView):
             follow = False
         context["follow"] = follow
         return context
+
+# class ProfileVisit(DetailView):
+#     model = Profile
+#     template_name = 'userprofile/profile_visit.html','myapp/search.html'
+
+#     def get_object(self, **kwargs):
+#         pk = self.kwargs.get('id')
+#         viewProfile = Profile.objects.get(pk = pk)
+#         return viewProfile
+    
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         viewProfile = self.get_object()
+#         my_profile = Profile.objects.get(user=self.request.user)
+#         if viewProfile in my_profile.following.all():
+#             follow = True
+#         else:
+#             follow = False
+#         context["follow"] = follow
+#         return context
 
 def follow_unfollow_profile(request):
     if request.method=="POST":

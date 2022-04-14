@@ -22,7 +22,9 @@ urlpatterns = [
     path('search/', views.search, name = "search"),
 
     path('ticket/', views.ticketPage, name = "ticket"),
-    path('ticket-add/', views.ticketAddPage, name = "ticketAdd"),
+    # path('ticket-add/', views.ticketAddPage, name = "ticketAdd"),
+    path('ticket_upload/', views.TicketUpload.as_view(), name = 'ticketUpload'),
+    path('ticket/<int:pk>/', views.TicketDetail.as_view(), name = "ticketDetail"),
     path('post_upload/', views.PostUpload.as_view(), name = 'postUpload'),
     path('post/<int:pk>/', views.PostDetail.as_view(), name = "postDetail"),
     # path('main/', PostListView.as_view(), name = 'main')

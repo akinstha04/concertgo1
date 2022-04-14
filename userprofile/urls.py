@@ -11,7 +11,8 @@ urlpatterns = [
     path('profileUpdate/', views.profileUpdate, name = "profileUpdate"),
     # path('post_upload/', views.postUpload, name = "postUpload")
     
-    path('<pk>/', views.ProfileVisit.as_view(), name = "profileVisit")
+    path('profile/<pk>/', views.ProfileVisit.as_view(), name = "profileVisit")
+    # path('profile/<int:id>/', views.ProfileVisit.as_view(), name = "profileVisit")
     
     # path('main/', views.main, name="main")
 ]
