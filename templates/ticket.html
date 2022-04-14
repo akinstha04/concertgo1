@@ -5,150 +5,33 @@
 <link rel="stylesheet" href="{% static 'css/ticket.css' %}">
     <section class="wrapper2">
         <div class="container">
-      
           <div class="row">
-            <div class="col-md-4">
-              <div class="card text-white card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?tech,street');">
-                <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
-                <div class="card-img-overlay d-flex flex-column">
-                  <div class="card-body">
-                    <small class="card-meta mb-2">Albatross | Jindabaad</small>
-                    <h4 class="card-title mt-0 "><a class="text-white" herf="#">New Years with Albatross and Jindabaad</a></h4>
-                    <small><i class="far fa-clock"></i> June 15, 2022</small>
-                  </div>
-                  <div class="card-footer">
-                    <div class="media">
-                      <img class="mr-3 rounded-circle" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/male-512.png" alt="Generic placeholder image" style="max-width:50px">
-                      <div class="media-body">
-                        <h6 class="my-0 text-white d-block">Purple Haze</h6>
-                        <small>Rs1500</small>
+            {% for ticket in tickets %}
+              <div class="col-md-4">
+                <div class="card text-white card-has-bg click-col">
+                  <img class="card-img d-none" src="{{ticket.image}}" alt="ticketbg">
+                  <div class="card-img-overlay d-flex flex-column">
+                    <div class="card-body">
+                      <small class="card-meta mb-2">{{ticket.title}}</small>
+                      <h4 class="card-title mt-0 "><a class="text-white" herf="#">New Years with Albatross and Jindabaad</a></h4>
+                      <small><i class="far fa-clock"></i> {{ticket.date}}</small>
+                    </div>
+                    <div class="card-footer">
+                      <div class="media">
+                        <img class="mr-3 rounded-circle" src="{{ticket.seller.image.url}}" alt="sellerimage" style="max-width:50px">
+                        <div class="media-body">
+                          <h6 class="my-0 text-white d-block">{{ticket.seller}}</h6>
+                          <small>{{ticket.price}}</small>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-white card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?tree,nature');">
-                <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tree,nature" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
-                <div class="card-img-overlay d-flex flex-column">
-                  <div class="card-body">
-                    <small class="card-meta mb-2">Space</small>
-                    <h4 class="card-title mt-0 "><a class="text-white" herf="#">Rock n roll with Space</a></h4>
-                    <small><i class="far fa-clock"></i> May 22, 2022</small>
-                  </div>
-                  <div class="card-footer">
-                    <div class="media">
-                      <img class="mr-3 rounded-circle" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/male-512.png" alt="Generic placeholder image" style="max-width:50px">
-                      <div class="media-body">
-                        <h6 class="my-0 text-white d-block">Sisha</h6>
-                        <small>Rs900</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-white card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?computer,design');">
-                <img class="card-img d-none" src="https://source.unsplash.com/600x900/?computer,design" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
-                <div class="card-img-overlay d-flex flex-column">
-                  <div class="card-body">
-                    <small class="card-meta mb-2">Cobweb | Pariwartan band</small>
-                    <h4 class="card-title mt-0 "><a class="text-white" herf="#">Cobweb and pariwartan band</a></h4>
-                    <small><i class="far fa-clock"></i> April 15, 2022</small>
-                  </div>
-                  <div class="card-footer">
-                    <div class="media">
-                      <img class="mr-3 rounded-circle" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/male-512.png" alt="Generic placeholder image" style="max-width:50px">
-                      <div class="media-body">
-                        <h6 class="my-0 text-white d-block">Reggae bar</h6>
-                        <small>Rs1700</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>  
-          </div>
-
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card text-white card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?tech,street');">
-                <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
-                <div class="card-img-overlay d-flex flex-column">
-                  <div class="card-body">
-                    <small class="card-meta mb-2">Albatross | Jindabaad</small>
-                    <h4 class="card-title mt-0 "><a class="text-white" herf="#">New Years with Albatross and Jindabaad</a></h4>
-                    <small><i class="far fa-clock"></i> June 15, 2022</small>
-                  </div>
-                  <div class="card-footer">
-                    <div class="media">
-                      <img class="mr-3 rounded-circle" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/male-512.png" alt="Generic placeholder image" style="max-width:50px">
-                      <div class="media-body">
-                        <h6 class="my-0 text-white d-block">Purple Haze</h6>
-                        <small>Rs1500</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-white card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?tree,nature');">
-                <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tree,nature" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
-                <div class="card-img-overlay d-flex flex-column">
-                  <div class="card-body">
-                    <small class="card-meta mb-2">Space</small>
-                    <h4 class="card-title mt-0 "><a class="text-white" herf="#">Rock n roll with Space</a></h4>
-                    <small><i class="far fa-clock"></i> May 22, 2022</small>
-                  </div>
-                  <div class="card-footer">
-                    <div class="media">
-                      <img class="mr-3 rounded-circle" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/male-512.png" alt="Generic placeholder image" style="max-width:50px">
-                      <div class="media-body">
-                        <h6 class="my-0 text-white d-block">Sisha</h6>
-                        <small>Rs900</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card text-white card-has-bg click-col" style="background-image:url('https://source.unsplash.com/600x900/?computer,design');">
-                <img class="card-img d-none" src="https://source.unsplash.com/600x900/?computer,design" alt="Goverment Lorem Ipsum Sit Amet Consectetur dipisi?">
-                <div class="card-img-overlay d-flex flex-column">
-                  <div class="card-body">
-                    <small class="card-meta mb-2">Cobweb | Pariwartan band</small>
-                    <h4 class="card-title mt-0 "><a class="text-white" herf="#">Cobweb and pariwartan band</a></h4>
-                    <small><i class="far fa-clock"></i> April 15, 2022</small>
-                  </div>
-                  <div class="card-footer">
-                    <div class="media">
-                      <img class="mr-3 rounded-circle" src="https://cdn0.iconfinder.com/data/icons/user-pictures/100/male-512.png" alt="Generic placeholder image" style="max-width:50px">
-                      <div class="media-body">
-                        <h6 class="my-0 text-white d-block">Reggae bar</h6>
-                        <small>Rs1700</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>  
+            {% endfor %}
           </div>
         </div>
-        
       </section>
-      
-      
-            {% if request.user.is_authenticated %}
-            <p>Hello {{request.user}}</p>
-            <a href ="{% url 'logout' %}">Logout</a>
-            {% else %}
-
-            <a href ="{% url 'login' %}">Login</a>
-            {% endif %}
 
 
     {% endblock %}

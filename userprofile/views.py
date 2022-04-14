@@ -20,22 +20,17 @@ def profilePage(request):
     users = [user for user in profile.following.all()]
     posts = []
     qs = None
-    count= profile.following.all().count()
-    # get posts of people who are followed
+    following= profile.following.all().count()
     
-    for u in users:
-        p = Profile.objects.get(user=u)
-        # p_posts = p.post_set.all()
-        # p_posts.append(p_posts)
-        # c= u.count()
     
     # self posts
     my_posts = profile.profile_posts()
     posts.append(my_posts)
+    post_count = len(my_posts)
     # sort and chain querys and unpack the posts list
     if len(posts)>0:
         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
-    return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'count':count})
+    return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'following':following,'post_count':post_count})
 
 
 
@@ -106,6 +101,26 @@ class ProfileListView(ListView):
     def get_queryset(self):
         return Profile.objects.all().exclude(user=self.request.user)
 
+# class ProfileVisit(DetailView):
+#     model = Profile
+#     template_name = 'userprofile/profile_visit.html'
+
+#     def get_object(self, **kwargs):
+#         pk = self.kwargs.get('pk')
+#         viewProfile = Profile.objects.get(pk = pk)
+#         return viewProfile
+    
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         viewProfile = self.get_object()
+#         my_profile = Profile.objects.get(user=self.request.user)
+#         if viewProfile in my_profile.following.all():
+#             follow = True
+#         else:
+#             follow = False
+#         context["follow"] = follow
+#         return context
+    
 class ProfileVisit(DetailView):
     model = Profile
     template_name = 'userprofile/profile_visit.html'
@@ -126,25 +141,6 @@ class ProfileVisit(DetailView):
         context["follow"] = follow
         return context
 
-# class ProfileVisit(DetailView):
-#     model = Profile
-#     template_name = 'userprofile/profile_visit.html','myapp/search.html'
-
-#     def get_object(self, **kwargs):
-#         pk = self.kwargs.get('id')
-#         viewProfile = Profile.objects.get(pk = pk)
-#         return viewProfile
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         viewProfile = self.get_object()
-#         my_profile = Profile.objects.get(user=self.request.user)
-#         if viewProfile in my_profile.following.all():
-#             follow = True
-#         else:
-#             follow = False
-#         context["follow"] = follow
-#         return context
 
 def follow_unfollow_profile(request):
     if request.method=="POST":

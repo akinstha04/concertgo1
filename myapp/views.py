@@ -121,8 +121,29 @@ def register(request):
         form = RegisterForm()
     return render(request, 'myapp/register.html', {'form': form})
 
+# def ticketPage(request):
+#     return render(request, 'ticket.html')
+
+
 def ticketPage(request):
-    return render(request, 'ticket.html')
+    profile = Profile.objects.get(user=request.user)
+    users = [user for user in profile.following.all()]
+    tickets = []
+    ts = None
+    # get posts of people who are followed
+    for u in users:
+        p = Profile.objects.get(user=u)
+        p_tickets = p.ticket_set.all()
+        tickets.append(p_tickets)
+    # self posts
+    my_tickets = profile.profile_tickets()
+
+    tickets.append(my_tickets)
+    # sort and chain querys and unpack the posts list
+
+    if len(tickets)>0:
+        ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.created_at)
+    return render(request,'ticket.html',{'profile':profile,'tickets':ts})
 
 
 def ticketAddPage(request):
@@ -175,6 +196,15 @@ class TicketListView(ListView):
 class TicketDetail(DetailView):
     model=Ticket
 
+# class TicketUpload(CreateView):
+#     model = Ticket
+#     fields = ['title','detail','date','ex_date','price','image','quantity']
+
+#     def form_valid(self,form):
+#         form.instance.seller = self.request.user.profile
+#         return super().form_valid(form)
+
+
 class TicketUpload(CreateView):
     model = Ticket
     fields = ['title','detail','date','ex_date','price','image','quantity']
@@ -183,21 +213,48 @@ class TicketUpload(CreateView):
         form.instance.seller = self.request.user.profile
         return super().form_valid(form)
 
+# def main(request):
+#     profile = Profile.objects.get(user=request.user)
+#     users = [user for user in profile.following.all()]
+#     posts = []
+#     qs = None
+#     # get posts of people who are followed
+#     for u in users:
+#         p = Profile.objects.get(user=u)
+#         p_posts = p.post_set.all()
+#         posts.append(p_posts)
+#     # self posts
+#     my_posts = profile.profile_posts()
+#     posts.append(my_posts)
+#     # sort and chain querys and unpack the posts list
+#     if len(posts)>0:
+#         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
+#     return render(request,'main.html',{'profile':profile,'posts':qs})
 
 def main(request):
     profile = Profile.objects.get(user=request.user)
     users = [user for user in profile.following.all()]
     posts = []
+    tickets = []
     qs = None
+    ts = None
     # get posts of people who are followed
     for u in users:
         p = Profile.objects.get(user=u)
         p_posts = p.post_set.all()
-        p_posts.append(p_posts)
+        posts.append(p_posts)
+
+        p_tickets = p.ticket_set.all()
+        tickets.append(p_tickets)
     # self posts
     my_posts = profile.profile_posts()
+    my_tickets = profile.profile_tickets()
     posts.append(my_posts)
+    tickets.append(my_tickets)
     # sort and chain querys and unpack the posts list
     if len(posts)>0:
         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
-    return render(request,'main.html',{'profile':profile,'posts':qs})
+
+    if len(tickets)>0:
+        ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.created_at)
+    return render(request,'main.html',{'profile':profile,'posts':qs,'tickets':ts})

@@ -15,7 +15,7 @@
             
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <img src="{{ user.profile.image.url }}" class="user-profile">
+                        <img src="{{ post.owner.image.url }}" class="user-profile">
                         <div class="pull-right text-right">
                             <i class="fa fa-calendar"></i><br> {{ post.date_posted }}
                         </div>
@@ -60,41 +60,22 @@
         <div class="col-md-6">
             <!-- right column -->
 
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-rounded">
-                    <div class="pull-right text-right">
-                        <i class="fa fa-calendar"></i><br> 3 hours ago
+            {% for ticket in tickets %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <img src="{{ ticket.seller.image.url }}" class="user-profile">
+                        <div class="pull-right text-right">
+                            <i class="fa fa-calendar"></i><br> {{ ticket.created_at}}
+                        </div>
+                        <div><strong>{{ ticket.seller }}</strong></div>
+                        <div class="small"><i></i>Price: {{ ticket.price }}</div>
                     </div>
-                    <div><strong>{{ user.username }}</strong></div>
-                    <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div>
-                </div>
-                <div class="panel-body">
-                    <blockquote>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</blockquote>
-                </div>
-                <div class="panel-footer">
-                    <input type="email" class="form-control" placeholder="Write a comment...">
-                </div>
-            </div>
-
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-rounded">
-                    <div class="pull-right text-right">
-                        <i class="fa fa-calendar"></i><br> 3 hours ago
+                    <div class="panel-body">
+                        <p>{{ ticket.title }}</p>
+                        <blockquote>{{ ticket.detail }}</blockquote>
                     </div>
-                    <div><strong>John Doe</strong></div>
-                    <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div>
                 </div>
-                <div class="panel-body">
-                    <blockquote>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</blockquote>
-                </div>
-                <div class="panel-footer">
-                    <input type="email" class="form-control" placeholder="Write a comment...">
-                </div>
-            </div>
+            {% endfor %}
 
         </div><!--/.col-->
         

@@ -28,7 +28,7 @@
                             <button type = "submit" class = "ui negative button">Unfollow</button>
                         </form>
                     {% else %}
-                        <button id "follow-btn" class ="ui positive button">Follow</button>
+                        <button id ="follow-btn" class ="ui positive button">Follow</button>
                     {% endif %}
                     <div class="header-information">
                       {{object.bio}}
@@ -39,7 +39,7 @@
                     
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
-                            <div class="stats-value">284</div>
+                            <div class="stats-value">{{ object.following.count }}</div>
                             <div class="stats-title">FOLLOWING</div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12 stats-col">

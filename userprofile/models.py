@@ -17,6 +17,9 @@ class Profile(models.Model):
 
     def profile_posts(self):
         return self.post_set.all()
+    
+    def profile_tickets(self):
+        return self.ticket_set.all()
 
     def __str__(self):
         # return f'{self.user.username} Profile'
