@@ -17,20 +17,26 @@ from .models import Post, Profile
 
 def profilePage(request):
     profile = Profile.objects.get(user=request.user)
-    users = [user for user in profile.following.all()]
     posts = []
+    tickets = []
     qs = None
+    ts = None
     following= profile.following.all().count()
-    
-    
+
     # self posts
     my_posts = profile.profile_posts()
     posts.append(my_posts)
+    my_tickets = profile.profile_tickets()
+    tickets.append(my_tickets)
+
     post_count = len(my_posts)
     # sort and chain querys and unpack the posts list
     if len(posts)>0:
         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
-    return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'following':following,'post_count':post_count})
+
+    if len(tickets)>0:
+        ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.created_at)
+    return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'following':following,'post_count':post_count,'tickets':ts})
 
 # class ProfileVisit(DetailView):
 #     model = Profile
@@ -72,6 +78,7 @@ class ProfileVisit(DetailView):
             follow = False
         context["follow"] = follow
         context["posts"] = self.get_object().profile_posts()
+        context["tickets"] = self.get_object().profile_tickets()
         context['post_count'] = self.get_object().profile_posts().count()
         return context
 

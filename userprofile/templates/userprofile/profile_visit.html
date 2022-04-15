@@ -3,7 +3,12 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css"/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/profilevisit.css' %}">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 {% include 'navbar.html' %}
@@ -69,33 +74,80 @@
     </div>
 </div>
 
-  
-      
 
-    
-      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-      <!-- Leave those next 4 lines if you care about users using IE8 -->
-      <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+<!-- <section class="portfolio" id="portfolio">
+	<div class="container-fluid">
+		<div class="row">
 
-    
-
-    
-        <div class="container">
-          <h1>Posts</h1>
-          <hr>
-            <div class="row">
+			<div align="center">
+				<button class="filter-button" data-filter="all">all</button>
+				<button class="filter-button" data-filter="category1">Posts</button>
+				<button class="filter-button" data-filter="category2">Tickets</button>
+			</div>
+			
+			<br/>
             {% for post in posts %}
-              <div class="col-lg-4 col-sm-6">
-                <div class="thumbnail img-responsive">
-                    <a href="{% url 'postDetail' post.pk %}" title="Image 1"><img src="{{ post.image.url }}"></a>
-                  <!-- <a href="#" title="Image 1"><img src="{{ post.image.url }}"> </a> -->
+                <div class="gallery_product col-sm-3 col-xs-6 filter category1">
+                    <a class="fancybox" rel="ligthbox" href="{% url 'postDetail' post.pk %}">
+                        <img class="img-responsive" alt="" src="{{post.image.url}}" />
+                    </a>
                 </div>
-              </div>
             {% endfor %}
+            
+            {% for ticket in tickets %}
+                <div class="gallery_product col-sm-3 col-xs-6 filter category2">
+                    <a class="fancybox" rel="ligthbox" href="{% url 'ticketDetail' ticket.pk %}">
+                        <img class="img-responsive" alt="" src="{{ticket.image.url}}" />
+                    </a>
+                </div>
+            {% endfor %}
+
+		</div>
+	</div>
+</section> -->
+
+<div class="container">
+    <h1>Content</h1>
+    <hr>
+    <div class="row">
+    <!-- {% for post in posts %}
+    <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail img-responsive">
+            <a href="{% url 'postDetail' post.pk %}" title="Image 1"><img src="{{ post.image.url }}"></a>
+        </div>
+    </div>
+    {% endfor %} -->
+
+
+    <div align="center">
+        <button class="filter-button" data-filter="all">all</button>
+        <button class="filter-button" data-filter="category1">Posts</button>
+        <button class="filter-button" data-filter="category2">Tickets</button>
+    </div>
+    
+    <br/>
+    {% for post in posts %}
+        <div class="gallery_product col-lg-4 col-sm-6 filter category1">
+            <div class="thumbnail img-responsive">
+                <a class="fancybox" rel="ligthbox" href="{% url 'postDetail' post.pk %}">
+                    <img class="img-responsive" alt="" src="{{post.image.url}}" />
+                </a>
+            </div>
+            
+        </div>
+    {% endfor %}
+    
+    {% for ticket in tickets %}
+        <div class="gallery_product col-sm-3 col-xs-6 filter category2">
+            <a class="fancybox" rel="ligthbox" href="{% url 'ticketDetail' ticket.pk %}">
+                <img class="img-responsive" alt="" src="{{ticket.image.url}}" />
+            </a>
+        </div>
+    {% endfor %}
               
 
-              
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+<script src="{% static 'js/prof.js' %}"></script>
 {% endblock content %}
