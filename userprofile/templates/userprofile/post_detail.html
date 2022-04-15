@@ -16,9 +16,22 @@
                 <div class="panel-heading">
                     <img src="{{ user.profile.image.url }}" class="user-profile">
                     <div class="pull-right text-right">
-                        <i class="fa fa-calendar"></i><br> {{ post.date_posted }}
+                        <!-- <i class="fa fa-calendar"></i> -->
+                        <button type="button" class="btn btn-light"><span class="bi bi-three-dots-vertical"></span></button>
+                        <!-- <br> {{ post.date_posted }} -->
+                        <div class="menu-nav">
+                            <!-- <div class="menu-item">click the 3 dots=></div> -->
+                            <div class="dropdown-container" tabindex="-1">
+                              <div class="three-dots"></div>
+                              <div class="dropdown">
+                                <a href="#"><div>Edit</div></a>
+                                <a href="#"><div>Delete</div></a>
+                              </div>
+                            </div>
+                          </div>
                     </div>
                     <div><strong>{{ post.owner}}</strong></div>
+                    <div class="small"><i class="fa fa-map-marker"></i>{{ post.date_posted }}</div>
                     <!-- <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div> -->
                 </div>
                 <div class="panel-body">

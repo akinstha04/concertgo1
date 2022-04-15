@@ -32,8 +32,48 @@ def profilePage(request):
         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
     return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'following':following,'post_count':post_count})
 
+# class ProfileVisit(DetailView):
+#     model = Profile
+#     template_name = 'userprofile/profile_visit.html'
+
+#     def get_object(self, **kwargs):
+#         pk = self.kwargs.get('pk')
+#         viewProfile = Profile.objects.get(pk = pk)
+#         return viewProfile
+    
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         viewProfile = self.get_object()
+#         my_profile = Profile.objects.get(user=self.request.user)
+#         if viewProfile in my_profile.following.all():
+#             follow = True
+#         else:
+#             follow = False
+#         context["follow"] = follow
+#         return context
 
 
+class ProfileVisit(DetailView):
+    model = Profile
+    template_name = 'userprofile/profile_visit.html'
+
+    def get_object(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        viewProfile = Profile.objects.get(pk = pk)
+        return viewProfile
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        viewProfile = self.get_object()
+        my_profile = Profile.objects.get(user=self.request.user)
+        if viewProfile in my_profile.following.all():
+            follow = True
+        else:
+            follow = False
+        context["follow"] = follow
+        context["posts"] = self.get_object().profile_posts()
+        context['post_count'] = self.get_object().profile_posts().count()
+        return context
 
 # def profilePage(request):
 #     profile = Profile.objects.get(user=request.user)
@@ -121,25 +161,7 @@ class ProfileListView(ListView):
 #         context["follow"] = follow
 #         return context
     
-class ProfileVisit(DetailView):
-    model = Profile
-    template_name = 'userprofile/profile_visit.html'
 
-    def get_object(self, **kwargs):
-        pk = self.kwargs.get('pk')
-        viewProfile = Profile.objects.get(pk = pk)
-        return viewProfile
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        viewProfile = self.get_object()
-        my_profile = Profile.objects.get(user=self.request.user)
-        if viewProfile in my_profile.following.all():
-            follow = True
-        else:
-            follow = False
-        context["follow"] = follow
-        return context
 
 
 def follow_unfollow_profile(request):
@@ -153,6 +175,6 @@ def follow_unfollow_profile(request):
         else:
             my_profile.following.add(obj.user)
         return redirect(request.META.get('HTTP_REFERER'))
-    return redirect('profiles:ProfileListView')
+    return redirect('userprofile/profile_visit.html')
 
 

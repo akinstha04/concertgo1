@@ -77,8 +77,9 @@
             <div class="row">
               {% for post in posts %}
               <div class="col-lg-4 col-sm-6">
-                <div class="thumbnail img-responsive" max height="50px">
-                  <a href="% url 'postDetail' pk=self.pk %" title="Image 1"><img src="{{ post.image.url }}"> </a>
+                <div class="thumbnail img-responsive">
+                  <!-- <a href="% url 'postDetail' pk=self.pk %" title="Image 1"><img src="{{ post.image.url }}"> </a> -->
+                  <a href="{% url 'postDetail' post.pk %}" title="Image 1"><img src="{{ post.image.url }}"></a>
                 </div>
               </div>
               {% endfor %}

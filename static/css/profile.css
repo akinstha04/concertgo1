@@ -141,7 +141,7 @@ img {
   padding: 22px 20px;
   background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+
 }
 .about-section .counter .count-data {
   margin-top: 10px;
@@ -297,24 +297,13 @@ body {
 
 
 /*css example*/
-.mediaUp {
-  position: absolute;
-  bottom: 15px;
-  right: 10px;
-  text-decoration: none;
-  }
-  .mediaUp i {
-   opacity: 0.7;
-   cursor: pointer;
-   vertical-align: middle;
-  }
-  .media img {
+
+  /* .media img {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, .56), 0 4px 25px 0 rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2);
-  border: 2px solid #555;
-  }
+
+  } */
   .autosize{    
     width: 100%;
     overflow: hidden;
@@ -356,7 +345,6 @@ body {
     border-bottom: 5px solid #c2c2c2;
     margin-top: 5px;
     outline: none;
-    box-shadow: 0 27px 24px 0 rgba(0, 0, 0, .2), 0 40px 77px 0 rgba(0, 0, 0, .22);
   }
   .emojiTrigger{
     position: absolute;
@@ -402,7 +390,7 @@ body {
       width: 140px!important;
       height: 140px!important;
       border-radius: 10px;
-      box-shadow: 0 5px 15px -8px rgba(0,0,0,.24), 0 8px 10px -5px rgba(0,0,0,.2);
+      
       margin: auto;
       -webkit-transform: scale(1);
       transform: scale(1);

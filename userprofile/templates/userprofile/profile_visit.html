@@ -22,7 +22,7 @@
                     </a> -->
                     
                     {% if follow %}
-                        <form action =""method ="POST">
+                        <form action ="{% url 'userprofile:follow_unfollow_profile' %"method ="POST">
                             {% csrf_token %}
                             <input type = "hidden" name ="profile_pk" value ={{object.pk}}>
                             <button type = "submit" class = "ui negative button">Unfollow</button>
@@ -47,7 +47,7 @@
                             <div class="stats-title">FOLLOWERS</div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
-                            <div class="stats-value">9</div>
+                            <div class="stats-value">{{post_count}}</div>
                             <div class="stats-title">POSTS</div>
                         </div>
                     </div>
@@ -87,10 +87,11 @@
           <h1>Posts</h1>
           <hr>
             <div class="row">
-            {% for post in object.profiles_posts %}
+            {% for post in posts %}
               <div class="col-lg-4 col-sm-6">
                 <div class="thumbnail img-responsive">
-                  <a href="#" title="Image 1"><img src="{{ post.image }}"> </a>
+                    <a href="{% url 'postDetail' post.pk %}" title="Image 1"><img src="{{ post.image.url }}"></a>
+                  <!-- <a href="#" title="Image 1"><img src="{{ post.image.url }}"> </a> -->
                 </div>
               </div>
             {% endfor %}

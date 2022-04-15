@@ -16,16 +16,18 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <img src="{{ post.owner.image.url }}" class="user-profile">
-                        <div class="pull-right text-right">
+                        <!-- <div class="pull-right text-right">
                             <i class="fa fa-calendar"></i><br> {{ post.date_posted }}
-                        </div>
+                        </div> -->
                         <div><strong>{{ post.owner }}</strong></div>
-                        <!-- <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div> -->
+                        <div class="small">{{ post.date_posted }}</div>
                     </div>
                     <div class="panel-body">
                         <p>{{ post.detail }}</p>
                         <div class="video-container">
-                            <image src="{{ post.image.url }}" width="524" frameborder="0"></image>
+                            <a href="{% url 'postDetail' post.pk %}">
+                                <image src="{{ post.image.url }}" width="524" frameborder="0"></image>
+                            </a>
                         </div>
                         
                         <div class="actions">
@@ -59,23 +61,59 @@
         <!--/.col-->
         <div class="col-md-6">
             <!-- right column -->
+            <div class="d-flex justify-content-center row">
+                {% for ticket in tickets %}
+                    <div class = "Ticket">
+                        <div class="card card-body">
+                            <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
+                                <div class="mr-2 mb-3 mb-lg-0"> <img src="{{ticket.image.url}}" width="150" height="150" alt=""> </div>
+                                <div class="media-body">
+                                    <h6 class="media-title font-weight-semibold"> <a href="#" data-abc="true">{{ticket.title}}</a> </h6>
+                                    <!-- <ul class="list-inline list-inline-dotted mb-3 mb-lg-2">
+                                        <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Phones</a></li>
+                                        <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Mobiles</a></li>
+                                    </ul> -->
+                                    <p class="mb-3">{{ticket.detail}}</p>
+                                    <ul class="list-inline list-inline-dotted mb-0">
+                                        <li class="list-inline-item">Tickets from <a href="#" data-abc="true">{{ticket.seller}}</a></li>
+                                        <li class="list-inline-item">Add to <a href="#" data-abc="true">wishlist</a></li>
+                                    </ul>
+                                </div>
+                                <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
+                                    <h3 class="mb-0 font-weight-semibold">${{ticket.price}}</h3>
+                                    <!-- <div> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> -->
+                                    <div class="text-muted">{{ticket.date}}</div>
+                                    <a href="{% url 'ticketDetail' ticket.pk %}">
+                                        <button type="button" class="btn btn-warning mt-4 text-white">Check Details</button>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
 
-            {% for ticket in tickets %}
+
+            
+
+            <!-- {% for ticket in tickets %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <img src="{{ ticket.seller.image.url }}" class="user-profile">
                         <div class="pull-right text-right">
-                            <i class="fa fa-calendar"></i><br> {{ ticket.created_at}}
+                            <div class="Big">Price: {{ ticket.price }}</div>
                         </div>
                         <div><strong>{{ ticket.seller }}</strong></div>
-                        <div class="small"><i></i>Price: {{ ticket.price }}</div>
+                        <div class="small">{{ ticket.created_at}}</div>
+                        
                     </div>
                     <div class="panel-body">
                         <p>{{ ticket.title }}</p>
                         <blockquote>{{ ticket.detail }}</blockquote>
                     </div>
                 </div>
-            {% endfor %}
+            {% endfor %} -->
 
         </div><!--/.col-->
         
