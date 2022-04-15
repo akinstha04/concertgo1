@@ -64,8 +64,6 @@
 
   
 <div class="container">
-  <!-- <h1>Content</h1>
-  <hr> -->
   <div class="row">
   <!-- {% for post in posts %}
   <div class="col-lg-4 col-sm-6">
@@ -87,19 +85,24 @@
       <div class="gallery_product col-lg-4 col-sm-6 filter category1">
           <div class="thumbnail img-responsive">
               <a class="fancybox" rel="ligthbox" href="{% url 'postDetail' post.pk %}">
+                <div class="prof_image">
                   <img class="img-responsive" alt="" src="{{post.image.url}}" />
+                </div>
               </a>
           </div>
-          
       </div>
   {% endfor %}
   
   {% for ticket in tickets %}
-      <div class="gallery_product col-sm-3 col-xs-6 filter category2">
-          <a class="fancybox" rel="ligthbox" href="{% url 'ticketDetail' ticket.pk %}">
-              <img class="img-responsive" alt="" src="{{ticket.image.url}}" />
-          </a>
-      </div>
+  <div class="gallery_product col-lg-4 col-sm-6 filter category2">
+    <div class="thumbnail img-responsive">
+        <a class="fancybox" rel="ligthbox" href="{% url 'ticketDetail' ticket.pk %}">
+          <div class="prof_image">
+            <img class="img-responsive" alt="" src="{{ticket.image.url}}" />
+          </div>
+        </a>
+    </div>
+  </div>
   {% endfor %}
 
     

@@ -39,6 +39,15 @@ section{
 	padding:0;
 	position:relative;
 }
+.prof_image{
+    height: 191px;
+}
+.prof_image img{
+    object-fit: cover !important;
+    height: 100%;
+    
+    margin: auto;
+}
 /* .gallery_product .img-info{
 	position: absolute;
     background: rgba(0,0,0,0.5);
