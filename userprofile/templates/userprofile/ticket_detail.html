@@ -31,6 +31,19 @@
             </div>
 
             <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
+                <div class="pull-right text-right">
+                    <button type="button" class="btn btn-light"><span class="bi bi-three-dots-vertical"></span></button>
+                    <div class="menu-nav">
+                        <!-- <div class="menu-item">click the 3 dots=></div> -->
+                        <div class="dropdown-container" tabindex="-1">
+                          <div class="three-dots"></div>
+                          <div class="dropdown">
+                            <a href="{% url 'ticketUpdate' ticket.pk %}"><div>Edit</div></a>
+                            <a href="{% url 'ticketDelete' ticket.pk %}"><div>Delete</div></a>
+                          </div>
+                        </div>
+                    </div>
+                </div>
                 <h2 class="name">
                     {{ticket.title}}
                     <p>

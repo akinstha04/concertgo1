@@ -13,7 +13,6 @@ urlpatterns = [
     # path('logout/',auth_views.LogoutView.as_view(next_page='login'),name='logout'),
     # path('register/', views.registerpageView.as_view(), name = "register"),
     path('register/', views.register, name = "register"),
-    # path('register_venuemanager/', views.registerManagerpageView.as_view(), name = "register_venuemanager"),
     path('passwordreset/', auth_views.PasswordResetView.as_view(template_name='myapp/password_reset.html', form_class = MyPasswordResetForm), name = "password_reset"),
     path('password-reset/done/',auth_views.PasswordResetDoneView.as_view(template_name='myapp/password_resetdone.html'),name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='myapp/password_resetconfirm.html'),name='password_reset_confirm'),
@@ -21,21 +20,19 @@ urlpatterns = [
     
     path('search/', views.search, name = "search"),
 
-    path('ticket/', views.ticketPage, name = "ticket"),
-    # path('ticket-add/', views.ticketAddPage, name = "ticketAdd"),
-    path('ticket_upload/', views.TicketUpload.as_view(), name = 'ticketUpload'),
-    path('ticket/<int:pk>/', views.TicketDetail.as_view(), name = "ticketDetail"),
     path('post_upload/', views.PostUpload.as_view(), name = 'postUpload'),
     path('post/<int:pk>/', views.PostDetail.as_view(), name = "postDetail"),
+    path('post_update/<int:pk>', views.PostUpdate.as_view(), name = 'postUpdate'),
+    path('post_delete/<int:pk>', views.PostDelete.as_view(), name = 'postDelete'),
 
+    path('ticket/', views.ticketPage, name = "ticket"),
+    path('ticket_upload/', views.TicketUpload.as_view(), name = 'ticketUpload'),
+    path('ticket/<int:pk>/', views.TicketDetail.as_view(), name = "ticketDetail"),
+    path('ticket_update/<int:pk>', views.TicketUpdate.as_view(), name = 'ticketUpdate'),
+    path('ticket_delete/<int:pk>', views.TicketDelete.as_view(), name = 'ticketDelete'),
 
     path('like/<int:pk>', views.likePost,name='likePost'),
-    # path('main/', PostListView.as_view(), name = 'main')
-    # path('main/', views.main, name = "main")
     path('main/', views.main, name = "main")
-    # path('post_upload/', PostUpload.as_view(), name = 'postUpload'),
-    # path('post/<int:pk>/', views.PostDetail.as_view(), name = "postDetail"),
-    # path('main/', PostListView.as_view(), name = 'main')
     
 ]
 urlpatterns += staticfiles_urlpatterns()

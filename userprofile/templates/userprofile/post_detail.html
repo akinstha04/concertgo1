@@ -15,27 +15,28 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <img src="{{ post.owner.image.url }}" class="user-profile">
+                    {% if post.owner == self.request.user %}
+                    {% endif %}
                     <div class="pull-right text-right">
-                        <!-- <i class="fa fa-calendar"></i> -->
                         <button type="button" class="btn btn-light"><span class="bi bi-three-dots-vertical"></span></button>
-                        <!-- <br> {{ post.date_posted }} -->
                         <div class="menu-nav">
                             <!-- <div class="menu-item">click the 3 dots=></div> -->
                             <div class="dropdown-container" tabindex="-1">
                               <div class="three-dots"></div>
                               <div class="dropdown">
-                                <a href="#"><div>Edit</div></a>
-                                <a href="#"><div>Delete</div></a>
+                                <a href="{% url 'postUpdate' post.pk %}"><div>Edit</div></a>
+                                <a href="{% url 'postDelete' post.pk %}"><div>Delete</div></a>
                               </div>
                             </div>
-                          </div>
+                        </div>
                     </div>
+                    
                     <div><strong>{{ post.owner}}</strong></div>
                     <div class="small"><i class="fa fa-map-marker"></i>{{ post.date_posted }}</div>
                     <!-- <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div> -->
                 </div>
                 <div class="panel-body">
-                    
+                    <p>{{ post.detail }}</p>
                     <div class="video-container">
                         <image src="{{ post.image.url }}" width="524" frameborder="0"></image>
                     </div>
@@ -61,17 +62,12 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <img src="{{ post.owner.image.url }}" class="user-profile">
-                    <!-- <div class="pull-right text-right">
-                        <i class="fa fa-calendar"></i><br> 3 hours ago
-                    </div> -->
-                    <div><strong>{{ post.owner }}</strong></div>
-                    <!-- <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div> -->
+                    <!-- <img src="{{ post.owner.image.url }}" class="user-profile">
+                    <div><strong>{{ post.owner }}</strong></div> -->
+                    <div><strong>Comments</strong></div>
                 </div>
                 <div class="panel-body">
-                    <blockquote>{{ post.detail }}</blockquote>
-                    <!-- comments -->
-                    <p>Comments</p>
+                    <!-- <p>Comments</p> -->
                     <div class="media">
                         
                         <!-- <a class="pull-left" href="#">
@@ -79,7 +75,7 @@
                         </a> -->
                         <div class="media-body">
                             <div class="pull-right small">3 hours ago</div>
-                            <h4 class="media-heading">Media heading</h4>
+                            <h4 class="media-heading">User</h4>
                             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
                         </div>
                     </div>
@@ -89,7 +85,7 @@
                         </a> -->
                         <div class="media-body">
                             <div class="pull-right small">3 hours ago</div>
-                            <h4 class="media-heading">Media heading</h4>
+                            <h4 class="media-heading">User</h4>
                             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
                         </div>
                     </div>
@@ -103,13 +99,6 @@
         
     </div>
 </div>
-        <!-- {% if request.user.is_authenticated %}
-        <p>Hello {{request.user}}</p>
-        <a href ="{% url 'logout' %}">Logout</a>
-        {% else %}
-
-        <a href ="{% url 'login' %}">Login</a>
-        {% endif %} -->
 
 
 

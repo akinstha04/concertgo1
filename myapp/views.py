@@ -12,10 +12,11 @@ from .forms import RegisterForm
 from django.views import View
 from userprofile.models import Post, Profile, Ticket
 
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from itertools import chain
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 # from django.views.generic import CreateView
 # from django.shortcuts import render
@@ -122,8 +123,7 @@ def register(request):
         form = RegisterForm()
     return render(request, 'myapp/register.html', {'form': form})
 
-# def ticketPage(request):
-#     return render(request, 'ticket.html')
+
 
 
 def ticketPage(request):
@@ -198,7 +198,30 @@ class PostUpload(CreateView):
     def form_valid(self,form):
         form.instance.owner = self.request.user.profile
         return super().form_valid(form)
+    
+class PostUpdate(UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['detail']
+    
+    def form_valid(self, form):
+        form.instance.owner.profile = self.request.user
+        return super().form_valid(form)
 
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user.profile == post.owner:
+            return True
+        return False
+
+    
+class PostDelete(UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = '/'
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user.profile == post.owner:
+            return True
+        return False
 
 
 class TicketListView(ListView):
@@ -210,15 +233,6 @@ class TicketListView(ListView):
 class TicketDetail(DetailView):
     model=Ticket
 
-# class TicketUpload(CreateView):
-#     model = Ticket
-#     fields = ['title','detail','date','ex_date','price','image','quantity']
-
-#     def form_valid(self,form):
-#         form.instance.seller = self.request.user.profile
-#         return super().form_valid(form)
-
-
 class TicketUpload(CreateView):
     model = Ticket
     fields = ['title','detail','date','ex_date','price','image','quantity']
@@ -226,6 +240,29 @@ class TicketUpload(CreateView):
     def form_valid(self,form):
         form.instance.seller = self.request.user.profile
         return super().form_valid(form)
+
+class TicketUpdate(UserPassesTestMixin, UpdateView):
+    model = Ticket
+    fields = ['title','detail']
+    
+    def form_valid(self, form):
+        form.instance.seller.profile = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        ticket = self.get_object()
+        if self.request.user.profile == ticket.seller:
+            return True
+        return False
+
+class TicketDelete(UserPassesTestMixin, DeleteView):
+    model = Ticket
+    success_url = '/'
+    def test_func(self):
+        ticket = self.get_object()
+        if self.request.user.profile == ticket.seller:
+            return True
+        return False
 
 # def main(request):
 #     profile = Profile.objects.get(user=request.user)
