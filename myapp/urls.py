@@ -27,6 +27,9 @@ urlpatterns = [
     path('ticket/<int:pk>/', views.TicketDetail.as_view(), name = "ticketDetail"),
     path('post_upload/', views.PostUpload.as_view(), name = 'postUpload'),
     path('post/<int:pk>/', views.PostDetail.as_view(), name = "postDetail"),
+
+
+    path('like/<int:pk>', views.likePost,name='likePost'),
     # path('main/', PostListView.as_view(), name = 'main')
     # path('main/', views.main, name = "main")
     path('main/', views.main, name = "main")

@@ -19,7 +19,10 @@
                         <!-- <div class="pull-right text-right">
                             <i class="fa fa-calendar"></i><br> {{ post.date_posted }}
                         </div> -->
-                        <div><strong>{{ post.owner }}</strong></div>
+                        <a href="{% url 'profileVisit' user.profile.pk %}">
+                            <div><strong>{{ post.owner }}</strong></div>
+                        </a>
+                        <!-- <div><strong>{{ post.owner }}</strong></div> -->
                         <div class="small">{{ post.date_posted }}</div>
                     </div>
                     <div class="panel-body">
@@ -32,10 +35,20 @@
                         
                         <div class="actions">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-link"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                                <button type="button" class="btn btn-link"><i class="fa fa-share"></i> Share</button>
+                                <form action = "{% url 'likePost' post.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    
+                                    {% if liked %}
+                                    <button type="submit" class="btn btn-link" name="post_id" value="{{post.id}}"><i class="fa fa-thumbs-o-up"></i> Liked</button>
+                                    {% else %}
+                                    <button type="submit" class="btn btn-link" name="post_id" value="{{post.id}}"><i class="fa fa-thumbs-o-up"></i> Like</button>
+                                    {% endif %}
+                                </form>
+                                <a href="{% url 'postDetail' post.pk %}">
+                                    <button type="button" class="btn btn-link"><i class="fa fa-comment"></i> Comment</button>
+                                </a>
                             </div>
-                            <div class="pull-right"><strong>1.789</strong> Likes</div>      
+                            <div class="pull-right"><strong>{{post.likes.count}}</strong> Likes</div>
                         </div>  
                         
                         <!-- commentsection -->
@@ -51,9 +64,9 @@
                             </div>
                         </div> -->
                     </div>
-                    <div class="panel-footer">
+                    <!-- <div class="panel-footer">
                         <input type="email" class="form-control" placeholder="Write a comment...">
-                    </div>
+                    </div> -->
                 </div>
             {% endfor %}
                 
@@ -63,7 +76,7 @@
             <!-- right column -->
             <div class="d-flex justify-content-center row">
                 {% for ticket in tickets %}
-                    <div class = "Ticket">
+                    <div class = "ticket">
                         <div class="card card-body">
                             <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
                                 <div class="mr-2 mb-3 mb-lg-0"> <img src="{{ticket.image.url}}" width="150" height="150" alt=""> </div>
@@ -73,9 +86,9 @@
                                         <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Phones</a></li>
                                         <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Mobiles</a></li>
                                     </ul> -->
-                                    <p class="mb-3">{{ticket.detail}}</p>
+                                    <p class="text-justify">{{ticket.detail}}</p>
                                     <ul class="list-inline list-inline-dotted mb-0">
-                                        <li class="list-inline-item">Tickets from <a href="#" data-abc="true">{{ticket.seller}}</a></li>
+                                        <li class="list-inline-item">Tickets from <a href="{% url 'profileVisit' user.profile.pk %}" data-abc="true">{{ticket.seller}}</a></li>
                                         <li class="list-inline-item">Add to <a href="#" data-abc="true">wishlist</a></li>
                                     </ul>
                                 </div>

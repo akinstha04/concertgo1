@@ -2,7 +2,7 @@ from audioop import reverse
 import datetime
 from multiprocessing import context
 from django.http.response import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 # from django.contrib.auth.models import User
 from myapp.models import User
 from django.contrib import messages
@@ -12,8 +12,9 @@ from .forms import RegisterForm
 from django.views import View
 from userprofile.models import Post, Profile, Ticket
 
+from django.urls import reverse_lazy, reverse
 from itertools import chain
-
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView
 
 # from django.views.generic import CreateView
@@ -177,6 +178,18 @@ class PostListView(ListView):
 
 class PostDetail(DetailView):
     model=Post
+    # template_name = 'post_detail.html'
+    # def get_context_data(self, *args, **kwargs):
+    #     post = get_object_or_404(Post,id = self.kwargs['pk'])
+    #     likes = post.total_likes()
+        
+    #     liked = False
+    #     if post.likes.filter(id=self.request.user.profile.id).exists():
+    #         liked = True
+
+    #     context["likes"] = likes
+    #     context["liked"] = liked
+    #     return context
 
 class PostUpload(CreateView):
     model = Post
@@ -185,6 +198,7 @@ class PostUpload(CreateView):
     def form_valid(self,form):
         form.instance.owner = self.request.user.profile
         return super().form_valid(form)
+
 
 
 class TicketListView(ListView):
@@ -258,3 +272,16 @@ def main(request):
     if len(tickets)>0:
         ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.created_at)
     return render(request,'main.html',{'profile':profile,'posts':qs,'tickets':ts})
+
+
+def likePost(request, pk):
+    post = get_object_or_404(Post, id = request.POST.get('post_id'))
+    liked = False
+    if post.likes.filter(id=request.user.profile.id).exists():
+        post.likes.remove(request.user.profile)
+        liked = False
+    else:
+        post.likes.add(request.user.profile)
+        liked = True
+    return HttpResponseRedirect(reverse('main'))
+    # return HttpResponseRedirect(reverse('postDetail',args = [str(pk)]))

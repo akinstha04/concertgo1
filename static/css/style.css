@@ -17,7 +17,9 @@ body{
   position: relative;
   font-family: 'roboto', sans-serif;
 }
-
+.ticket{
+  margin-bottom: 4px;
+}
 .navbar{
   position: sticky;
   top: 0;

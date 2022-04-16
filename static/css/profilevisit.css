@@ -20,10 +20,10 @@ section{
 }
 .filter-button{
     font-size: 18px;
-    border: 2px solid #3F6184;
+    border: 2px solid #000000;
 	padding:5px 10px;
     text-align: center;
-    color: #3F6184;
+    color: #4c4c4c;
     margin-bottom: 30px;
 	background:transparent;
 }
@@ -31,7 +31,7 @@ section{
 .filter-button:focus,
 .filter-button.active{
     color: #ffffff;
-    background-color:#3F6184;
+    background-color:#797979;
 	outline:none;
 }
 .gallery_product{
@@ -45,7 +45,6 @@ section{
 .prof_image img{
     object-fit: cover !important;
     height: 100%;
-    
     margin: auto;
 }
 /* .gallery_product .img-info{

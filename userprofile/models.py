@@ -40,12 +40,16 @@ class Post(models.Model):
     image = models.ImageField(upload_to='posts')
     detail = models.TextField(max_length=300)
     date_posted = models.DateTimeField(default=timezone.now)
+    likes = models.ManyToManyField(Profile, related_name="posts")
 
     def __str__(self):
         return self.detail
 
     def get_absolute_url(self):
         return reverse('postDetail', kwargs={'pk': self.pk})
+    
+    def total_likes(self):
+        return self.likes.count()
 
 class Ticket(models.Model):
     seller = models.ForeignKey(Profile, on_delete=models.CASCADE)
