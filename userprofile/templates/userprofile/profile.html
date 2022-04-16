@@ -37,7 +37,7 @@
                             <div class="stats-title">FOLLOWING</div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
-                            <div class="stats-value">803</div>
+                            <div class="stats-value">{{ followers }}</div>
                             <div class="stats-title">FOLLOWERS</div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
@@ -75,9 +75,13 @@
 
 
   <div align="center">
-      <button class="filter-button" data-filter="all">all</button>
-      <button class="filter-button" data-filter="category1">Posts</button>
-      <button class="filter-button" data-filter="category2">Tickets</button>
+    {%if posts or tickets%}
+    <button class="filter-button" data-filter="all">all</button>
+    <button class="filter-button" data-filter="category1">Posts</button>
+    <button class="filter-button" data-filter="category2">Tickets</button>
+    {% else %}
+    <h1>User has no tickets or posts yet</h1>
+    {% endif %}
   </div>
   
   <br/>

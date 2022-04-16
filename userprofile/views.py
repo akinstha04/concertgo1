@@ -1,9 +1,11 @@
 from itertools import chain
 from operator import truediv
 import re
-from django.shortcuts import redirect, render
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse, reverse_lazy
 
 from myapp.models import User
 from .forms import ProfilePicUpdateForm, ProfileUpdateForm, UserUpdateForm, ProfilePicUpdateForm
@@ -22,6 +24,7 @@ def profilePage(request):
     qs = None
     ts = None
     following= profile.following.all().count()
+    followers= profile.followers.all().count()
 
     # self posts
     my_posts = profile.profile_posts()
@@ -36,7 +39,7 @@ def profilePage(request):
 
     if len(tickets)>0:
         ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.created_at)
-    return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'following':following,'post_count':post_count,'tickets':ts})
+    return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'following':following,'post_count':post_count,'tickets':ts,'followers':followers})
 
 # class ProfileVisit(DetailView):
 #     model = Profile
@@ -77,9 +80,12 @@ class ProfileVisit(DetailView):
         else:
             follow = False
         context["follow"] = follow
+        context["followers"] = self.get_object().total_followers()
+        context['following'] = self.get_object().total_following()
         context["posts"] = self.get_object().profile_posts()
         context["tickets"] = self.get_object().profile_tickets()
         context['post_count'] = self.get_object().profile_posts().count()
+        
         return context
 
 # def profilePage(request):
@@ -183,5 +189,20 @@ def follow_unfollow_profile(request):
             my_profile.following.add(obj.user)
         return redirect(request.META.get('HTTP_REFERER'))
     return redirect('userprofile/profile_visit.html')
+
+def follow(request, pk):
+    profile = get_object_or_404(Profile, id = request.POST.get('profile_id'))
+    my_profile = Profile.objects.get(user=request.user)
+    follow = False
+    if profile.followers.filter(id=request.user.profile.id).exists():
+        profile.followers.remove(request.user)
+        my_profile.following.remove(profile.user)
+        follow = False
+    else:
+        profile.followers.add(request.user)
+        my_profile.following.add(profile.user)
+        follow = True
+    # return HttpResponseRedirect(reverse('profileVisit'))
+    return HttpResponseRedirect(reverse('profileVisit',args = [str(pk)]))
 
 

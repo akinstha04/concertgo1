@@ -1,15 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css"/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="{% static 'css/profilevisit.css' %}">
+
+
 {% include 'navbar.html' %}
 
-<div class="container mt-5 mb-5">
-  <div class="d-flex justify-content-center row">
+
+
+  
+<div class="container">
+  <div class="row">
+  <div align="center">
+      <button class="filter-button" data-filter="all">all</button>
+      <button class="filter-button" data-filter="category1">Tickets</button>
+      <button class="filter-button" data-filter="category2">Saved Tickets</button>
+  </div>
+  
+  <br/>
+  
+  
+  <div class="gallery_product container mt-5 mb-5 filter category1">
+    <div class="d-flex justify-content-center row">
       <div class="col-md-10">
         {% for ticket in tickets %}
           <div class="row p-2 bg-white border rounded">
-              <!-- <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="https://i.imgur.com/QpjAiHq.jpg"></div> -->
-              <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ticket.image.url}}"></div>
+            <!-- <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="https://i.imgur.com/QpjAiHq.jpg"></div> -->
+            <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ticket.image.url}}"></div>
               <div class="col-md-6 mt-1">
                   <h5>{{ticket.title}}</h5>
                   <!-- <div class="mt-1 mb-1 spec-1"><span>100% cotton</span><span class="dot"></span><span>Light weight</span><span class="dot"></span><span>Best finish<br></span></div>
@@ -17,26 +41,34 @@
                   <p>{{ticket.detail}}</p>
               </div>
               <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                  <div class="d-flex flex-row align-items-center">
-                      <h4 class="mr-1">${{ticket.price}}</h4>
-                  </div>
-                  <h6 class="text-success">{{ticket.date}}</h6>
-                  <div class="d-flex flex-column mt-4">
-                    <a href="{% url 'ticketDetail' ticket.pk %}">
-                      <button class="btn btn-primary btn-sm" type="button">Details</button>
-                    </a>
-                    <!-- <button class="btn btn-primary btn-sm" type="button">Details</button> -->
-                    <a href="{% url 'ticketDetail' ticket.pk %}">
-                      <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add to wishlist</button>
-                    </a>
-                    <!-- <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add to wishlist</button> -->
-                  </div>
+                <div class="d-flex flex-row align-items-center">
+                    <h4 class="mr-1">${{ticket.price}}</h4>
+                </div>
+                <h6 class="text-success">{{ticket.date}}</h6>
+                <div class="d-flex flex-column mt-4">
+                  <a href="{% url 'ticketDetail' ticket.pk %}">
+                    <button class="btn btn-primary btn-sm" type="button">Details</button>
+                  </a>
+                  <!-- <button class="btn btn-primary btn-sm" type="button">Details</button> -->
+                  <a href="{% url 'ticketDetail' ticket.pk %}">
+                    <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add to wishlist</button>
+                  </a>
+                  <!-- <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add to wishlist</button> -->
+                </div>
               </div>
           </div>
         {% endfor %}
       </div>
+    </div>
+    
   </div>
-</div>
+  
 
 
-    {% endblock %}
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+<script src="{% static 'js/prof.js' %}"></script>  
+
+
+{% endblock %}

@@ -22,11 +22,18 @@
                 </div>
                 <div class="col-md-8 col-sm-12 profile-info">
                     <div class="header-fullname">{{object}}</div>
+                    <form action = "{% url 'follow' profile.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-default shiny btn-sm  btn-follow" name="profile_id" value="{{profile.id}}"> follow</button>
+                    </form>
+                    <!-- <a href="{% url 'profileUpdate' %}" class="btn btn-default shiny btn-sm  btn-follow">
+                        follow
+                    </a> -->
                     <!-- <a href="{% url 'profileUpdate' %}" class="btn btn-default shiny btn-sm  btn-follow">
                         Update profile
                     </a> -->
                     
-                    {% if follow %}
+                    <!-- {% if follow %}
                         <form action ="{% url 'userprofile:follow_unfollow_profile' %"method ="POST">
                             {% csrf_token %}
                             <input type = "hidden" name ="profile_pk" value ={{object.pk}}>
@@ -34,7 +41,7 @@
                         </form>
                     {% else %}
                         <button id ="follow-btn" class ="ui positive button">Follow</button>
-                    {% endif %}
+                    {% endif %} -->
                     <div class="header-information">
                       {{object.bio}}
                     </div>
@@ -48,7 +55,7 @@
                             <div class="stats-title">FOLLOWING</div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
-                            <div class="stats-value">803</div>
+                            <div class="stats-value">{{followers}}</div>
                             <div class="stats-title">FOLLOWERS</div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
@@ -118,7 +125,7 @@
 
 
     <div align="center">
-        {%if posts%}
+        {%if posts or tickets%}
             <button class="filter-button" data-filter="all">all</button>
             <button class="filter-button" data-filter="category1">Posts</button>
             <button class="filter-button" data-filter="category2">Tickets</button>

@@ -4,7 +4,7 @@
 {% include 'navbar.html' %}
 {% load crispy_forms_tags %}
 
-<div class="text-center">
+<!-- <div class="text-center">
   <h1>Post upload</h1>
   <div class="height-100 d-flex justify-content-center align-items-center">
     <button type="button" class="btn btn-primary modalTrigger" data-toggle="modal" data-target="#exampleModal">
@@ -28,11 +28,43 @@
               {{ form|crispy}}
             </div> <button class="btn btn-primary btn-block confirm-button">Confirm</button>
             </form>
-            <!-- <div class="photo-input"> <input type="file" id="loadFile" onchange="console.log(this.files[0].name);" /> <button class="btn btn-sm btn-primary" onclick="document.getElementById('loadFile').click()"> Upload a picture </button> </div> -->
         </div>
-        <!-- <div class="modal-footer">
-            <p class="footer-title">If you're having problems uploading, try choosing a smaller photo.</p>
-        </div> -->
+        
+    </div>
+  </div>
+</div> -->
+
+<div class="container py-5">
+
+  
+
+
+  <div class="row">
+    <div class="col-lg-7 mx-auto">
+      <div class="bg-white rounded-lg shadow-sm p-5">
+        <h1>Create Post</h1>
+        <!-- End -->
+
+
+        <!-- Credit card form content -->
+        <div class="tab-content">
+
+          <!-- credit card info-->
+          <div id="nav-tab-card" >
+            <!-- <p class="alert alert-success">Some text success or error</p> -->
+            <p class="body-desc">You can upload the image in JPG, GIF or PNG format.</p>
+            <form method = "POST" action = "" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form|crispy}}
+            </div> <button class="btn btn-primary btn-block confirm-button">Confirm</button>
+            </form>
+          </div>
+          
+          <!-- End -->
+        </div>
+        <!-- End -->
+
+      </div>
     </div>
   </div>
 </div>

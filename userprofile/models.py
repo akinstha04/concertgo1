@@ -13,13 +13,18 @@ class Profile(models.Model):
     image = models.ImageField(default = 'profile_pics\default.jpg', upload_to='profile_pics')
     bio = models.TextField(default="hi")
     following = models.ManyToManyField(User, related_name='following', blank=True)
-
+    followers = models.ManyToManyField(User,related_name='followers', blank=True)
 
     def profile_posts(self):
         return self.post_set.all()
     
     def profile_tickets(self):
         return self.ticket_set.all()
+
+    def total_followers(self):
+        return self.followers.count()
+    def total_following(self):
+        return self.following.count()
 
     def __str__(self):
         # return f'{self.user.username} Profile'
