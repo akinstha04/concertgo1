@@ -6,12 +6,12 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 {% include 'navbar.html' %}
-
+{% if posts or tickets %}
 <div class="container">
     <div class="row activity">
         <div class="col-md-6">
             <!-- left column -->
-            {% if posts or tickets %}
+            
             {% for post in posts %}
             
                 <div class="panel panel-default">
@@ -80,7 +80,10 @@
                     <div class = "ticket">
                         <div class="card card-body">
                             <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
-                                <div class="mr-2 mb-3 mb-lg-0"> <img src="{{ticket.image.url}}" width="150" height="150" alt=""> </div>
+                                <div class="tp">
+                                    <div class="mr-2 mb-3 mb-lg-0"> <img src="{{ticket.image.url}}" width="150" height="150" alt=""> </div>
+                                </div>
+                                
                                 <div class="media-body">
                                     <h6 class="media-title font-weight-semibold"> <a href="#" data-abc="true">{{ticket.title}}</a> </h6>
                                     <!-- <ul class="list-inline list-inline-dotted mb-3 mb-lg-2">
@@ -108,12 +111,7 @@
                 {% endfor %}
                 
             </div>
-            {% else %}
-            <div align="center">
-                <h3>Follow users to start seeing posts/tickets in your feed</h3>
-            </div>
             
-            {% endif %}
 
             
 
@@ -140,6 +138,11 @@
     </div>
 </div>
 
+{% else %}
+<div align="center">
+    <h3>Follow users to start seeing posts/tickets in your feed</h3>
+</div>
 
+{% endif %}
 
 {% endblock %}

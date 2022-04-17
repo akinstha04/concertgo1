@@ -42,7 +42,7 @@
   <div class="row">
     <div class="col-lg-7 mx-auto">
       <div class="bg-white rounded-lg shadow-sm p-5">
-        <h1>Create Ticket</h1>
+        <h1>Ticket</h1>
         <!-- End -->
 
 
@@ -52,34 +52,10 @@
           <!-- credit card info-->
           <div id="nav-tab-card" >
             <!-- <p class="alert alert-success">Some text success or error</p> -->
-            <p class="body-desc">You can upload the image in JPG, GIF or PNG format.</p>
+            <!-- <p class="body-desc">You can upload the image in JPG, GIF or PNG format.</p> -->
             <form method = "POST" action = "" enctype="multipart/form-data">
               {% csrf_token %}
-              {{ form.image }}
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Title</label>
-                {{ form.title }}
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Detail</label>
-                {{ form.detail }}
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Date</label>
-                {{ form.date }}
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Expiry date</label>
-                {{ form.ex_date }}
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Price</label>
-                {{ form.price }}
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Quantity</label>
-                {{ form.quantity }}
-              </div>
+              {{ form|crispy }}
               
               
             </div> <button class="btn btn-primary btn-block confirm-button">Confirm</button>

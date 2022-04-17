@@ -24,7 +24,11 @@
                     <div class="header-fullname">{{object}}</div>
                     <form action = "{% url 'follow' profile.pk %}" method="POST">
                         {% csrf_token %}
+                        {% if follow %}
                         <button type="submit" class="btn btn-default shiny btn-sm  btn-follow" name="profile_id" value="{{profile.id}}"> follow</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-default shiny btn-sm  btn-follow" name="profile_id" value="{{profile.id}}"> follow</button>
+                        {% endif %}
                     </form>
                     <!-- <a href="{% url 'profileUpdate' %}" class="btn btn-default shiny btn-sm  btn-follow">
                         follow

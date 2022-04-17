@@ -1,10 +1,11 @@
+from xml.etree.ElementTree import Comment
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, AuthenticationForm, UsernameField
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import password_validation
 # from django.contrib.auth.models import User
 from myapp.models import User
-from userprofile.models import Post
+from userprofile.models import Post, Comment
 from django.views.generic import ListView, DetailView, CreateView
 
 
@@ -89,3 +90,12 @@ class MySetPasswordForm(SetPasswordForm):
     )
 
 
+class AddComment(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body',)
+        
+        username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Write a comment'}))
+        # widgets= {
+        #     'body': forms.TextInput(attrs={'class'})
+        # }

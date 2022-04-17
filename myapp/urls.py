@@ -32,6 +32,7 @@ urlpatterns = [
     path('ticket_delete/<int:pk>', views.TicketDelete.as_view(), name = 'ticketDelete'),
 
     path('like/<int:pk>', views.likePost,name='likePost'),
+    path('post/<int:pk>/comment/', views.AddComment.as_view(), name='commentPost'),
     path('main/', views.main, name = "main")
     
 ]

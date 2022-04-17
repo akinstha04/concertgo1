@@ -1,5 +1,6 @@
 from audioop import reverse
 from email.policy import default
+from tkinter import CASCADE
 from django.utils import timezone
 from django.db import models
 # from django.contrib.auth.models import User
@@ -72,3 +73,13 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         return reverse('ticketDetail', kwargs={'pk': self.pk})
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    body = models.TextField()
+    date_added = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return '%s - %s' % (self.body, self.user)
+    

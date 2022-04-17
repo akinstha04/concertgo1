@@ -177,6 +177,19 @@ class ProfileListView(ListView):
 
 
 
+# def follow_unfollow_profile(request):
+#     if request.method=="POST":
+#         my_profile = Profile.objects.get(user=request.user)
+#         pk = request.POST.get('profile_pk')
+#         obj = Profile.objects.get(pk=pk)
+
+#         if obj.user in my_profile.following.all():
+#             my_profile.following.remove(obj.user)
+#         else:
+#             my_profile.following.add(obj.user)
+#         return redirect(request.META.get('HTTP_REFERER'))
+#     return redirect('userprofile/profile_visit.html')
+
 def follow_unfollow_profile(request):
     if request.method=="POST":
         my_profile = Profile.objects.get(user=request.user)
@@ -185,16 +198,19 @@ def follow_unfollow_profile(request):
 
         if obj.user in my_profile.following.all():
             my_profile.following.remove(obj.user)
+            obj.user.profile.followers.remove(my_profile.user)
         else:
             my_profile.following.add(obj.user)
+            obj.user.profile.followers.add(my_profile.user)
         return redirect(request.META.get('HTTP_REFERER'))
     return redirect('userprofile/profile_visit.html')
+
 
 def follow(request, pk):
     profile = get_object_or_404(Profile, id = request.POST.get('profile_id'))
     my_profile = Profile.objects.get(user=request.user)
     follow = False
-    if profile.followers.filter(id=request.user.profile.id).exists():
+    if profile.followers.filter(id=my_profile.id).exists():
         profile.followers.remove(request.user)
         my_profile.following.remove(profile.user)
         follow = False

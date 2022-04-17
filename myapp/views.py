@@ -1,6 +1,7 @@
 from audioop import reverse
 import datetime
 from multiprocessing import context
+from xml.etree.ElementTree import Comment
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 # from django.contrib.auth.models import User
@@ -8,7 +9,7 @@ from myapp.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .forms import RegisterForm
+from .forms import RegisterForm, AddComment
 from django.views import View
 from userprofile.models import Post, Profile, Ticket
 
@@ -17,9 +18,7 @@ from django.urls import reverse_lazy, reverse
 from itertools import chain
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
-# from django.views.generic import CreateView
-# from django.shortcuts import render
+from django import forms
 
 # Create your views here.
 
@@ -76,22 +75,7 @@ def logoutUser(request):
 #     }
 #     return render(request, 'main.html', context)
 
-# class PostListView(ListView):
-#     model = Post
-#     template_name = 'main.html'
-#     context_object_name = 'posts'
-#     ordering = ['-date_posted']
 
-# class PostDetail(DetailView):
-#     model=Post
-
-# class PostUpload(CreateView):
-#     model = Post
-#     fields = ['image','detail']
-
-#     def form_valid(self,form):
-#         form.instance.owner = self.request.user
-#         return super().form_valid(form)
 
 
 
@@ -235,7 +219,15 @@ class TicketDetail(DetailView):
 
 class TicketUpload(CreateView):
     model = Ticket
-    fields = ['title','detail','date','ex_date','price','image','quantity']
+    fields = ['image','title','detail','date','ex_date','price','quantity']
+
+    # date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control'}))   
+    
+    # widgets = {
+    #     'date': forms.DateField(attrs={'class':'form-control'}),
+    #     'ex_date': forms.DateTimeField(attrs={'class':'form-control'}),
+    # }
+
 
     def form_valid(self,form):
         form.instance.seller = self.request.user.profile
@@ -322,3 +314,16 @@ def likePost(request, pk):
         liked = True
     return HttpResponseRedirect(reverse('main'))
     # return HttpResponseRedirect(reverse('postDetail',args = [str(pk)]))
+
+class AddComment(CreateView):
+    model = Comment
+    form_class = AddComment
+    template_name = 'post_detail.html'
+
+    def form_valid(self,form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
+    success_url = reverse_lazy('postDetail')
+
+    
+    

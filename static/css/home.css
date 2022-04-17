@@ -171,3 +171,13 @@ a {
     padding-bottom: 15px;
     margin-bottom: 15px;
 }
+
+
+/* .tp{
+    height: 130px;
+} */
+.tp img{
+    object-fit: cover !important;
+    height: 100%;
+    margin: auto;
+}

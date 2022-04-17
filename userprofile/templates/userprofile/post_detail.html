@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
+
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
@@ -15,8 +17,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <img src="{{ post.owner.image.url }}" class="user-profile">
-                    {% if post.owner == self.request.user %}
-                    {% endif %}
+                    {% if post.owner == request.user.profile %}
                     <div class="pull-right text-right">
                         <button type="button" class="btn btn-light"><span class="bi bi-three-dots-vertical"></span></button>
                         <div class="menu-nav">
@@ -30,6 +31,8 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
+                    
                     
                     <div><strong>{{ post.owner}}</strong></div>
                     <div class="small"><i class="fa fa-map-marker"></i>{{ post.date_posted }}</div>
@@ -68,29 +71,38 @@
                 </div>
                 <div class="panel-body">
                     <!-- <p>Comments</p> -->
-                    <div class="media">
-                        
-                        <!-- <a class="pull-left" href="#">
-                            <img class="media-object img-rounded" src="https://bootdey.com/img/Content/avatar/avatar1.png">
-                        </a> -->
-                        <div class="media-body">
-                            <div class="pull-right small">3 hours ago</div>
-                            <h4 class="media-heading">User</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                        </div>
-                    </div>
-                    <div class="media">
-                        <!-- <a class="pull-left" href="#">
-                            <img class="media-object img-rounded" src="https://bootdey.com/img/Content/avatar/avatar1.png">
-                        </a> -->
-                        <div class="media-body">
-                            <div class="pull-right small">3 hours ago</div>
-                            <h4 class="media-heading">User</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                        </div>
-                    </div>
+                    
+                    {% if not post.comments.all %}
+                    <h3> No comments yet</h3>
+                    {% else %}
+                        {% for comment in post.comments.all %}
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="pull-right small">{{ comment.date_added }}</div>
+                                    <h4 class="media-heading">{{ comment.user }}</h4>
+                                    <p>{{ comment.body}}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <hr size="8" width="98%" color="gray"> 
+                    {% endif %}
+                    <!-- <br> -->
                 <div class="panel-footer">
-                    <input type="email" class="form-control" placeholder="Write a comment...">
+                    <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+                        <!-- <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38"> -->
+                        <input type="text" class="form-control mr-3" placeholder="Add comment">
+                        <button class="btn btn-primary" type="button">Comment</button>
+                    </div>
+                    <!-- <input type="email" class="form-control" placeholder="Write a comment..."> -->
+                    <!-- <div class="d-grid gap-2">
+                        <a href="{% url 'commentPost' post.pk %}"></a>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{form|crispy}}
+                            <button class="btn btn-primary" type="button">Post</button>
+                        </form>
+                        
+                      </div> -->
                 </div>
             </div>
 
