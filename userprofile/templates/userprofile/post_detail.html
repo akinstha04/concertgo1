@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load humanize %}
 {% block content %}
 
 
@@ -87,30 +88,41 @@
                         {% for comment in post.comments.all %}
                             <div class="media">
                                 <div class="media-body">
-                                    <div class="pull-right small">{{ comment.date_added }}</div>
-                                    <h4 class="media-heading">@{{ comment.user }}</h4>
+                                    <div class="pull-right small">{{ comment.date_added|naturaltime }}</div>
+                                    <h5 class="media-heading">@{{ comment.user }}</h5>
                                     <p>{{ comment.body}}</p>
                                 </div>
                             </div>
                         {% endfor %}
-                        <hr size="8" width="98%" color="gray"> 
+                        <hr size="8" width="98%" color="gray">
                     {% endif %}
                     <!-- <br> -->
                 <div class="panel-footer">
                     <div class="d-flex flex-row add-comment-section mt-4 mb-4">
                         <!-- <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38"> -->
-                        
-                        <!-- <input type="text" class="form-control mr-3" placeholder="Add comment">
-                        <button class="btn btn-primary" type="button">Comment</button> -->
-
-                        <a href="{% url 'commentPost' post.pk %}">
+                        <!-- <form action="/post/comment/{{post.id}}">
+                            <input type="text" class="form-control mr-3" placeholder="Add comment">
+                            <button class="btn btn-primary" type="button">Comment</button>
+                        </form> -->
+                        <!-- <a href="{% url 'commentPost' post.pk %}">
                             <form method="POST">
                                 {% csrf_token %}
                                 {{ form.as_p }}
                                 <button class="btn btn-primary" type="button">Post</button>
                             </form>
-                        </a>
+                        </a> -->
                         
+                        
+
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                              {{ form }}
+                              <button class="btn btn-primary" type="submit">Add comment</button>
+                            </div>
+                          </form>
+
                     </div>
                     <!-- <input type="email" class="form-control" placeholder="Write a comment..."> -->
                     <!-- <div class="d-grid gap-2">

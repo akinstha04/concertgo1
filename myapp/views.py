@@ -12,7 +12,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterForm, CommentForm
 from django.views import View
 from userprofile.models import Post, Profile, Ticket, Wishlist
-
+from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from itertools import chain
@@ -135,8 +135,8 @@ def ticketPage(request):
 
 
 
-def ticketAddPage(request):
-    return render(request, 'myapp/ticket_add.html')
+# def ticketAddPage(request):
+#     return render(request, 'myapp/ticket_add.html')
 
     
 # def main(request):
@@ -166,7 +166,26 @@ class PostListView(ListView):
 
 class PostDetail(DetailView):
     model=Post
+    pk ="pk"
+    count_hit = True
+    form = CommentForm
+    
+    def post(self, request, *args, **kwargs):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            post = self.get_object()
+            form.instance.user = request.user.profile
+            form.instance.post = post
+            form.save()
 
+            return redirect(reverse("postDetail",kwargs={
+                "pk": post.pk
+            }))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.form
+        return context
     # template_name = 'userprofile/post_detail.html'
     # pk="pk"
     # count_hit = True
@@ -366,6 +385,7 @@ def addWishlist(request):
     ticket = Ticket.objects.get(pk=tid)
     data = {}
     checkw = Wishlist.objects.filter(ticket=ticket, user=request.user).count()
+    ticketsW = Wishlist.objects.filter(user=request.user).order_by('-id')
     if checkw>0:
         data={
             'bool':False
@@ -376,6 +396,18 @@ def addWishlist(request):
             user=request.user
         )
         data={
-            'bool':True
+            'bool':True,
         }
+    return JsonResponse(data)
+
+     
+def removeWishlist(request):
+    # ticket = get_object_or_404(Ticket, id = request.POST.get('ticket_id'))
+    tid = request.GET['ticket']
+    a = Wishlist.objects.get(Q(ticket=tid) & Q(user=request.user))
+    a.delete()
+    # print("akinakinakin")
+    data={
+        'bool':True
+    }
     return JsonResponse(data)

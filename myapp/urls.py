@@ -26,7 +26,7 @@ urlpatterns = [
     path('post_delete/<int:pk>', views.PostDelete.as_view(), name = 'postDelete'),
 
     path('like/<int:pk>', views.likePost,name='likePost'),
-    path('post/<int:pk>/comment/', views.AddComment.as_view(), name='commentPost'),
+    path('post/comment/<int:pk>', views.AddComment.as_view(), name='commentPost'),
 
     path('ticket/', views.ticketPage, name = "ticket"),
     path('ticket_upload/', views.TicketUpload.as_view(), name = 'ticketUpload'),
@@ -34,7 +34,8 @@ urlpatterns = [
     path('ticket_update/<int:pk>', views.TicketUpdate.as_view(), name = 'ticketUpdate'),
     path('ticket_delete/<int:pk>', views.TicketDelete.as_view(), name = 'ticketDelete'),
 
-    path('add_wishlist', views.addWishlist, name='addWishlist'),
+    path('add_wishlist/', views.addWishlist, name='addWishlist'),
+    path('removewishlist/', views.removeWishlist, name='addWishlist'),
     
     path('main/', views.main, name = "main")
     
