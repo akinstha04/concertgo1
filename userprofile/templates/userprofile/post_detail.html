@@ -34,7 +34,9 @@
                     {% endif %}
                     
                     
-                    <div><strong>{{ post.owner}}</strong></div>
+                    <a href="{% url 'profileVisit' post.owner.pk %}">
+                        <div><strong>{{ post.owner }}</strong></div>
+                    </a>
                     <div class="small"><i class="fa fa-map-marker"></i>{{ post.date_posted }}</div>
                     <!-- <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div> -->
                 </div>
@@ -46,10 +48,17 @@
                     
                     <div class="actions">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-link"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                            <button type="button" class="btn btn-link"><i class="fa fa-share"></i> Share</button>
+                            <form action = "{% url 'likePost' post.pk %}" method="POST">
+                                {% csrf_token %}
+                                
+                                {% if liked %}
+                                <button type="submit" class="btn btn-link" name="post_id" value="{{post.id}}"><i class="fa fa-thumbs-o-up"></i> Liked</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-link" name="post_id" value="{{post.id}}"><i class="fa fa-thumbs-o-up"></i> Like</button>
+                                {% endif %}
+                            </form>
                         </div>
-                        <div class="pull-right"><strong>{{likes}}</strong> Likes</div>      
+                        <div class="pull-right"><strong>{{post.likes.count}}</strong> Likes</div>      
                     </div>  
                     
                 </div>
@@ -79,7 +88,7 @@
                             <div class="media">
                                 <div class="media-body">
                                     <div class="pull-right small">{{ comment.date_added }}</div>
-                                    <h4 class="media-heading">{{ comment.user }}</h4>
+                                    <h4 class="media-heading">@{{ comment.user }}</h4>
                                     <p>{{ comment.body}}</p>
                                 </div>
                             </div>
@@ -90,8 +99,18 @@
                 <div class="panel-footer">
                     <div class="d-flex flex-row add-comment-section mt-4 mb-4">
                         <!-- <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38"> -->
-                        <input type="text" class="form-control mr-3" placeholder="Add comment">
-                        <button class="btn btn-primary" type="button">Comment</button>
+                        
+                        <!-- <input type="text" class="form-control mr-3" placeholder="Add comment">
+                        <button class="btn btn-primary" type="button">Comment</button> -->
+
+                        <a href="{% url 'commentPost' post.pk %}">
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button class="btn btn-primary" type="button">Post</button>
+                            </form>
+                        </a>
+                        
                     </div>
                     <!-- <input type="email" class="form-control" placeholder="Write a comment..."> -->
                     <!-- <div class="d-grid gap-2">

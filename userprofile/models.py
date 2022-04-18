@@ -1,6 +1,7 @@
 from audioop import reverse
 from email.policy import default
 from tkinter import CASCADE
+from turtle import ondrag
 from django.utils import timezone
 from django.db import models
 # from django.contrib.auth.models import User
@@ -11,7 +12,7 @@ from django.urls import reverse
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default = 'profile_pics\default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default = 'profile_pics\default_p.jpg', upload_to='profile_pics')
     bio = models.TextField(default="hi")
     following = models.ManyToManyField(User, related_name='following', blank=True)
     followers = models.ManyToManyField(User,related_name='followers', blank=True)
@@ -49,7 +50,8 @@ class Post(models.Model):
     likes = models.ManyToManyField(Profile, related_name="posts")
 
     def __str__(self):
-        return self.detail
+        # return self.detail
+        return '%s - %s' % (self.owner, self.detail)
 
     def get_absolute_url(self):
         return reverse('postDetail', kwargs={'pk': self.pk})
@@ -83,3 +85,10 @@ class Comment(models.Model):
     def __str__(self):
         return '%s - %s' % (self.body, self.user)
     
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '%s - %s - %s' % (self.user, 'wishlist', self.ticket.title)

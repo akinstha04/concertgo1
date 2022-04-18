@@ -54,7 +54,7 @@
                     <p>
                         {{ticket.date}}
                     </p>
-                    <small>Tickets from <a href="javascript:void(0);">{{ticket.seller}}</a></small>
+                    <small>Tickets from <a href="{% url 'profileVisit' ticket.seller.pk %}">{{ticket.seller}}</a></small>
                     <br>
                     <span class="fa fa-2x"><h5>Buy tickets before {{ticket.ex_date}}</h5></span>
                 </h2>

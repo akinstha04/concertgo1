@@ -9,14 +9,14 @@ from myapp.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .forms import RegisterForm, AddComment
+from .forms import RegisterForm, CommentForm
 from django.views import View
-from userprofile.models import Post, Profile, Ticket
+from userprofile.models import Post, Profile, Ticket, Wishlist
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from itertools import chain
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django import forms
 
@@ -124,11 +124,15 @@ def ticketPage(request):
     my_tickets = profile.profile_tickets()
 
     tickets.append(my_tickets)
+
+
+    ticketsW = Wishlist.objects.filter(user=request.user).order_by('-id')
     # sort and chain querys and unpack the posts list
 
     if len(tickets)>0:
         ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.created_at)
-    return render(request,'ticket.html',{'profile':profile,'tickets':ts})
+    return render(request,'ticket.html',{'profile':profile,'tickets':ts,'wishlist':ticketsW})
+
 
 
 def ticketAddPage(request):
@@ -162,6 +166,25 @@ class PostListView(ListView):
 
 class PostDetail(DetailView):
     model=Post
+
+    # template_name = 'userprofile/post_detail.html'
+    # pk="pk"
+    # count_hit = True
+    # def post (self,request,*args,**kwargs):
+    #     form = CommentForm(request.POST)
+    #     if form.is_valid():
+    #         post = self.get_object()
+    #         form.instance.user = request.user
+    #         form.instance.post = post
+    #         form.save()
+            
+    #         return redirect(reverse("post",kwargs={'pk':post.pk}))
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["form"] = self.form
+    #     return context
+
+
     # template_name = 'post_detail.html'
     # def get_context_data(self, *args, **kwargs):
     #     post = get_object_or_404(Post,id = self.kwargs['pk'])
@@ -315,15 +338,44 @@ def likePost(request, pk):
     return HttpResponseRedirect(reverse('main'))
     # return HttpResponseRedirect(reverse('postDetail',args = [str(pk)]))
 
+# class AddComment(CreateView):
+#     model = Comment
+#     form_class = CommentForm
+#     template_name = 'post_detail.html'
+
+#     def form_valid(self,form):
+#         form.instance.post_id = self.kwargs['pk']
+#         return super().form_valid(form)
+#     success_url = reverse_lazy('postDetail')
+
 class AddComment(CreateView):
     model = Comment
-    form_class = AddComment
-    template_name = 'post_detail.html'
+    form_class = CommentForm
+    template_name = 'userprofile/post_detail.html'
 
     def form_valid(self,form):
         form.instance.post_id = self.kwargs['pk']
+        form.instance.user = self.request.user.profile
         return super().form_valid(form)
     success_url = reverse_lazy('postDetail')
-
     
     
+def addWishlist(request):
+    # ticket = get_object_or_404(Ticket, id = request.POST.get('ticket_id'))
+    tid = request.GET['ticket']
+    ticket = Ticket.objects.get(pk=tid)
+    data = {}
+    checkw = Wishlist.objects.filter(ticket=ticket, user=request.user).count()
+    if checkw>0:
+        data={
+            'bool':False
+        }
+    else:
+        wishlist=Wishlist.objects.create(
+            ticket=ticket,
+            user=request.user
+        )
+        data={
+            'bool':True
+        }
+    return JsonResponse(data)

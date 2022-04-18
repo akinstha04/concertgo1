@@ -1,6 +1,5 @@
 from itertools import chain
 from operator import truediv
-import re
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -139,20 +138,20 @@ def profileUpdate(request):
 
 
 
-class PostListView(ListView):
-    model = Post
-    template_name = 'main.html','userprofile/profile.html'
-    context_object_name = 'posts'
-    ordering = ['-date_posted']
+# class PostListView(ListView):
+#     model = Post
+#     template_name = 'main.html','userprofile/profile.html'
+#     context_object_name = 'posts'
+#     ordering = ['-date_posted']
 
 
-class ProfileListView(ListView):
-    model = Profile
-    template_name = 'userprofile/profile.html','myapp/search.html'
-    context_object_name = 'profiles'
+# class ProfileListView(ListView):
+#     model = Profile
+#     template_name = 'userprofile/profile.html','myapp/search.html'
+#     context_object_name = 'profiles'
 
-    def get_queryset(self):
-        return Profile.objects.all().exclude(user=self.request.user)
+#     def get_queryset(self):
+#         return Profile.objects.all().exclude(user=self.request.user)
 
 # class ProfileVisit(DetailView):
 #     model = Profile

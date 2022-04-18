@@ -22,6 +22,8 @@
                 </div>
                 <div class="col-md-8 col-sm-12 profile-info">
                     <div class="header-fullname">{{object}}</div>
+                    {% if object == request.user.profile %}
+                    {% else %}
                     <form action = "{% url 'follow' profile.pk %}" method="POST">
                         {% csrf_token %}
                         {% if follow %}
@@ -30,6 +32,7 @@
                         <button type="submit" class="btn btn-default shiny btn-sm  btn-follow" name="profile_id" value="{{profile.id}}"> follow</button>
                         {% endif %}
                     </form>
+                    {% endif %}
                     <!-- <a href="{% url 'profileUpdate' %}" class="btn btn-default shiny btn-sm  btn-follow">
                         follow
                     </a> -->
@@ -67,18 +70,6 @@
                             <div class="stats-title">POSTS</div>
                         </div>
                     </div>
-                    
-                    <!-- <div class="row">
-                        <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
-                            <i class="glyphicon glyphicon-map-marker"></i> Boston
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
-                            Rate: <strong>$250</strong>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
-                            Age: <strong>24</strong>
-                        </div>
-                    </div> -->
                 </div>
             </div>   
         </div>

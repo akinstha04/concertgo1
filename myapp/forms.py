@@ -1,3 +1,4 @@
+from pyexpat import model
 from xml.etree.ElementTree import Comment
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, AuthenticationForm, UsernameField
@@ -45,17 +46,18 @@ class LoginForm(AuthenticationForm):
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete': 'current-password','class':'form-control'}),
     )
+
+    
 class RegisterForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Username'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm Password'}))
     email = forms.CharField(required= True, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Email'}))
-    # is_manager = forms.CheckboxInput(widget=forms.CheckboxInput(attrs={'class':'control control--checkbox mb-0','label':'Register as Manager'}))
-    # is_customer = forms.BooleanField(widget = forms.CheckboxInput(attrs={'class':'checkbox form-control'}))
-    # is_manager = forms.BooleanField(widget = forms.CheckboxInput(attrs={'class':'required checkbox form-control'}))
     class Meta:
         model=User
         fields = ('username','email','password1','password2','is_manager')
+
+
 
 
 # class RegistrationForms(UserCreationForm): #inheriting usercreationform
@@ -90,12 +92,14 @@ class MySetPasswordForm(SetPasswordForm):
     )
 
 
-class AddComment(forms.ModelForm):
+class CommentForm(forms.ModelForm):
+    body = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Write a comment'}))
+
     class Meta:
         model = Comment
         fields = ('body',)
         
-        username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Write a comment'}))
+        
         # widgets= {
         #     'body': forms.TextInput(attrs={'class'})
         # }
