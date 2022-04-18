@@ -38,7 +38,7 @@
                     <a href="{% url 'profileVisit' post.owner.pk %}">
                         <div><strong>{{ post.owner }}</strong></div>
                     </a>
-                    <div class="small"><i class="fa fa-map-marker"></i>{{ post.date_posted }}</div>
+                    <div class="small">{{ post.date_posted }}</div>
                     <!-- <div class="small"><i class="fa fa-map-marker"></i> Medellin, Colombia</div> -->
                 </div>
                 <div class="panel-body">
@@ -111,17 +111,13 @@
                                 <button class="btn btn-primary" type="button">Post</button>
                             </form>
                         </a> -->
-                        
-                        
-
-
+                        <!-- <input type="text" class="form-control mr-3" placeholder="Add comment">
+                            <button class="btn btn-primary" type="button">Comment</button> -->
                         <form method="POST">
                             {% csrf_token %}
-                            <div class="form-group">
-                              {{ form }}
-                              <button class="btn btn-primary" type="submit">Add comment</button>
-                            </div>
-                          </form>
+                            {{ form }}
+                            <button class="btn btn-primary" type="submit">Comment</button>
+                        </form>
 
                     </div>
                     <!-- <input type="email" class="form-control" placeholder="Write a comment..."> -->

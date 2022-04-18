@@ -35,10 +35,9 @@
                         </div>
                         
                         <div class="actions">
-                            <div class="btn-group">
+                            <div class="btn-group" style="display: flex;justify-content: space-around;">
                                 <form action = "{% url 'likePost' post.pk %}" method="POST">
                                     {% csrf_token %}
-                                    
                                     {% if liked %}
                                     <button type="submit" class="btn btn-link" name="post_id" value="{{post.id}}"><i class="fa fa-thumbs-o-up"></i> Liked</button>
                                     {% else %}
@@ -48,8 +47,8 @@
                                 <a href="{% url 'postDetail' post.pk %}">
                                     <button type="button" class="btn btn-link"><i class="fa fa-comment"></i> Comment</button>
                                 </a>
+                                <div class="pull-right"><strong>{{post.likes.count}}</strong> Likes</div>
                             </div>
-                            <div class="pull-right"><strong>{{post.likes.count}}</strong> Likes</div>
                         </div>  
                         
                         <!-- commentsection -->

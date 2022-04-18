@@ -1,3 +1,4 @@
+from cProfile import label
 from pyexpat import model
 from xml.etree.ElementTree import Comment
 from django import forms
@@ -93,7 +94,11 @@ class MySetPasswordForm(SetPasswordForm):
 
 
 class CommentForm(forms.ModelForm):
-    body = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Write a comment'}))
+    body = forms.CharField(
+        widget=forms.TextInput(attrs={'class':'form-control mr-3','placeholder':'Write a comment'}),
+        label=_(""),
+        strip=True
+        )
 
     class Meta:
         model = Comment

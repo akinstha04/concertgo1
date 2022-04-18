@@ -181,3 +181,6 @@ a {
     height: 100%;
     margin: auto;
 }
+.btn-group{
+    display:flex;
+}
