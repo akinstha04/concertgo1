@@ -28,20 +28,3 @@ class ProfilePicUpdateForm(forms.ModelForm):
 
         # fields = '__all__'
         # exclude = ['user']
-
-
-
-
-
-# class TicketForm():
-#     title = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'title'}))
-#     detail = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'detail'}))
-#     date = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control','placeholder':'Confirm Password'}))
-#     ex_date = forms.DateTimeField(required= True, widget=forms.DateTimeInput(attrs={'class':'form-control','placeholder':'Email'}))
-#     price = forms.FloatField(widget=forms.NumberInput(attrs={'class':'form-control','placeholder':'price'})) 
-#     image = forms.ImageField(default= 'ticket_pics\default.jpg')
-#     quantity = forms.IntegerField(default= 1)
-
-#     class Meta:
-#         model=User
-#         fields = ('title','detail','date','ex_date','price','image','quantity')

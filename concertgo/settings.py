@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp.apps.MyappConfig',
     'userprofile.apps.UserprofileConfig',
+    'order.apps.OrderConfig',
     'crispy_forms',
     'django.contrib.humanize',
 ]

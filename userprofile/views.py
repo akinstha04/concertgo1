@@ -1,6 +1,6 @@
 from itertools import chain
 from operator import truediv
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -9,7 +9,7 @@ from django.urls import reverse, reverse_lazy
 from myapp.models import User
 from .forms import ProfilePicUpdateForm, ProfileUpdateForm, UserUpdateForm, ProfilePicUpdateForm
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Post, Profile
+from .models import Post, Profile, Wishlist, Like
 
 # Create your views here.
 # def profilePage(request):
@@ -40,25 +40,7 @@ def profilePage(request):
         ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.created_at)
     return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'following':following,'post_count':post_count,'tickets':ts,'followers':followers})
 
-# class ProfileVisit(DetailView):
-#     model = Profile
-#     template_name = 'userprofile/profile_visit.html'
 
-#     def get_object(self, **kwargs):
-#         pk = self.kwargs.get('pk')
-#         viewProfile = Profile.objects.get(pk = pk)
-#         return viewProfile
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         viewProfile = self.get_object()
-#         my_profile = Profile.objects.get(user=self.request.user)
-#         if viewProfile in my_profile.following.all():
-#             follow = True
-#         else:
-#             follow = False
-#         context["follow"] = follow
-#         return context
 
 
 class ProfileVisit(DetailView):
@@ -87,27 +69,7 @@ class ProfileVisit(DetailView):
         
         return context
 
-# def profilePage(request):
-#     profile = Profile.objects.get(user=request.user)
-#     users = [user for user in profile.following.all()]
-#     posts = []
-#     qs = None
-    
-#     # get posts of people who are followed
-    
-#     for u in users:
-#         p = Profile.objects.get(user=u)
-#         # p_posts = p.post_set.all()
-#         # p_posts.append(p_posts)
-#         # c= u.count()
-    
-#     # self posts
-#     my_posts = profile.profile_posts()
-#     posts.append(my_posts)
-#     # sort and chain querys and unpack the posts list
-#     if len(posts)>0:
-#         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
-#     return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs})
+
 
 
 
@@ -138,40 +100,6 @@ def profileUpdate(request):
 
 
 
-# class PostListView(ListView):
-#     model = Post
-#     template_name = 'main.html','userprofile/profile.html'
-#     context_object_name = 'posts'
-#     ordering = ['-date_posted']
-
-
-# class ProfileListView(ListView):
-#     model = Profile
-#     template_name = 'userprofile/profile.html','myapp/search.html'
-#     context_object_name = 'profiles'
-
-#     def get_queryset(self):
-#         return Profile.objects.all().exclude(user=self.request.user)
-
-# class ProfileVisit(DetailView):
-#     model = Profile
-#     template_name = 'userprofile/profile_visit.html'
-
-#     def get_object(self, **kwargs):
-#         pk = self.kwargs.get('pk')
-#         viewProfile = Profile.objects.get(pk = pk)
-#         return viewProfile
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         viewProfile = self.get_object()
-#         my_profile = Profile.objects.get(user=self.request.user)
-#         if viewProfile in my_profile.following.all():
-#             follow = True
-#         else:
-#             follow = False
-#         context["follow"] = follow
-#         return context
     
 
 
@@ -221,3 +149,77 @@ def follow(request, pk):
     return HttpResponseRedirect(reverse('profileVisit',args = [str(pk)]))
 
 
+def ticketWishlistPage(request):
+    profile = Profile.objects.get(user=request.user)
+    ticketsW = Wishlist.objects.filter(user=request.user).order_by('-id')
+
+    return render(request,'userprofile/ticket_wishlist.html',{'profile':profile,'wishlist':ticketsW})
+
+
+# def likeUnlikePost(request):
+#     user = request.user
+#     if request.method == 'POST':
+#         post_id = request.POST.get('post_id')
+#         post_obj = Post.objects.get(id=post_id)
+#         profile = Profile.objects.get(user=user)
+                    
+#         if profile in post_obj.likes.all():
+#             post_obj.likes.remove(profile)
+#         else:
+#             post_obj.likes.add(profile)
+            
+#         like, created = Like.objects.get_or_create(user=profile, post_id=post_id)
+
+#         if not created:
+#             if like.value=='Like':
+#                 like.value='Unlike'
+#             else:
+#                 like.value='Like'
+#         else:
+#             like.value='Like'
+
+#             post_obj.save()
+#             like.save()
+
+#         data = {
+#             'value': like.value,
+#             'likes': post_obj.likes.all()
+#         }
+#         return JsonResponse(data, safe=False)
+#     return redirect('main')
+
+def likeUnlikePost(request):
+    user = request.user
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        post_obj = Post.objects.get(id=post_id)
+        profile = Profile.objects.get(user=user)
+
+        if profile in post_obj.likes.all():
+            post_obj.likes.remove(profile)
+        else:
+            post_obj.likes.add(profile)
+
+        like, created = Like.objects.get_or_create(user=profile, post_id=post_id)
+
+        if not created:
+            if like.value=='Like':
+                like.value='Unlike'
+                bool = True
+            else:
+                like.value='Like'
+        else:
+            like.value='Like'
+
+            post_obj.save()
+            like.save()
+    context = {
+        'bool':True
+    }
+        # data = {
+        #     'value': like.value,
+        #     'likes': post_obj.liked.all().count()
+        # }
+
+    return JsonResponse(context)
+    # return redirect('main')

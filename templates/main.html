@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -24,7 +25,7 @@
                             <div><strong>{{ post.owner }}</strong></div>
                         </a>
                         <!-- <div><strong>{{ post.owner }}</strong></div> -->
-                        <div class="small">{{ post.date_posted }}</div>
+                        <div class="small">{{ post.date_posted | naturaltime }}</div>
                     </div>
                     <div class="panel-body">
                         <p>{{ post.detail }}</p>
@@ -36,18 +37,23 @@
                         
                         <div class="actions">
                             <div class="btn-group" style="display: flex;justify-content: space-around;">
-                                <form action = "{% url 'likePost' post.pk %}" method="POST">
+                                <form action = "{% url 'likeUnlikePost' %}" method="POST" class='like-form' id="{{post.id}}">
                                     {% csrf_token %}
-                                    {% if liked %}
-                                    <button type="submit" class="btn btn-link" name="post_id" value="{{post.id}}"><i class="fa fa-thumbs-o-up"></i> Liked</button>
-                                    {% else %}
-                                    <button type="submit" class="btn btn-link" name="post_id" value="{{post.id}}"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                                    {% endif %}
+                                    <input type="hidden" name="post_id" value="{{post.id}}">
+                                    <button type="submit" class="btn btn-link like-btn{{post.id}}">
+                                        {% if profile not in post.likes.all %}
+                                        Like
+                                        {% else %}
+                                        Unlike
+                                        {% endif %}
+                                    </button>
                                 </form>
                                 <a href="{% url 'postDetail' post.pk %}">
-                                    <button type="button" class="btn btn-link"><i class="fa fa-comment"></i> Comment</button>
+                                    <button type="button" class="btn btn-link">
+                                        <!-- <i class="fa fa-comment"></i> -->
+                                         Comment</button>
                                 </a>
-                                <div class="pull-right"><strong>{{post.likes.count}}</strong> Likes</div>
+                                <div class="pull-right" style="display: flex;"><strong style="margin-right: 5px;"><div class="like-count{{post.id}}"> {{post.likes.count }} </div></strong>  Likes</div>
                             </div>
                         </div>  
                         
@@ -84,7 +90,7 @@
                                 </div>
                                 
                                 <div class="media-body">
-                                    <h6 class="media-title font-weight-semibold"> <a href="#" data-abc="true">{{ticket.title}}</a> </h6>
+                                    <h6 class="media-title font-weight-semibold"> {{ticket.title}} </h6>
                                     <!-- <ul class="list-inline list-inline-dotted mb-3 mb-lg-2">
                                         <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Phones</a></li>
                                         <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Mobiles</a></li>

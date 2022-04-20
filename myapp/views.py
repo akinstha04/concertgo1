@@ -4,7 +4,6 @@ from multiprocessing import context
 from xml.etree.ElementTree import Comment
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-# from django.contrib.auth.models import User
 from myapp.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -126,12 +125,14 @@ def ticketPage(request):
     tickets.append(my_tickets)
 
 
-    ticketsW = Wishlist.objects.filter(user=request.user).order_by('-id')
-    # sort and chain querys and unpack the posts list
+    # ticketsW = Wishlist.objects.filter(user=request.user).order_by('-id')
+
+
+    # sort and chain querys and unpack the tickets list
 
     if len(tickets)>0:
         ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.created_at)
-    return render(request,'ticket.html',{'profile':profile,'tickets':ts,'wishlist':ticketsW})
+    return render(request,'ticket.html',{'profile':profile,'tickets':ts})
 
 
 
@@ -277,7 +278,7 @@ class TicketUpload(CreateView):
 
 class TicketUpdate(UserPassesTestMixin, UpdateView):
     model = Ticket
-    fields = ['title','detail']
+    fields = ['title','detail','quantity']
     
     def form_valid(self, form):
         form.instance.seller.profile = self.request.user
@@ -298,23 +299,6 @@ class TicketDelete(UserPassesTestMixin, DeleteView):
             return True
         return False
 
-# def main(request):
-#     profile = Profile.objects.get(user=request.user)
-#     users = [user for user in profile.following.all()]
-#     posts = []
-#     qs = None
-#     # get posts of people who are followed
-#     for u in users:
-#         p = Profile.objects.get(user=u)
-#         p_posts = p.post_set.all()
-#         posts.append(p_posts)
-#     # self posts
-#     my_posts = profile.profile_posts()
-#     posts.append(my_posts)
-#     # sort and chain querys and unpack the posts list
-#     if len(posts)>0:
-#         qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
-#     return render(request,'main.html',{'profile':profile,'posts':qs})
 
 def main(request):
     profile = Profile.objects.get(user=request.user)
@@ -357,15 +341,6 @@ def likePost(request, pk):
     return HttpResponseRedirect(reverse('main'))
     # return HttpResponseRedirect(reverse('postDetail',args = [str(pk)]))
 
-# class AddComment(CreateView):
-#     model = Comment
-#     form_class = CommentForm
-#     template_name = 'post_detail.html'
-
-#     def form_valid(self,form):
-#         form.instance.post_id = self.kwargs['pk']
-#         return super().form_valid(form)
-#     success_url = reverse_lazy('postDetail')
 
 class AddComment(CreateView):
     model = Comment
@@ -406,7 +381,6 @@ def removeWishlist(request):
     tid = request.GET['ticket']
     a = Wishlist.objects.get(Q(ticket=tid) & Q(user=request.user))
     a.delete()
-    # print("akinakinakin")
     data={
         'bool':True
     }

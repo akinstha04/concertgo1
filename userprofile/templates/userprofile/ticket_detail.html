@@ -3,15 +3,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'css/ticketdetail.css' %}">
 <link rel="stylesheet" href="{% static 'css/ticket.css' %}">
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
@@ -58,7 +50,8 @@
                     </p>
                     <small>Tickets from <a href="{% url 'profileVisit' ticket.seller.pk %}">{{ticket.seller}}</a></small>
                     <br>
-                    <span class="fa fa-2x"><h5>Buy tickets before {{ticket.ex_date}}</h5></span>
+                    <span class="fa fa-2x"><h4>Buy tickets before {{ticket.ex_date}}</h4></span>
+                    <span class="fa fa-2x"><h4>|| {{ticket.quantity}} tickets left</h4></span>
                 </h2>
                 <hr />
                 <h3 class="price-container">
@@ -93,7 +86,7 @@
                 <hr />
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-lg-6">
-                        <a href="javascript:void(0);" class="btn btn-success btn-lg">Purchase ticket</a>
+                        <a href="{% url 'orderTicket' %}" class="btn btn-success btn-lg">Purchase ticket</a>
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="btn-group pull-right">

@@ -48,18 +48,25 @@
                     </div>
                     
                     <div class="actions">
-                        <div class="btn-group">
-                            <form action = "{% url 'likePost' post.pk %}" method="POST">
+                        <div class="btn-group" style="display: flex;justify-content: space-around;">
+                            <form action = "{% url 'likeUnlikePost' %}" method="POST" class='like-form' id="{{post.id}}">
                                 {% csrf_token %}
-                                
-                                {% if liked %}
-                                <button type="submit" class="btn btn-link" name="post_id" value="{{post.id}}"><i class="fa fa-thumbs-o-up"></i> Liked</button>
-                                {% else %}
-                                <button type="submit" class="btn btn-link" name="post_id" value="{{post.id}}"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                                {% endif %}
+                                <input type="hidden" name="post_id" value="{{post.id}}">
+                                <button type="submit" class="btn btn-link like-btn{{post.id}}">
+                                    {% if profile not in post.likes.all %}
+                                    Like
+                                    {% else %}
+                                    Unlike
+                                    {% endif %}
+                                </button>
                             </form>
+                            <a href="{% url 'postDetail' post.pk %}">
+                                <button type="button" class="btn btn-link">
+                                    <!-- <i class="fa fa-comment"></i> -->
+                                     Comment</button>
+                            </a>
+                            <div class="pull-right" style="display: flex;"><strong style="margin-right: 5px;"><div class="like-count{{post.id}}"> {{post.likes.count }} </div></strong>  Likes</div>
                         </div>
-                        <div class="pull-right"><strong>{{post.likes.count}}</strong> Likes</div>      
                     </div>  
                     
                 </div>
@@ -75,8 +82,6 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <!-- <img src="{{ post.owner.image.url }}" class="user-profile">
-                    <div><strong>{{ post.owner }}</strong></div> -->
                     <div><strong>Comments</strong></div>
                 </div>
                 <div class="panel-body">
@@ -89,7 +94,8 @@
                             <div class="media">
                                 <div class="media-body">
                                     <div class="pull-right small">{{ comment.date_added|naturaltime }}</div>
-                                    <h5 class="media-heading">@{{ comment.user }}</h5>
+                                    
+                                    <h5 class="media-heading"><a href="{% url 'profileVisit' comment.user.pk %}">@{{ comment.user }}</a></h5>
                                     <p>{{ comment.body}}</p>
                                 </div>
                             </div>
