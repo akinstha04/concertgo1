@@ -7,7 +7,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import password_validation
 # from django.contrib.auth.models import User
 from myapp.models import User
-from userprofile.models import Post, Comment
+from userprofile.models import Post, Comment, Ticket
 from django.views.generic import ListView, DetailView, CreateView
 
 
@@ -79,3 +79,32 @@ class CommentForm(forms.ModelForm):
         # widgets= {
         #     'body': forms.TextInput(attrs={'class'})
         # }
+
+
+class TicketForm(forms.ModelForm):
+    model = Ticket
+    fields = ['image','title','detail','date','ex_date','price','quantity']
+
+    # date = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control'})),
+    # ex_date = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'class':'form-control'})),
+
+
+    # widgets = {
+    #         'title': forms.TextInput(attrs={'class': 'form-control'}),
+    #         'detail': forms.TextInput(attrs={'class': 'form-control'}),
+    #         'date': forms.DateInput(
+    #             format=('%Y-%m-%d'), attrs={
+    #                 'class': 'form-control', 
+    #                 'placeholder': 'Select a date',
+    #                 'type': 'date'
+    #             }),
+    #         'ex_date': forms.DateTimeInput(
+    #             format=('%Y-%m-%d'), attrs={
+    #                 'class': 'form-control', 
+    #                 'placeholder': 'Select a date',
+    #                 'type': 'date'
+    #             }),
+    #         'price': forms.IntegerField(attrs={'class': 'form-control'}),
+            
+    #         'quantity': forms.IntegerField(attrs={'class': 'form-control'}),
+    #     }

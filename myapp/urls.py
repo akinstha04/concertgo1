@@ -8,13 +8,13 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', views.loginPage, name = "login"),
     path('logout/', views.logoutUser, name = "logout"),
-    
+
     path('register/', views.register, name = "register"),
     path('passwordreset/', auth_views.PasswordResetView.as_view(template_name='myapp/password_reset.html', form_class = MyPasswordResetForm), name = "password_reset"),
     path('password-reset/done/',auth_views.PasswordResetDoneView.as_view(template_name='myapp/password_resetdone.html'),name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='myapp/password_resetconfirm.html'),name='password_reset_confirm'),
     path('password-reset-complete/',auth_views.PasswordResetCompleteView.as_view(template_name='myapp/password_resetcomplete.html'),name='password_reset_complete'),
-    
+
     path('search/', views.search, name = "search"),
 
     path('post_upload/', views.PostUpload.as_view(), name = 'postUpload'),
@@ -33,7 +33,7 @@ urlpatterns = [
 
     path('add_wishlist/', views.addWishlist, name='addWishlist'),
     path('removewishlist/', views.removeWishlist, name='removeWishlist'),
-    
+
     path('main/', views.main, name = "main")
     
 ]

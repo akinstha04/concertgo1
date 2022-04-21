@@ -255,4 +255,11 @@ a, a:hover {
       height: 130%;
       width: 55px;
     }
+  
+}
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: #000000;
 }

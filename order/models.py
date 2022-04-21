@@ -3,7 +3,6 @@ from userprofile.models import Profile, Ticket
 from audioop import reverse
 from tkinter import CASCADE
 from django.utils import timezone
-from myapp.models import User
 from django.urls import reverse
 # Create your models here.
 
@@ -15,4 +14,4 @@ class Order(models.Model):
     date_purchased = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return '%s - %s - %s' % (self.user, self.ticket, self.quantity)
+        return '%s - %s - %s' % (self.buyer, self.ticket, self.quantity)

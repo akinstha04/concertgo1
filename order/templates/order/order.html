@@ -6,34 +6,41 @@
 
 <link rel="stylesheet" href="{% static 'css/order.css' %}">
 
-
 <div class="container mt-5 p-3 rounded cart">
     <div class="row no-gutters">
+  
         <div class="col-md-8">
-            <div class="product-details mr-2">
+            <form action="/payment" id="paymentform">
+                {% for ticket in tickets %}
+                <div class="product-details mr-2">
                 
-                <article class="postcard dark red">
-                    <a class="postcard__img_link" href="#">
-                        <img class="postcard__img" src="https://picsum.photos/501/500" alt="Image Title" />	
-                    </a>
-                    <div class="postcard__text">
-                        <h1 class="postcard__title red"><a href="#">Podcast Title</a></h1>
-                        <div class="postcard__subtitle small">
-                            <time datetime="2020-05-25 12:00:00">
-                                Mon, May 25th 2020
-                            </time>
+                    <article class="postcard dark red">
+                        <a class="postcard__img_link" href="#">
+                            <img class="postcard__img" src="{{ticket.image.url}}" alt="Image Title" />	
+                        </a>
+                        <div class="postcard__text">
+                            <h1 class="postcard__title red"><a href="#">{{ticket.title}}</a></h1>
+                            <div class="postcard__subtitle small">
+                                <time datetime="2020-05-25 12:00:00">
+                                    {{ticket.date}}
+                                </time>
+                            </div>
+                            <div class="postcard__bar"></div>
+                            <div class="postcard__preview-txt">{{ticket.detail}}</div>
+                            <ul class="postcard__tagbox">
+                                <li class="tag__item">{{ticket.quantity}} tickets left</li>
+                                <li class="tag__item play red">
+                                    $<span id=ticketprice>{{ticket.price}}</span>
+                                </li>
+                                    <!-- <span class = "dec qtybtn decrement-btn" style="cursor:pointer">-</span>
+                                    <input type="text" name="quantity" class="qty-input" value="1" id="quantity">
+                                    <span class="dec qtybtn increment-btn" pid="{{product.quantity}}" style="cursor:pointer">+</span>    -->
+                            </ul>
                         </div>
-                        <div class="postcard__bar"></div>
-                        <div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
-                        <ul class="postcard__tagbox">
-                            <li class="tag__item">Podcast</li>
-                            <li class="tag__item play red">
-                                <a href="#">Play Episode</a>
-                            </li>
-                        </ul>
-                    </div>
-                </article>
-            </div>
+                    </article>
+                </div>
+                <input  type="hidden" name="ticketid" value="{{ticket.pk}}">
+            {% endfor %}
         </div>
         <div class="col-md-4">
             <div class="payment-info">
@@ -41,19 +48,62 @@
                 <!-- <label class="radio"> <input type="radio" name="card" value="payment" checked> <span><img width="30" src="https://img.icons8.com/color/48/000000/mastercard.png" /></span> </label>
                 <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/officel/48/000000/visa.png" /></span> </label>
                 <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/ultraviolet/48/000000/amex.png" /></span> </label> -->
-                <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/officel/48/000000/paypal.png" /></span> </label>
-                <div><label class="credit-card-label">Name on card</label><input type="text" class="form-control credit-inputs" placeholder="Name"></div>
-                <div><label class="credit-card-label">Card number</label><input type="text" class="form-control credit-inputs" placeholder="0000 0000 0000 0000"></div>
+                <!-- <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/officel/48/000000/paypal.png" /></span> </label> -->
                 <div class="row">
-                    <div class="col-md-6"><label class="credit-card-label">Date</label><input type="text" class="form-control credit-inputs" placeholder="12/24"></div>
-                    <div class="col-md-6"><label class="credit-card-label">CVV</label><input type="text" class="form-control credit-inputs" placeholder="342"></div>
                 </div>
                 <hr class="line">
-                <div class="d-flex justify-content-between information"><span>Subtotal</span><span>$3000.00</span></div>
-                <button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button"><span>$3020.00</span><span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span></button>
+                
+                    <input  type="hidden" name="tquan" value="{{quantity}}">
+                    <!-- <input  type="hidden" name="tquan" value="{{ticket}}"> -->
+                    {% for tickes in tickets %}
+                    <div class="d-flex justify-content-between information"><span>Subtotal</span><span id="subtotal">${{tot}}</span></div>
+                    {% endfor %}
+                
+                <!-- <button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button"><span>$3020.00</span><span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span></button> -->
+                <!-- Set up a container element for the button -->
+                <div id="paypal-button-container"></div>
             </div>
+        </form>
         </div>
+    
     </div>
+    
 </div>
-
 {% endblock content %}
+{% block payment-gateway %}
+
+<script src="https://www.paypal.com/sdk/js?client-id=ATif2iPBVWE3YUaj3RQ3rOA_gsS979fKo88oXgf0OfVeU56L1jN9bkbV19MRM2_eOurC5tPQyw-ZbQ99&currency=USD"></script>
+<script>
+    // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '{{tot}}'
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(orderData) {
+                // Successful capture! For demo purposes:
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                var transaction = orderData.purchase_units[0].payments.captures[0];
+                alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+                document.getElementById("paymentform").submit();
+                // Replace the above to show a success message within this page, e.g.
+                // const element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '';
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL:  actions.redirect('thank_you.html');
+            });
+        }
+
+
+    }).render('#paypal-button-container');
+</script>
+{% endblock payment-gateway %}

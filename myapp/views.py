@@ -264,13 +264,25 @@ class TicketUpload(CreateView):
     model = Ticket
     fields = ['image','title','detail','date','ex_date','price','quantity']
 
-    # date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control'}))   
-    
-    # widgets = {
-    #     'date': forms.DateField(attrs={'class':'form-control'}),
-    #     'ex_date': forms.DateTimeField(attrs={'class':'form-control'}),
-    # }
-
+    # widget = {
+    #         'title': forms.TextInput(attrs={'class': 'form-control'}),
+    #         'detail': forms.TextInput(attrs={'class': 'form-control'}),
+    #         'date': forms.DateInput(
+    #             format=('%Y-%m-%d'), attrs={
+    #                 'class': 'form-control', 
+    #                 'placeholder': 'Select a date',
+    #                 'type': 'date'
+    #             }),
+    #         'ex_date': forms.DateInput(
+    #             format=('%Y-%m-%d'), attrs={
+    #                 'class': 'form-control', 
+    #                 'placeholder': 'Select a date',
+    #                 'type': 'date'
+    #             }),
+    #         'price': forms.IntegerField(attrs={'class': 'form-control'}),
+            
+    #         'quantity': forms.IntegerField(attrs={'class': 'form-control'}),
+    #     }
 
     def form_valid(self,form):
         form.instance.seller = self.request.user.profile

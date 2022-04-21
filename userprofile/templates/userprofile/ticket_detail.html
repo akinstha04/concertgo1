@@ -54,21 +54,6 @@
                     <span class="fa fa-2x"><h4>|| {{ticket.quantity}} tickets left</h4></span>
                 </h2>
                 <hr />
-                <h3 class="price-container">
-                    ${{ticket.price}}
-                    <!-- <small>*includes tax</small> -->
-                </h3>
-                <!-- <div class="certified">
-                    <ul>
-                        <li>
-                            <a href="javascript:void(0);">Delivery time<span>7 Working Days</span></a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
-                        </li>
-                    </ul>
-                </div> -->
-                <hr />
                 <div class="description description-tabs">
                     <!-- <ul id="myTab" class="nav nav-pills">
                         <li class="active"><a href="#more-information" data-toggle="tab" class="no-margin">Product Description </a></li>
@@ -83,10 +68,33 @@
                         </div>
                     </div>
                 </div>
+                <hr/>
+                <h3 class="price-container">
+                    ${{ticket.price}}
+                    <!-- <small>*includes tax</small> -->
+                </h3>
+                <div class="certified">
+                    <!-- <ul>
+                        <li>
+                            <a href="javascript:void(0);">Delivery time<span>7 Working Days</span></a> 
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Certified<span>Quality Assured</span></a>
+                        </li>
+                    </ul> -->
+                    <form action="{% url 'orderTicket' ticket.pk %}">
+                        <span class = "dec qtybtn decrement-btn" style="cursor:pointer">-</span>
+                        <input type="text" name="quantity" class="qty-input" value="1" id="quantity">
+                        <span class="dec qtybtn increment-btn" pid="{{product.quantity}}" style="cursor:pointer">+</span>
+                        <br>
+                        <button type="submit" class="btn btn-success btn-lg">Purchase ticket</button>
+                    </form>
+                </div>
                 <hr />
+                
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-lg-6">
-                        <a href="{% url 'orderTicket' %}" class="btn btn-success btn-lg">Purchase ticket</a>
+                        <!-- <a href="{% url 'orderTicket' ticket.pk %}" class="btn btn-success btn-lg">Purchase ticket</a> -->
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <div class="btn-group pull-right">

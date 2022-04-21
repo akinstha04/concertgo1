@@ -110,5 +110,54 @@ $('.like-form').submit(function(e){
             console.log('error', response)
         }
     })
+});
+$('.increment-btn').click(function(e) {
+    console.log("ckickec");
+    var inc_value = $(this).closest('.certified').find('.qty-input').val();
+    // var ids = document.getElementById("ticketprice").textContent
+    // var t = parseInt(ids)
+    // console.log("asdf"+ids)
+    var value = parseInt(inc_value,10);
+    value = isNaN(value) ? 0 : value;
+    if(value<5)
+        value++;
+        $(this).closest('.certified').find('.qty-input').val(value);
 
-})
+    // $.ajax({
+    //     type: 'GET',
+    //     url: '/increaseticket',
+    //     data: {
+    //         'increase':value,
+    //     },
+    //     success: function(response) {
+    //         aa = t * response.bool
+    //         document.getElementById("subtotal").innerText = "$"+aa
+    //         document.getElementById("t_amount").innerText = "$"+aa
+    //         document.cookie = "amount=" + aa + ";" + "path=/;";
+    //     }
+    // })
+});
+$('.decrement-btn').click(function(e) {
+    console.log("ckickec");
+    var inc_value = $(this).closest('.certified').find('.qty-input').val();
+    // var ids = document.getElementById("ticketprice").textContent
+    // var t = parseInt(ids)
+    // console.log("asdf"+ids)
+    var value = parseInt(inc_value,10);
+    value = isNaN(value) ? 0 : value;
+    if(value>1)
+        value--;
+    $(this).closest('.certified').find('.qty-input').val(value);
+
+    // $.ajax({
+    //     type: 'GET',
+    //     url: '/decreaseticket',
+    //     data: {
+    //         'increase':value,
+    //     },
+    //     success: function(response) {
+    //         aa = t * response.bool
+    //         document.getElementById("subtotal").innerText = "$"+aa
+    //     },
+    // })
+});
