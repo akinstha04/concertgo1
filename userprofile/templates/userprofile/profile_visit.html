@@ -29,26 +29,11 @@
                         {% if follow %}
                         <button type="submit" class="btn btn-default shiny btn-sm  btn-follow" name="profile_id" value="{{profile.id}}"> follow</button>
                         {% else %}
-                        <button type="submit" class="btn btn-default shiny btn-sm  btn-follow" name="profile_id" value="{{profile.id}}"> follow</button>
+                        <button type="submit" class="btn btn-default shiny btn-sm  btn-follow" name="profile_id" value="{{profile.id}}"> unfollow</button>
                         {% endif %}
                     </form>
                     {% endif %}
-                    <!-- <a href="{% url 'profileUpdate' %}" class="btn btn-default shiny btn-sm  btn-follow">
-                        follow
-                    </a> -->
-                    <!-- <a href="{% url 'profileUpdate' %}" class="btn btn-default shiny btn-sm  btn-follow">
-                        Update profile
-                    </a> -->
                     
-                    <!-- {% if follow %}
-                        <form action ="{% url 'userprofile:follow_unfollow_profile' %"method ="POST">
-                            {% csrf_token %}
-                            <input type = "hidden" name ="profile_pk" value ={{object.pk}}>
-                            <button type = "submit" class = "ui negative button">Unfollow</button>
-                        </form>
-                    {% else %}
-                        <button id ="follow-btn" class ="ui positive button">Follow</button>
-                    {% endif %} -->
                     <div class="header-information">
                       {{object.bio}}
                     </div>

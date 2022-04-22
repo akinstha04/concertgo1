@@ -71,7 +71,6 @@
                 <hr/>
                 <h3 class="price-container">
                     ${{ticket.price}}
-                    <!-- <small>*includes tax</small> -->
                 </h3>
                 <div class="certified">
                     <!-- <ul>
@@ -89,20 +88,21 @@
                         <br>
                         <button type="submit" class="btn btn-success btn-lg">Purchase ticket</button>
                     </form>
+                    <div class="btn-group pull-right">
+                        <div>
+                            <button class="btn btn-white btn-default add-wishlist" data-ticket="{{ticket.pk}}"><i class="fa fa-star"></i> Add to wishlist</button>
+                        </div>
+                        <!-- <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Seller Profile</button> -->
+                    </div>
                 </div>
-                <hr />
+                <!-- <hr /> -->
                 
                 <div class="row">
                     <div class="col-sm-12 col-md-6 col-lg-6">
                         <!-- <a href="{% url 'orderTicket' ticket.pk %}" class="btn btn-success btn-lg">Purchase ticket</a> -->
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-6">
-                        <div class="btn-group pull-right">
-                            <div>
-                                <button class="btn btn-white btn-default add-wishlist" data-ticket="{{ticket.pk}}"><i class="fa fa-star"></i> Add to wishlist</button>
-                            </div>
-                            <!-- <button class="btn btn-white btn-default"><i class="fa fa-envelope"></i> Seller Profile</button> -->
-                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ urlpatterns = [
     path('ticket_order/<int:pk>', views.orderTicket, name = "orderTicket"),
     path('increaseticket/', views.increment, name = "increaseTicket"),
     path('decreaseticket/', views.decrement, name = "decreaseTicket"),
-    path('payment/',views.paymentDone,name="paymentdone")
+    path('payment/',views.paymentDone,name="paymentdone"),
+    path('mytickets/', views.myTicketPage, name = "myTickets"),
 ]
 urlpatterns += staticfiles_urlpatterns()

@@ -64,16 +64,7 @@ class MySetPasswordForm(SetPasswordForm):
     )
 
 
-class CommentForm(forms.ModelForm):
-    body = forms.CharField(
-        widget=forms.TextInput(attrs={'class':'form-control mr-3','placeholder':'Write a comment'}),
-        label=_(""),
-        strip=True
-        )
 
-    class Meta:
-        model = Comment
-        fields = ('body',)
         
         
         # widgets= {

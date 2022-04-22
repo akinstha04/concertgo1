@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import gettext, gettext_lazy as _
 # from django.contrib.auth.models import User
 from myapp.models import User
-from .models import Profile, Post
+from .models import Profile, Post,Comment
 from django.views.generic import ListView, DetailView, CreateView
 
 
@@ -28,3 +28,13 @@ class ProfilePicUpdateForm(forms.ModelForm):
 
         # fields = '__all__'
         # exclude = ['user']
+class CommentForm(forms.ModelForm):
+    body = forms.CharField(
+        widget=forms.TextInput(attrs={'class':'form-control mr-3','placeholder':'Write a comment'}),
+        label=_(""),
+        strip=True
+        )
+
+    class Meta:
+        model = Comment
+        fields = ('body',)

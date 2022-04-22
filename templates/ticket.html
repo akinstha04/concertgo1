@@ -26,7 +26,7 @@
     <a href = "{% url 'ticketWishlist' %}">
       <button class="filter-button">Ticket wishlist</button>
     </a>
-    <a href = "{% url 'ticketWishlist' %}">
+    <a href = "{% url 'myTickets' %}">
       <button class="filter-button">My Tickets</button>
     </a>
   </div>
@@ -50,22 +50,20 @@
                   <p>Tickets from <a href="{% url 'profileVisit' ticket.seller.pk %}">{{ticket.seller}}</a></p>
               </div>
               <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                <div class="d-flex flex-row align-items-center">
-                    <h4 class="mr-1">${{ticket.price}}</h4>
-                </div>
-                <h6 class="text-success">{{ticket.date}}</h6>
-                <div class="d-flex flex-column mt-4">
+                <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
+                  <h3 class="mb-0 font-weight-semibold">${{ticket.price}}</h3>
+                  <!-- <div> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> -->
+                  <div class="text-muted">{{ticket.date}}</div>
                   <a href="{% url 'ticketDetail' ticket.pk %}">
-                    <button class="btn btn-primary btn-sm" type="button">Details</button>
+                      <button type="button" class="btn btn-warning mt-4 text-white">Check Details</button>
                   </a>
-                  <!-- <button class="btn btn-primary btn-sm" type="button">Details</button> -->
-                  <div>
+                  <br><br>
                     <button class="btn btn-white btn-default add-wishlist" data-ticket="{{ticket.pk}}"><i class="fa fa-star"></i> Add to wishlist</button>
-                  </div>
-                  <!-- <button class="btn btn-outline-primary btn-sm mt-2" type="button">Add to wishlist</button> -->
+                    <br><br>
                 </div>
-              </div>
+            </div>
           </div>
+          <br>
         {% endfor %}
       </div>
     </div>

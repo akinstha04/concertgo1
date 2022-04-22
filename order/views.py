@@ -1,3 +1,4 @@
+from itertools import chain
 from django.shortcuts import redirect, render
 from .models import Order,Ticket,Profile
 from django.http import JsonResponse
@@ -36,15 +37,32 @@ def decrement(request):
     return JsonResponse(data)
 
 def paymentDone(request):
-    
     bb = request.GET.get('tquan')
-    print("ohshit"+str(bb))
     cc =request.GET.get('ticketid')
     cd = Ticket.objects.get(id=cc)
-    print("abc"+str(cc))
-    print("oh no oh no oh no")
-    use = request.user.profile
-    Order(buyer=use,ticket=cd,quantity=bb).save()
-    return redirect('/ticket')
-    # return render(request,'ticket.html')
+
+    if int(bb)<cd.quantity:
+        use = request.user.profile
+        Order(buyer=use,ticket=cd,quantity=bb).save()
+        cd.quantity=cd.quantity-int(bb)
+        return redirect('/ticket')
+    else:
+        return redirect()
+    # use = request.user.profile
+    # Order(buyer=use,ticket=cd,quantity=bb).save()
+    # return redirect('/ticket')
     
+    
+
+def myTicketPage(request):
+    profile = Profile.objects.get(user=request.user)
+    tickets = []
+    ts = None
+
+    my_tickets = profile.profile_myTickets()
+
+    tickets.append(my_tickets)
+    # sort and chain querys and unpack the tickets list
+    if len(tickets)>0:
+        ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.date_purchased)
+    return render(request,'order/my_tickets.html',{'profile':profile,'tickets':ts})

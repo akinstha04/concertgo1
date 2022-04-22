@@ -161,3 +161,45 @@ $('.decrement-btn').click(function(e) {
     //     },
     // })
 });
+
+$('.follow-form').submit(function(e){
+    e.preventDefault()
+    
+    const profile_id = $(this).attr('id')
+    
+    const followText = $(`.follow-btn${post_id}`).text()
+    const trim = $.trim(followText)
+
+    const url = $(this).attr('action')
+    
+    let res;
+    const followers = $(`.follower-count${post_id}`).text()
+    console.log('akdin'+followers)
+    const trimCount = parseInt(likes)
+    
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: {
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+            'post_id':post_id,
+        },
+        success: function(response) {
+            if(trim === 'Unfollow') {
+                $(`.follow-btn${profile_id}`).text('Follow')
+                res = trimCount - 1
+            } else {
+                $(`.follow-btn${profile_id}`).text('Unfollow')
+                res = trimCount + 1
+            }
+
+            $(`.follow-count${profile_id}`).text(res)
+            // if(response.bool==true){
+            //     console.log("rishavasdfafds")
+            // }
+        },
+        error: function(response) {
+            console.log('error', response)
+        }
+    })
+});

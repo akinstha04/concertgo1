@@ -263,3 +263,13 @@ button, input, select, textarea {
   line-height: inherit;
   color: #000000;
 }
+.pro-qty input {
+  text-align: center;
+  width: 34px;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  color: #4c4c4c;
+  line-height: 34px;
+  float: left;
+}

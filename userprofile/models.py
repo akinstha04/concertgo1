@@ -22,6 +22,9 @@ class Profile(models.Model):
     
     def profile_tickets(self):
         return self.ticket_set.all()
+    
+    def profile_myTickets(self):
+        return self.order_set.all()
 
     def total_followers(self):
         return self.followers.count()
@@ -41,6 +44,20 @@ class Profile(models.Model):
     #         output_size = (500, 500)
     #         img.thumbnail(output_size)
     #         img.save(self.image.path)
+# FOLLOW_CHOICES = (
+#     ('Like', 'Like'),
+#     ('Unlike', 'Unlike'),
+# )
+
+# class follow(models.Model): 
+#     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+#     userf = models.ForeignKey(Profile, on_delete=models.CASCADE)
+#     value = models.CharField(choices=FOLLOW_CHOICES, max_length=8)
+#     updated = models.DateTimeField(auto_now=True)
+#     created = models.DateTimeField(auto_now_add=True)
+    
+#     def __str__(self):
+#         return f"{self.user}-{self.userf}-{self.value}"
     
 class Post(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)

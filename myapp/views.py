@@ -4,20 +4,19 @@ from multiprocessing import context
 from xml.etree.ElementTree import Comment
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from myapp.forms import RegisterForm
 from myapp.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .forms import RegisterForm, CommentForm
+
 from django.views import View
 from userprofile.models import Post, Profile, Ticket, Wishlist
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from itertools import chain
-from django.http import HttpResponseRedirect, JsonResponse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django import forms
+
 
 # Create your views here.
 
@@ -159,157 +158,7 @@ def search(request):
 #     }
 #     return render(request, 'main.html', context)
 
-class PostListView(ListView):
-    model = Post
-    template_name = 'main.html'
-    context_object_name = 'posts'
-    ordering = ['-date_posted']
 
-class PostDetail(DetailView):
-    model=Post
-    pk ="pk"
-    count_hit = True
-    form = CommentForm
-    
-    def post(self, request, *args, **kwargs):
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            post = self.get_object()
-            form.instance.user = request.user.profile
-            form.instance.post = post
-            form.save()
-
-            return redirect(reverse("postDetail",kwargs={
-                "pk": post.pk
-            }))
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["form"] = self.form
-        return context
-    # template_name = 'userprofile/post_detail.html'
-    # pk="pk"
-    # count_hit = True
-    # def post (self,request,*args,**kwargs):
-    #     form = CommentForm(request.POST)
-    #     if form.is_valid():
-    #         post = self.get_object()
-    #         form.instance.user = request.user
-    #         form.instance.post = post
-    #         form.save()
-            
-    #         return redirect(reverse("post",kwargs={'pk':post.pk}))
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["form"] = self.form
-    #     return context
-
-
-    # template_name = 'post_detail.html'
-    # def get_context_data(self, *args, **kwargs):
-    #     post = get_object_or_404(Post,id = self.kwargs['pk'])
-    #     likes = post.total_likes()
-        
-    #     liked = False
-    #     if post.likes.filter(id=self.request.user.profile.id).exists():
-    #         liked = True
-
-    #     context["likes"] = likes
-    #     context["liked"] = liked
-    #     return context
-
-class PostUpload(CreateView):
-    model = Post
-    fields = ['image','detail']
-
-    def form_valid(self,form):
-        form.instance.owner = self.request.user.profile
-        return super().form_valid(form)
-    
-class PostUpdate(UserPassesTestMixin, UpdateView):
-    model = Post
-    fields = ['detail']
-    
-    def form_valid(self, form):
-        form.instance.owner.profile = self.request.user
-        return super().form_valid(form)
-
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user.profile == post.owner:
-            return True
-        return False
-
-    
-class PostDelete(UserPassesTestMixin, DeleteView):
-    model = Post
-    success_url = '/'
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user.profile == post.owner:
-            return True
-        return False
-
-
-class TicketListView(ListView):
-    model = Ticket
-    template_name = 'main.html'
-    context_object_name = 'posts'
-    ordering = ['-date_posted']
-
-class TicketDetail(DetailView):
-    model=Ticket
-
-class TicketUpload(CreateView):
-    model = Ticket
-    fields = ['image','title','detail','date','ex_date','price','quantity']
-
-    # widget = {
-    #         'title': forms.TextInput(attrs={'class': 'form-control'}),
-    #         'detail': forms.TextInput(attrs={'class': 'form-control'}),
-    #         'date': forms.DateInput(
-    #             format=('%Y-%m-%d'), attrs={
-    #                 'class': 'form-control', 
-    #                 'placeholder': 'Select a date',
-    #                 'type': 'date'
-    #             }),
-    #         'ex_date': forms.DateInput(
-    #             format=('%Y-%m-%d'), attrs={
-    #                 'class': 'form-control', 
-    #                 'placeholder': 'Select a date',
-    #                 'type': 'date'
-    #             }),
-    #         'price': forms.IntegerField(attrs={'class': 'form-control'}),
-            
-    #         'quantity': forms.IntegerField(attrs={'class': 'form-control'}),
-    #     }
-
-    def form_valid(self,form):
-        form.instance.seller = self.request.user.profile
-        return super().form_valid(form)
-
-class TicketUpdate(UserPassesTestMixin, UpdateView):
-    model = Ticket
-    fields = ['title','detail','quantity']
-    
-    def form_valid(self, form):
-        form.instance.seller.profile = self.request.user
-        return super().form_valid(form)
-
-    def test_func(self):
-        ticket = self.get_object()
-        if self.request.user.profile == ticket.seller:
-            return True
-        return False
-
-class TicketDelete(UserPassesTestMixin, DeleteView):
-    model = Ticket
-    success_url = '/'
-    def test_func(self):
-        ticket = self.get_object()
-        if self.request.user.profile == ticket.seller:
-            return True
-        return False
 
 
 def main(request):
@@ -341,59 +190,4 @@ def main(request):
     return render(request,'main.html',{'profile':profile,'posts':qs,'tickets':ts})
 
 
-def likePost(request, pk):
-    post = get_object_or_404(Post, id = request.POST.get('post_id'))
-    liked = False
-    if post.likes.filter(id=request.user.profile.id).exists():
-        post.likes.remove(request.user.profile)
-        liked = False
-    else:
-        post.likes.add(request.user.profile)
-        liked = True
-    return HttpResponseRedirect(reverse('main'))
-    # return HttpResponseRedirect(reverse('postDetail',args = [str(pk)]))
 
-
-class AddComment(CreateView):
-    model = Comment
-    form_class = CommentForm
-    template_name = 'userprofile/post_detail.html'
-
-    def form_valid(self,form):
-        form.instance.post_id = self.kwargs['pk']
-        form.instance.user = self.request.user.profile
-        return super().form_valid(form)
-    success_url = reverse_lazy('postDetail')
-    
-    
-def addWishlist(request):
-    # ticket = get_object_or_404(Ticket, id = request.POST.get('ticket_id'))
-    tid = request.GET['ticket']
-    ticket = Ticket.objects.get(pk=tid)
-    data = {}
-    checkw = Wishlist.objects.filter(ticket=ticket, user=request.user).count()
-    ticketsW = Wishlist.objects.filter(user=request.user).order_by('-id')
-    if checkw>0:
-        data={
-            'bool':False
-        }
-    else:
-        wishlist=Wishlist.objects.create(
-            ticket=ticket,
-            user=request.user
-        )
-        data={
-            'bool':True,
-        }
-    return JsonResponse(data)
-
-     
-def removeWishlist(request):
-    # ticket = get_object_or_404(Ticket, id = request.POST.get('ticket_id'))
-    tid = request.GET['ticket']
-    a = Wishlist.objects.get(Q(ticket=tid) & Q(user=request.user))
-    a.delete()
-    data={
-        'bool':True
-    }
-    return JsonResponse(data)
