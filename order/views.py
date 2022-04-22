@@ -8,7 +8,6 @@ def orderTicket(request,pk):
     pks = pk
     tickets = Ticket.objects.filter(pk=pks)
     bb = request.GET.get('quantity')
-    print("akinquan"+str(bb))
     for a in tickets:
         print(a.price)
         tot = int(a.price) * int(bb)

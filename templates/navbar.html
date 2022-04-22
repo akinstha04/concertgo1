@@ -104,9 +104,11 @@
               </div>
             </a> -->
             <div class="nav-items">
-              <img src="{{ user.profile.image.url }}" data-toggle="dropdown" class="icon user-profile" alt="">
+              <img src="{{ user.profile.image.url }}" data-toggle="dropdown" class="icon user-profile" alt="profile">
                 <div class="dropdown-menu">
-                  <a href="{% url 'profile' %}" class="dropdown-item"><i class="fa fa-user-o"></i> {{user.username}} profile</a>
+                  <!-- <a href="{% url 'profile' %}" class="dropdown-item"><i class="fa fa-user-o"></i> {{user.username}} profile</a> -->
+                  <a href="{% url 'profile' %}" class="dropdown-item"> {{user.username}} Profile</a>
+                  <a href="{% url 'myTickets' %}" class="dropdown-item">My tickets</a>
                   <!-- <a href="{% url 'profile' %}" class="dropdown-item"><img src="{% static 'img/notif.PNG' %}"></i> Notifications</a> -->
                   <div class="divider dropdown-divider"></div>
                   <!-- <a href="{% url 'logout' %}" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a> -->

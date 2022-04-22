@@ -41,8 +41,6 @@ def profilePage(request):
     return render(request,'userprofile/profile.html',{'profile':profile,'posts':qs, 'following':following,'post_count':post_count,'tickets':ts,'followers':followers})
 
 
-
-
 class ProfileVisit(DetailView):
     model = Profile
     template_name = 'userprofile/profile_visit.html'
@@ -68,10 +66,6 @@ class ProfileVisit(DetailView):
         context['post_count'] = self.get_object().profile_posts().count()
         
         return context
-
-
-
-
 
 @login_required
 def profileUpdate(request):
@@ -99,8 +93,6 @@ def profileUpdate(request):
     return render(request, 'userprofile/profile_update.html', context)
 
 
-
-
 def follow_unfollow_profile(request):
     if request.method=="POST":
         my_profile = Profile.objects.get(user=request.user)
@@ -121,8 +113,9 @@ def follow(request, pk):
     profile = get_object_or_404(Profile, id = request.POST.get('profile_id'))
     my_profile = Profile.objects.get(user=request.user)
     follow = False
-    # if profile.followers.filter(id=my_profile.id).exists():
-    if my_profile in profile.followers:
+    if profile.followers.filter(id=my_profile.id).exists():
+    # if my_profile.following.filter(id=profile.id).exists():
+    # if my_profile in profile.followers:
         profile.followers.remove(request.user)
         my_profile.following.remove(profile.user)
         follow = False
@@ -140,96 +133,7 @@ def ticketWishlistPage(request):
 
     return render(request,'userprofile/ticket_wishlist.html',{'profile':profile,'wishlist':ticketsW})
 
-def likeUnlikePost(request):
-    user = request.user
-    if request.method == 'POST':
-        post_id = request.POST.get('post_id')
-        post_obj = Post.objects.get(id=post_id)
-        profile = Profile.objects.get(user=user)
 
-        if profile in post_obj.likes.all():
-            post_obj.likes.remove(profile)
-        else:
-            post_obj.likes.add(profile)
-
-        like, created = Like.objects.get_or_create(user=profile, post_id=post_id)
-
-        if not created:
-            if like.value=='Like':
-                like.value='Unlike'
-                bool = True
-            else:
-                like.value='Like'
-        else:
-            like.value='Like'
-
-            post_obj.save()
-            like.save()
-    context = {
-        'bool':True
-    }
-
-    return JsonResponse(context)
-
-
-# def followUnfollow(request):
-#     user = request.user
-#     if request.method == 'POST':
-#         profile_id = request.POST.get('profile_id')
-#         profile_obj = Post.objects.get(id=profile_id)
-#         profilem = Profile.objects.get(user=user)
-
-#         if profilem in profile_obj.likes.all():
-#             profile_obj.likes.remove(profilem)
-#         else:
-#             profile_obj.likes.add(profilem)
-
-#         like, created = Like.objects.get_or_create(user=profilem, profile_id=profile_id)
-
-#         if not created:
-#             if follow.value=='Follow':
-#                 follow.value='Unfollow'
-#                 bool = True
-#             else:
-#                 follow.value='Like'
-#         else:
-#             follow.value='Like'
-
-#             profile_obj.save()
-#             like.save()
-#     context = {
-#         'bool':True
-#     }
-#         # data = {
-#         #     'value': like.value,
-#         #     'likes': post_obj.liked.all().count()
-#         # }
-
-#     return JsonResponse(context)
-
-def likePost(request, pk):
-    post = get_object_or_404(Post, id = request.POST.get('post_id'))
-    liked = False
-    if post.likes.filter(id=request.user.profile.id).exists():
-        post.likes.remove(request.user.profile)
-        liked = False
-    else:
-        post.likes.add(request.user.profile)
-        liked = True
-    return HttpResponseRedirect(reverse('main'))
-    # return HttpResponseRedirect(reverse('postDetail',args = [str(pk)]))
-
-
-class AddComment(CreateView):
-    model = Comment
-    form_class = CommentForm
-    template_name = 'userprofile/post_detail.html'
-
-    def form_valid(self,form):
-        form.instance.post_id = self.kwargs['pk']
-        form.instance.user = self.request.user.profile
-        return super().form_valid(form)
-    success_url = reverse_lazy('postDetail')
     
     
 def addWishlist(request):
@@ -326,6 +230,102 @@ class PostDelete(UserPassesTestMixin, DeleteView):
             return True
         return False
 
+
+def likeUnlikePost(request):
+    user = request.user
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        post_obj = Post.objects.get(id=post_id)
+        profile = Profile.objects.get(user=user)
+
+        if profile in post_obj.likes.all():
+            post_obj.likes.remove(profile)
+        else:
+            post_obj.likes.add(profile)
+
+        like, created = Like.objects.get_or_create(user=profile, post_id=post_id)
+
+        if not created:
+            if like.value=='Like':
+                like.value='Unlike'
+                bool = True
+            else:
+                like.value='Like'
+        else:
+            like.value='Like'
+
+            post_obj.save()
+            like.save()
+    context = {
+        'bool':True
+    }
+
+    return JsonResponse(context)
+
+
+# def followUnfollow(request):
+#     user = request.user
+#     if request.method == 'POST':
+#         profile_id = request.POST.get('profile_id')
+#         profile_obj = Post.objects.get(id=profile_id)
+#         profilem = Profile.objects.get(user=user)
+
+#         if profilem in profile_obj.likes.all():
+#             profile_obj.likes.remove(profilem)
+#         else:
+#             profile_obj.likes.add(profilem)
+
+#         like, created = Like.objects.get_or_create(user=profilem, profile_id=profile_id)
+
+#         if not created:
+#             if follow.value=='Follow':
+#                 follow.value='Unfollow'
+#                 bool = True
+#             else:
+#                 follow.value='Like'
+#         else:
+#             follow.value='Like'
+
+#             profile_obj.save()
+#             like.save()
+#     context = {
+#         'bool':True
+#     }
+#         # data = {
+#         #     'value': like.value,
+#         #     'likes': post_obj.liked.all().count()
+#         # }
+
+#     return JsonResponse(context)
+
+def likePost(request, pk):
+    post = get_object_or_404(Post, id = request.POST.get('post_id'))
+    liked = False
+    if post.likes.filter(id=request.user.profile.id).exists():
+        post.likes.remove(request.user.profile)
+        liked = False
+    else:
+        post.likes.add(request.user.profile)
+        liked = True
+    return HttpResponseRedirect(reverse('main'))
+    # return HttpResponseRedirect(reverse('postDetail',args = [str(pk)]))
+
+
+class AddComment(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'userprofile/post_detail.html'
+
+    def form_valid(self,form):
+        form.instance.post_id = self.kwargs['pk']
+        form.instance.user = self.request.user.profile
+        return super().form_valid(form)
+    success_url = reverse_lazy('postDetail')
+
+class CommentDelete(DeleteView):
+    model = Comment
+    success_url = reverse_lazy('main')
+    template_name = 'userprofile/comment_delete_confirm.html'
 
 class TicketListView(ListView):
     model = Ticket

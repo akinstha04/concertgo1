@@ -30,7 +30,8 @@
                 <div class="pull-right text-right">
                     {% if ticket.seller == request.user.profile%}
                     <button type="button" class="btn btn-light">
-                        <span class="bi bi-three-dots-vertical"></span>
+                        <span class="bi bi-three-dots-vertical">
+                        </span>
                     </button>
                     <div class="menu-nav">
                         <div class="dropdown-container" tabindex="-1">
@@ -41,6 +42,7 @@
                           </div>
                         </div>
                     </div>
+                    
                     {% endif %}
                 </div>
                 <h2 class="name">
