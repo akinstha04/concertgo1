@@ -3,27 +3,18 @@ from operator import truediv
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 
 
 from .forms import CommentForm, ProfilePicUpdateForm, ProfileUpdateForm, UserUpdateForm, ProfilePicUpdateForm
-from django.views.generic import ListView, DetailView, CreateView
 from .models import Comment, Post, Profile, Ticket, Wishlist, Like
 
 from django.shortcuts import get_object_or_404, redirect, render
-from myapp.models import User
-from django.contrib import messages
 
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
-
 # Create your views here.
-# def profilePage(request):
-#     return render(request, 'userprofile/profile.html')
-
 
 def profilePage(request):
     profile = Profile.objects.get(user=request.user)
@@ -109,22 +100,6 @@ def profileUpdate(request):
 
 
 
-    
-
-
-
-# def follow_unfollow_profile(request):
-#     if request.method=="POST":
-#         my_profile = Profile.objects.get(user=request.user)
-#         pk = request.POST.get('profile_pk')
-#         obj = Profile.objects.get(pk=pk)
-
-#         if obj.user in my_profile.following.all():
-#             my_profile.following.remove(obj.user)
-#         else:
-#             my_profile.following.add(obj.user)
-#         return redirect(request.META.get('HTTP_REFERER'))
-#     return redirect('userprofile/profile_visit.html')
 
 def follow_unfollow_profile(request):
     if request.method=="POST":
@@ -165,39 +140,6 @@ def ticketWishlistPage(request):
 
     return render(request,'userprofile/ticket_wishlist.html',{'profile':profile,'wishlist':ticketsW})
 
-
-# def likeUnlikePost(request):
-#     user = request.user
-#     if request.method == 'POST':
-#         post_id = request.POST.get('post_id')
-#         post_obj = Post.objects.get(id=post_id)
-#         profile = Profile.objects.get(user=user)
-                    
-#         if profile in post_obj.likes.all():
-#             post_obj.likes.remove(profile)
-#         else:
-#             post_obj.likes.add(profile)
-            
-#         like, created = Like.objects.get_or_create(user=profile, post_id=post_id)
-
-#         if not created:
-#             if like.value=='Like':
-#                 like.value='Unlike'
-#             else:
-#                 like.value='Like'
-#         else:
-#             like.value='Like'
-
-#             post_obj.save()
-#             like.save()
-
-#         data = {
-#             'value': like.value,
-#             'likes': post_obj.likes.all()
-#         }
-#         return JsonResponse(data, safe=False)
-#     return redirect('main')
-
 def likeUnlikePost(request):
     user = request.user
     if request.method == 'POST':
@@ -226,13 +168,9 @@ def likeUnlikePost(request):
     context = {
         'bool':True
     }
-        # data = {
-        #     'value': like.value,
-        #     'likes': post_obj.liked.all().count()
-        # }
 
     return JsonResponse(context)
-    # return redirect('main')
+
 
 # def followUnfollow(request):
 #     user = request.user
@@ -355,36 +293,6 @@ class PostDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context["form"] = self.form
         return context
-    # template_name = 'userprofile/post_detail.html'
-    # pk="pk"
-    # count_hit = True
-    # def post (self,request,*args,**kwargs):
-    #     form = CommentForm(request.POST)
-    #     if form.is_valid():
-    #         post = self.get_object()
-    #         form.instance.user = request.user
-    #         form.instance.post = post
-    #         form.save()
-            
-    #         return redirect(reverse("post",kwargs={'pk':post.pk}))
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["form"] = self.form
-    #     return context
-
-
-    # template_name = 'post_detail.html'
-    # def get_context_data(self, *args, **kwargs):
-    #     post = get_object_or_404(Post,id = self.kwargs['pk'])
-    #     likes = post.total_likes()
-        
-    #     liked = False
-    #     if post.likes.filter(id=self.request.user.profile.id).exists():
-    #         liked = True
-
-    #     context["likes"] = likes
-    #     context["liked"] = liked
-    #     return context
 
 class PostUpload(CreateView):
     model = Post

@@ -1,22 +1,11 @@
 from audioop import reverse
-import datetime
-from multiprocessing import context
-from xml.etree.ElementTree import Comment
-from django.http.response import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from myapp.forms import RegisterForm
 from myapp.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-
-from django.views import View
-from userprofile.models import Post, Profile, Ticket, Wishlist
-from django.db.models import Q
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse_lazy, reverse
+from userprofile.models import Profile
 from itertools import chain
-
 
 # Create your views here.
 
@@ -67,14 +56,6 @@ def logoutUser(request):
 #     return render(request, 'myapp/register.html', {'form': form})
 
 
-# def main(request):
-#     context = {
-#         'posts': Post.objects.all()
-#     }
-#     return render(request, 'main.html', context)
-
-
-
 
 
 
@@ -122,11 +103,6 @@ def ticketPage(request):
     my_tickets = profile.profile_tickets()
 
     tickets.append(my_tickets)
-
-
-    # ticketsW = Wishlist.objects.filter(user=request.user).order_by('-id')
-
-
     # sort and chain querys and unpack the tickets list
 
     if len(tickets)>0:
@@ -135,13 +111,6 @@ def ticketPage(request):
 
 
 
-# def ticketAddPage(request):
-#     return render(request, 'myapp/ticket_add.html')
-
-    
-# def main(request):
-#     return render(request, 'main.html')
-
 def search(request):
     if request.method == "POST":
         searched = request.POST['searched']
@@ -149,14 +118,6 @@ def search(request):
         return render(request, 'myapp/search.html', {'searched':searched,'results':results})
     else:
         return render(request, 'myapp/search.html')
-
-
-
-# def main(request):
-#     context = {
-#         'posts': Post.objects.all()
-#     }
-#     return render(request, 'main.html', context)
 
 
 
