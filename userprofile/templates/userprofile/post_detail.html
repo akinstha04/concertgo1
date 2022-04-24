@@ -47,17 +47,17 @@
                 </div>
                 <div class="panel-body">
                     <p>{{ post.detail }}</p>
-                    <div class="video-container">
+                    <div class="video-container" style="height:-10">
                         <image src="{{ post.image.url }}" width="524" frameborder="0"></image>
                     </div>
                     
-                    <!-- <div class="actions">
+                    <div class="actions">
                         <div class="btn-group" style="display: flex;justify-content: space-around;">
                             <form action = "{% url 'likeUnlikePost' %}" method="POST" class='like-form' id="{{post.id}}">
                                 {% csrf_token %}
                                 <input type="hidden" name="post_id" value="{{post.id}}">
                                 <button type="submit" class="btn btn-link like-btn{{post.id}}">
-                                    {% if liked %}
+                                    {% if request.user.profile not in post.likes.all %}
                                     Like
                                     {% else %}
                                     Unlike
@@ -70,7 +70,7 @@
                             </a>
                             <div class="pull-right" style="display: flex;"><strong style="margin-right: 5px;"><div class="like-count{{post.id}}"> {{post.likes.count }} </div></strong>  Likes</div>
                         </div>
-                    </div>   -->
+                    </div>  
                     
                 </div>
             </div>        
@@ -104,13 +104,12 @@
                         <hr size="8" width="98%" color="gray">
                     {% endif %}
                 <div class="panel-footer">
-                    <div class="d-flex flex-row add-comment-section mt-4 mb-4">
-                        <form method="POST">
+                    <div class="add-comment-section">
+                        <form method="POST" class="d-flex justify-content-between">
                             {% csrf_token %}
                             {{ form }}
                             <button class="btn btn-primary" type="submit">Comment</button>
                         </form>
-
                     </div>
                 </div>
             </div>

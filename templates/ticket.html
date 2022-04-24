@@ -39,12 +39,9 @@
       <div class="col-md-10">
         {% for ticket in tickets %}
           <div class="row p-2 bg-white border rounded">
-            <!-- <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="https://i.imgur.com/QpjAiHq.jpg"></div> -->
             <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ticket.image.url}}"></div>
               <div class="col-md-6 mt-1">
                   <h5>{{ticket.title}}</h5>
-                  <!-- <div class="mt-1 mb-1 spec-1"><span>100% cotton</span><span class="dot"></span><span>Light weight</span><span class="dot"></span><span>Best finish<br></span></div>
-                  <div class="mt-1 mb-1 spec-1"><span>Unique design</span><span class="dot"></span><span>For men</span><span class="dot"></span><span>Casual<br></span></div> -->
                   <p>{{ticket.detail}}</p>
                   <br>
                   <p>Tickets from <a href="{% url 'profileVisit' ticket.seller.pk %}">{{ticket.seller}}</a></p>
@@ -52,7 +49,6 @@
               <div class="align-items-center align-content-center col-md-3 border-left mt-1">
                 <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
                   <h3 class="mb-0 font-weight-semibold">${{ticket.price}}</h3>
-                  <!-- <div> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> -->
                   <div class="text-muted">{{ticket.date}}</div>
                   <a href="{% url 'ticketDetail' ticket.pk %}">
                       <button type="button" class="btn btn-warning mt-4 text-white">Check Details</button>
@@ -71,36 +67,6 @@
   </div>
   
 
-  <!-- <div class="gallery_product container mt-5 mb-5 filter category2">
-    <div class="d-flex justify-content-center row">
-      <div class="col-md-10" id="wishlistclass">
-        {% for ticket in wishlist %}
-          <div class="row p-2 bg-white border rounded" >
-            <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ticket.ticket.image.url}}"></div>
-              <div class="col-md-6 mt-1">
-                  <h5>{{ticket.ticket.title}}</h5>
-                  <p>{{ticket.ticket.detail}}</p>
-                  <br>
-                  <p>Tickets from <a href="{% url 'profileVisit' ticket.ticket.seller.pk %}">{{ticket.ticket.seller}}</a></p>
-              </div>
-              <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                <div class="d-flex flex-row align-items-center">
-                    <h4 class="mr-1">${{ticket.ticket.price}}</h4>
-                </div>
-                <h6 class="text-success">{{ticket.ticket.date}}</h6>
-                <div class="d-flex flex-column mt-4">
-                  <a href="{% url 'ticketDetail' ticket.pk %}">
-                    <button class="btn btn-primary btn-sm" type="button">Details</button>
-                  </a>
-                    <button class="btn btn-info mt-2 btn-sm remove-wishlist" type="button" pid="{{ticket.ticket.pk}}">Remove</button>
-                </div>
-              </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-    
-  </div> -->
 
 
 

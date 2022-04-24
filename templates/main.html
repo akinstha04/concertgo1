@@ -29,9 +29,9 @@
                     </div>
                     <div class="panel-body">
                         <p>{{ post.detail }}</p>
-                        <div class="video-container">
+                        <div class="video-container mt-n1">
                             <a href="{% url 'postDetail' post.pk %}">
-                                <image src="{{ post.image.url }}" width="524" frameborder="0"></image>
+                                <image src="{{ post.image.url }}" class="pos" width="524" frameborder="0"></image>
                             </a>
                         </div>
                         
@@ -56,23 +56,7 @@
                                 <div class="pull-right" style="display: flex;"><strong style="margin-right: 5px;"><div class="like-count{{post.id}}"> {{post.likes.count }} </div></strong>  Likes</div>
                             </div>
                         </div>  
-                        
-                        <!-- commentsection -->
-
-                        <!-- <div class="media">
-                            <a class="pull-left" href="#">
-                                <img class="media-object img-rounded" src="https://bootdey.com/img/Content/avatar/avatar1.png">
-                            </a>
-                            <div class="media-body">
-                                <div class="pull-right small">3 hours ago</div>
-                                <h4 class="media-heading">Media heading</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                            </div>
-                        </div> -->
                     </div>
-                    <!-- <div class="panel-footer">
-                        <input type="email" class="form-control" placeholder="Write a comment...">
-                    </div> -->
                 </div>
             {% endfor %}
                 

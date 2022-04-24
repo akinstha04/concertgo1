@@ -119,7 +119,7 @@ $('.increment-btn').click(function(e) {
     // console.log("asdf"+ids)
     var value = parseInt(inc_value,10);
     value = isNaN(value) ? 0 : value;
-    if(value<5)
+    if(value<20)
         value++;
         $(this).closest('.certified').find('.qty-input').val(value);
 

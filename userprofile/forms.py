@@ -2,8 +2,8 @@ from django import forms
 from django.utils.translation import gettext, gettext_lazy as _
 # from django.contrib.auth.models import User
 from myapp.models import User
-from .models import Profile, Post,Comment
-from django.views.generic import ListView, DetailView, CreateView
+from .models import Profile, Comment, Ticket
+
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -26,8 +26,6 @@ class ProfilePicUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['image']
 
-        # fields = '__all__'
-        # exclude = ['user']
 class CommentForm(forms.ModelForm):
     body = forms.CharField(
         widget=forms.TextInput(attrs={'class':'form-control mr-3','placeholder':'Write a comment'}),
@@ -38,3 +36,11 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('body',)
+
+class TicketCreate(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['image','title','detail','date','ex_date','price','quantity']
+        widgets = {'date': forms.DateInput(attrs={'type': 'date'}), 'ex_date': forms.DateInput(attrs={'type': 'date'})}
+
+        # widgets = {'image':forms.ImageField(attrs={'class':'form-control'}),'title':forms.TimeField(attrs={'class':'form-control'}),'date': forms.NumberInput(attrs={'type': 'date'}),'ex_date':forms.DateTimeInput(attrs={'class':'form-control', 'type':'date'}), 'price':forms.IntegerField(attrs={'class':'form-control'}),'quantity':forms.IntegerField(attrs={'class':'form-control'})}

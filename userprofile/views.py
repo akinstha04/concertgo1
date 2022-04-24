@@ -4,12 +4,11 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
+from django.views import View
 
-
-from .forms import CommentForm, ProfilePicUpdateForm, ProfileUpdateForm, UserUpdateForm, ProfilePicUpdateForm
+from .forms import CommentForm, ProfilePicUpdateForm, ProfileUpdateForm, TicketCreate, UserUpdateForm, ProfilePicUpdateForm
 from .models import Comment, Post, Profile, Ticket, Wishlist, Like
 
-from django.shortcuts import get_object_or_404, redirect, render
 
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -336,37 +335,40 @@ class TicketListView(ListView):
 class TicketDetail(DetailView):
     model=Ticket
 
-class TicketUpload(CreateView):
-    model = Ticket
-    fields = ['image','title','detail','date','ex_date','price','quantity']
+# class TicketUpload(CreateView):
+#     model = Ticket
+#     fields = ['image','title','detail','date','ex_date','price','quantity']
 
-    # widget = {
-    #         'title': forms.TextInput(attrs={'class': 'form-control'}),
-    #         'detail': forms.TextInput(attrs={'class': 'form-control'}),
-    #         'date': forms.DateInput(
-    #             format=('%Y-%m-%d'), attrs={
-    #                 'class': 'form-control', 
-    #                 'placeholder': 'Select a date',
-    #                 'type': 'date'
-    #             }),
-    #         'ex_date': forms.DateInput(
-    #             format=('%Y-%m-%d'), attrs={
-    #                 'class': 'form-control', 
-    #                 'placeholder': 'Select a date',
-    #                 'type': 'date'
-    #             }),
-    #         'price': forms.IntegerField(attrs={'class': 'form-control'}),
-            
-    #         'quantity': forms.IntegerField(attrs={'class': 'form-control'}),
-    #     }
+#     def form_valid(self,form):
+#         form.instance.seller = self.request.user.profile
+#         return super().form_valid(form)
 
-    def form_valid(self,form):
-        form.instance.seller = self.request.user.profile
-        return super().form_valid(form)
+class addTicket(View): 
+    def get(self, request):
+        form = TicketCreate()
+
+        return render(request, 'userprofile/ticket_add.html', {'form': form})
+
+    def post(self, request):
+        form = TicketCreate(request.POST)#data fetched from TicketCreate
+        if form.is_valid():#checking form valid or not
+            image = request.FILES['image']
+            title = form.cleaned_data['title']
+            detail = form.cleaned_data['detail']
+            date = form.cleaned_data['date']
+            ex_date = form.cleaned_data['ex_date']
+            price = form.cleaned_data['price']
+            quantity = form.cleaned_data['quantity']
+            seller = self.request.user.profile
+            reg = Ticket(seller=seller,image=image,title=title,detail=detail,date=date,ex_date=ex_date,price=price,quantity=quantity)
+            reg.save()
+            # messages.success(request, 'Added Successfully')
+            return redirect('main')
+        return render(request,'userprofile/ticket_add.html',{'form':form})
 
 class TicketUpdate(UserPassesTestMixin, UpdateView):
     model = Ticket
-    fields = ['title','detail','quantity']
+    fields = ['image','title','detail','quantity']
     
     def form_valid(self, form):
         form.instance.seller.profile = self.request.user

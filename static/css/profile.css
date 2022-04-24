@@ -8,7 +8,7 @@
 .profile-container .profile-header .profile-stats .inlinestats-col {
   padding-top: 15px;
   text-align: center;
-  font-family: 'Lucida Sans','trebuchet MS',Arial,Helvetica;
+  /* font-family: 'Lucida Sans','trebuchet MS',Arial,Helvetica; */
   border-top: 1px solid #eee;
   min-height: 55px;
 }
@@ -17,7 +17,7 @@
   margin: 0 auto;
   text-align: center;
   font-size: 30px;
-  font-family: 'Lucida Sans','trebuchet MS',Arial,Helvetica;
+  /* font-family: 'Lucida Sans','trebuchet MS',Arial,Helvetica; */
 }
 .pink {
   color: #e75b8d!important;
@@ -49,7 +49,7 @@
   color: #fff;
 }
 .profile-container .profile-header .profile-info .header-fullname {
-  font: 21px 'Lucida Sans','trebuchet MS',Arial,Helvetica;
+  /* font: 21px 'Lucida Sans','trebuchet MS',Arial,Helvetica; */
   margin-top: 27px;
   display: inline-block;
 }

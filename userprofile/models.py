@@ -4,7 +4,6 @@ from tkinter import CASCADE
 from turtle import ondrag
 from django.utils import timezone
 from django.db import models
-# from django.contrib.auth.models import User
 from myapp.models import User
 from django.urls import reverse
 # from PIL import Image
@@ -28,11 +27,11 @@ class Profile(models.Model):
 
     def total_followers(self):
         return self.followers.count()
+
     def total_following(self):
         return self.following.count()
 
     def __str__(self):
-        # return f'{self.user.username} Profile'
         return str(self.user.username)
 
     # def save(self):
@@ -44,9 +43,11 @@ class Profile(models.Model):
     #         output_size = (500, 500)
     #         img.thumbnail(output_size)
     #         img.save(self.image.path)
+
+
 # FOLLOW_CHOICES = (
-#     ('Like', 'Like'),
-#     ('Unlike', 'Unlike'),
+#     ('Follow', 'Follow'),
+#     ('Unfollow', 'Unfollow'),
 # )
 
 # class follow(models.Model): 
@@ -96,7 +97,7 @@ class Ticket(models.Model):
     title = models.CharField(max_length=100)
     detail = models.TextField(max_length=200)
     date = models.DateField()
-    ex_date = models.DateTimeField()    #the time after which the ticket cannot be purchased.
+    ex_date = models.DateField()    #the time after which the ticket cannot be purchased.
     price = models.FloatField(max_length=255)
     image = models.ImageField(default = 'ticket_pics\default.jpg',upload_to='ticket_pics')
     quantity = models.IntegerField(default=1)

@@ -15,7 +15,7 @@ body{
   width: 100%;
   background: #fafafa;
   position: relative;
-  font-family: 'roboto', sans-serif;
+  /* font-family: 'roboto', sans-serif; */
 }
 .ticket{
   margin-bottom: 4px;

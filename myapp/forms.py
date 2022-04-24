@@ -30,20 +30,6 @@ class RegisterForm(UserCreationForm):
         fields = ('username','email','password1','password2','is_manager')
 
 
-
-
-# class RegistrationForms(UserCreationForm): #inheriting usercreationform
-#     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Username'}))
-#     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Password'}))
-#     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm Password'}))
-#     email = forms.CharField(required= True, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Email'}))
-#     # email = forms.EmailField(required= True,max_length=50, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Email'}))
-#     phone = forms.IntegerField(required= True, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Phone number'}))
-#     class Meta:#model form
-#         model = User
-#         fields = ['username','email','password1','password2','phone']
-#         # widgets = {'username': forms.TextInput(attrs={'class':'form-control','placeholder':'username'})}
-
 class MyPasswordResetForm(PasswordResetForm):
   email = forms.EmailField(
         label=("Email"),
