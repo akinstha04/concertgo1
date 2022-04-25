@@ -10,6 +10,7 @@
 
 {% include 'navbar.html' %}
 
+
 <div class="container">
     <div class="row activity">
         <div class="col-md-6">
@@ -79,7 +80,8 @@
             <!-- right column -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div><strong>Comments</strong></div>
+                    <a href="{{request.META.HTTP_REFERER}}" class="previous round"><div class="prev">&#8249;</div></a>
+                    <div><strong>Comments</strong></div>  
                 </div>
                 <div class="panel-body">
                     {% if not post.comments.all %}

@@ -10,5 +10,6 @@ urlpatterns = [
     path('payment/',views.paymentDone,name="paymentdone"),
     
     path('mytickets/', views.myTicketPage, name = "myTickets"),
+    path('ticket/sales/', views.myTicketSales, name = "myTicketSales"),
 ]
 urlpatterns += staticfiles_urlpatterns()

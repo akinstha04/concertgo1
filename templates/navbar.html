@@ -81,21 +81,21 @@
         </a>
         <!-- <input type="text" class="search-box" placeholder="search"> -->
         <div class="nav-items d-flex flex-row">
-            <a href="{% url 'main' %}"><img src ="{% static 'img/home.PNG' %}" class="icon" alt="home"></a>
+            <a href="{% url 'main' %}"><img src ="{% static 'img/home.PNG' %}" class="icon" alt="home" data-toggle="tooltip" data-placement="bottom" title="Home"></a>
             <a href="{% url 'search' %}">
-              <img src ="{% static 'img/search.PNG' %}" class="icon" alt="search">
+              <img src ="{% static 'img/search.PNG' %}" class="icon" alt="search" data-toggle="tooltip" data-placement="bottom" title="Search">
             </a>
             {% if request.user.is_manager %}
             <a href="{% url 'addTicket' %}">
-              <img src ="{% static 'img/addticket.PNG' %}" class="icon" alt="addticket">
+              <img src ="{% static 'img/addticket.PNG' %}" class="icon" alt="addticket" data-toggle="tooltip" data-placement="bottom" title="Add Tickets">
             </a>
             {% endif %}
             <!-- <img src ="{% static 'img/add.PNG' %}" class="icon" alt=""> -->
             <a href="{% url 'postUpload' %}">
-                <img src ="{% static 'img/addpost1.PNG' %}" class="icon" alt="addpost">
+                <img src ="{% static 'img/addpost1.PNG' %}" class="icon" alt="addpost" data-toggle="tooltip" data-placement="bottom" title="Add Post">
             </a>
             <a href="{% url 'ticket' %}">
-                <img src ="{% static 'img/ticket.PNG' %}" class="icon" alt="tickets">
+                <img src ="{% static 'img/ticket.PNG' %}" class="icon" alt="tickets" data-toggle="tooltip" data-placement="bottom" title="Tickets">
             </a>
             <!-- <img src ="{% static 'img/notif.PNG' %}" class="icon" alt="notification"> -->
             <!-- <a href="{% url 'profile' %}">
@@ -104,11 +104,16 @@
               </div>
             </a> -->
             <div class="nav-items">
-              <img src="{{ user.profile.image.url }}" data-toggle="dropdown" class="icon user-profile" alt="profile">
+              <img src="{{ user.profile.image.url }}" data-toggle="dropdown" class="icon user-profile" alt="profile" data-toggle="tooltip" data-placement="bottom" title="Profile">
                 <div class="dropdown-menu">
                   <!-- <a href="{% url 'profile' %}" class="dropdown-item"><i class="fa fa-user-o"></i> {{user.username}} profile</a> -->
                   <a href="{% url 'profile' %}" class="dropdown-item"> {{user.username}} Profile</a>
                   <a href="{% url 'myTickets' %}" class="dropdown-item">My tickets</a>
+                  {% if request.user.is_manager %}
+                  <a href="{% url 'myTicketSales' %}">
+                      <button type="button" class="dropdown-item">Check sales</button>
+                  </a>
+                  {% endif %}
                   <!-- <a href="{% url 'profile' %}" class="dropdown-item"><img src="{% static 'img/notif.PNG' %}"></i> Notifications</a> -->
                   <div class="divider dropdown-divider"></div>
                   <!-- <a href="{% url 'logout' %}" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a> -->

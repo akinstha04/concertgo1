@@ -14,7 +14,8 @@
               <h2>Are you sure you want to delete the ticket {{ object.title }}</h2>
               <div align="center">
                 <button class="btn btn-danger btn-rounded" type="submit">Confirm</button>
-                <a class="btn btn-info btn-rounded" href="{% url 'postDetail' object.pk %" type="submit">Cancel</a>
+                <!-- <a href="{{request.META.HTTP_REFERER}}">Go back</a> -->
+                <a class="btn btn-info btn-rounded" href="{{request.META.HTTP_REFERER}}" type="submit">Cancel</a>
               </div>
             </form>
           </div>

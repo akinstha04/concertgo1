@@ -323,3 +323,30 @@ body{
     width:40px;
     height:40px;
 }
+
+.qty-input {
+    text-align: center;
+    width: 34px;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    color: #4c4c4c;
+    line-height: 34px;
+    float: left;
+}
+.decrement-btn{
+    font-size: 35px;
+    color: #b2b2b2;
+    float: left;
+    line-height: 30px;
+    cursor: pointer;
+    width: 18px;
+}
+.increment-btn{
+    font-size: 28px;
+    color: #b2b2b2;
+    float: left;
+    line-height: 35px;
+    cursor: pointer;
+    width: 18px;
+}

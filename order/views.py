@@ -38,15 +38,20 @@ def decrement(request):
 def paymentDone(request):
     bb = request.GET.get('tquan')
     cc =request.GET.get('ticketid')
-    cd = Ticket.objects.get(id=cc)
+    cd = Ticket.objects.filter(id=cc)
+    print(cd)
 
-    if int(bb)<cd.quantity:
-        use = request.user.profile
-        Order(buyer=use,ticket=cd,quantity=bb).save()
-        cd.quantity=cd.quantity-int(bb)
+    for cd in cd:
+        if int(bb)<cd.quantity:
+            use = request.user.profile
+            print(cd.quantity)
+            cd.quantity=cd.quantity-int(bb)
+            cd.save()
+            Order(buyer=use,ticket=cd,quantity=bb).save()
+            
         return redirect('/ticket')
     else:
-        return redirect()
+        return redirect('/ticket')
     # use = request.user.profile
     # Order(buyer=use,ticket=cd,quantity=bb).save()
     # return redirect('/ticket')
@@ -65,3 +70,20 @@ def myTicketPage(request):
     if len(tickets)>0:
         ts = sorted(chain(*tickets), reverse=True, key=lambda obj: obj.date_purchased)
     return render(request,'order/my_tickets.html',{'profile':profile,'tickets':ts})
+
+# def myTicketOrders(request, pk):
+#     profile = Profile.objects.get(user=request.user)
+#     orders = []
+#     pks = pk
+#     ts = None
+
+#     o = Order.objects.filter(pk=pks)
+
+#     orders.append(o)
+#     if len(orders)>0:
+#         ts = sorted(chain(*orders), reverse=True, key=lambda obj: obj.date_purchased)
+#     return render(request,'order/ticketBuyers.html',{'profile':profile,'orders':ts})
+
+def myTicketSales(request):
+    order = Order.objects.all()
+    return render(request, 'order/ticketSales.html', {'orders': order})

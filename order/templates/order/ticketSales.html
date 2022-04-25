@@ -8,19 +8,10 @@
 {% include 'navbar.html' %}
 
 <div class="container">
-    <div class="search-form">
-        <form action="#" method="POST">
-            {% csrf_token %}
-            <div class="input-group">
-                <input type="text" placeholder="Username" name="searched" class="form-control input-lg">
-                <div class="input-group-btn">
-                    <button class="btn btn-lg btn-primary" type="submit">
-                        Search
-                    </button>
-                </div>
-            </div>
-        </form>
+    <div class="text-center">
+        <h2>Check your sales</h2>
     </div>
+    
 
     
 
@@ -37,20 +28,18 @@
                                         <div class="table-responsive">
                                             <table class="table widget-26">
                                                 <tbody>
-                                                    
-
-                                                    {% if searched %}
-                                                    <p>you searched</p>
-                                                        {% for user in results %}
+                                                
+                                                        {% for order in orders %}
+                                                        {% if order.ticket.seller == request.user.profile %}
                                                         <tr>
                                                             <td>
                                                                 <div class="widget-26-job-emp-img">
-                                                                    <img src="{{ user.profile.image.url}}" alt="Company" />
+                                                                    <img src="{{ order.buyer.image.url}}" alt="Company" />
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="widget-26-job-title">
-                                                                    <a href="{% url 'profileVisit' user.profile.pk %}">{{ user.username }}</a>
+                                                                    <a href="{% url 'profileVisit' order.buyer.pk %}">{{ order.buyer }}</a>
                                                                     <!-- <p>{{ user.username }}</p> -->
                                                                     <!-- <p class="m-0"><a href="#" class="employer-name">AxiomUI Llc.</a> <span class="text-muted time">2 days ago</span></p> -->
                                                                 </div>
@@ -61,28 +50,30 @@
                                                                     <p class="text-muted m-0">in <span class="location">New York, US</span></p>
                                                                 </div>
                                                             </td> -->
-                                                            {% if user.is_manager %}
+
                                                                 <td>
                                                                     <div class="widget-26-job-category">
-                                                                        <span>Manager</span>
+                                                                        <span>{{order.quantity}} tickets</span>
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                            {% else %}
+
                                                             <td>
                                                                 <div class="widget-26-job-category">
-                                                                    <span>User</span>
+                                                                    <!-- <span>{{order.ticket}}</span> -->
+                                                                    <a href="{% url 'ticketDetail' order.ticket.pk %}">{{ order.ticket }}</a>
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                            {% endif %}
+
 
                                                             
                                                                 
                                                             </td>
                                                         </tr>
+                                                        {% endif %}
                                                         {% endfor %}
-                                                    {% endif %}
+
                                                 </tbody>
                                             </table>
                                         </div>
