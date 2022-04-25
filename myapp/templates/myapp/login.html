@@ -27,7 +27,8 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <div class="input-group"> <input type="password" class="form-control" name="password" type="text" placeholder="Password"> </div>
+                            <div class="input-group"> <input type="password" class="form-control" name="password" id="myInput" type="text" placeholder="Password" data-toggle="password"> </div>
+                            <input type="checkbox" onclick="myFunction()">Show Password
                         </div>
                     </div>
                 </div>
@@ -46,6 +47,16 @@
         </div>
     </div>
 </div>
+<script>
+  function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
 
 </body>
     {% endblock content %}
