@@ -33,20 +33,6 @@
                   </div>
               </div>
               <div class="col-md-12 col-sm-12 col-xs-12 profile-stats">
-                <!-- <div class="row">
-                    <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div class="stats-value">284</div>
-                        <div class="stats-title">FOLLOWING</div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div class="stats-value">803</div>
-                        <div class="stats-title">FOLLOWERS</div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12 stats-col">
-                        <div class="stats-value">9</div>
-                        <div class="stats-title">POSTS</div>
-                    </div>
-                </div> -->
                 <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
                       {{ pp_form|crispy }}
@@ -57,10 +43,14 @@
                       {% endif %}
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-4 inlinestats-col">
-                      <div class="form-group">
-                        <button type="submit" class="form-control btn btn-primary rounded submit px-3">Done</button>
-                      </div>
+                      {% if user.is_authenticated %}
+                      <a href="{% url 'password_change' %}">Change password</a>
+                      {% endif %}
+                      
                     </div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="form-control btn btn-primary rounded submit px-3">Save changes</button>
                 </div>
             </div>
             </form>
@@ -70,43 +60,4 @@
   </div>
 </div>
 
-<!-- <section class="ftco-section">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-12 col-lg-10">
-        <div class="wrap d-md-flex">
-          <div class="img" style="background-image: url({{user.profile.image.url}});">
-          </div>
-          <div class="login-wrap p-4 p-md-5">
-            <div class="d-flex">
-              <div class="w-100">
-                <h3 class="mb-4">Profile Update</h3>
-              </div>
-            </div>
-            <form method = "POST" action = "" enctype="multipart/form-data">
-            <form action="#" class="signin-form">
-              <div class="form-group mb-3">
-                {% csrf_token %}
-                  {{ u_form|crispy }}
-                  {{ p_form|crispy }}
-                  {{ pp_form|crispy }}
-              </div>
-              {% if messages %}
-              {% for message in messages %}
-                <p {% if message.tags %} class = "alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
-              {% endfor %}
-              {% endif %}
-              <div class="form-group">
-                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Done</button>
-              </div>
-              <div class="form-group d-md-flex">
-              </div>
-            </form>
-            <p class="text-center"><a data-toggle="tab" href="{% url 'profile' %}">Back to profile</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
 {% endblock content %}

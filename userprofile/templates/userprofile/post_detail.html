@@ -85,7 +85,7 @@
                 </div>
                 <div class="panel-body">
                     {% if not post.comments.all %}
-                    <h3> No comments yet</h3>
+                    <p> No comments yet</p>
                     {% else %}
                         {% for comment in post.comments.all %}
                             <div class="media">
@@ -94,7 +94,7 @@
                                         {% if comment.user == request.user.profile %}
                                         <br>
                                         <div class="pull-right small">
-                                            <a href="{% url 'comment_delete' comment.id %}"><p>delete comment</p></a> 
+                                            <a href="{% url 'comment_delete' comment.id %}"><p>delete</p></a> 
                                         </div>
                                         {% endif %}
                                     </div>
@@ -106,7 +106,7 @@
                         <hr size="8" width="98%" color="gray">
                     {% endif %}
                     <div class="add-comment-section">
-                        <form method="POST" class="d-flex justify-content-between">
+                        <form method="POST" class="d-flex justify-content-between" autocomplete="off">
                             {% csrf_token %}
                             {{ form }}
                             <button class="btn btn-primary" type="submit">Comment</button>

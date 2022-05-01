@@ -19,7 +19,10 @@
                     <form method="post">
                         {% csrf_token %}
                         <p>Are you sure you want to delete your account?</p>
-                        <input type="submit" value="Confirm">
+                        <input type="submit" class="btn btn-danger btn-rounded" value="Confirm">
+                        <a href="{{request.META.HTTP_REFERER}}">
+                          <button type="button" class="btn btn-default">Cancel</button>
+                        </a>
                     </form>
                     {% endif %}
                 </div>

@@ -113,8 +113,6 @@ def follow(request, pk):
     my_profile = Profile.objects.get(user=request.user)
     follow = False
     if profile.followers.filter(id=my_profile.id).exists():
-    # if my_profile.following.filter(id=profile.id).exists():
-    # if my_profile in profile.followers:
         profile.followers.remove(request.user)
         my_profile.following.remove(profile.user)
         follow = False
@@ -177,6 +175,7 @@ class PostListView(ListView):
 class PostDetail(DetailView):
     model=Post
     pk ="pk"
+    # comment
     count_hit = True
     form = CommentForm
     
@@ -297,29 +296,7 @@ def likeUnlikePost(request):
 
 #     return JsonResponse(context)
 
-def likePost(request, pk):
-    post = get_object_or_404(Post, id = request.POST.get('post_id'))
-    liked = False
-    if post.likes.filter(id=request.user.profile.id).exists():
-        post.likes.remove(request.user.profile)
-        liked = False
-    else:
-        post.likes.add(request.user.profile)
-        liked = True
-    return HttpResponseRedirect(reverse('main'))
-    # return HttpResponseRedirect(reverse('postDetail',args = [str(pk)]))
 
-
-class AddComment(CreateView):
-    model = Comment
-    form_class = CommentForm
-    template_name = 'userprofile/post_detail.html'
-
-    def form_valid(self,form):
-        form.instance.post_id = self.kwargs['pk']
-        form.instance.user = self.request.user.profile
-        return super().form_valid(form)
-    success_url = reverse_lazy('postDetail')
 
 class CommentDelete(DeleteView):
     model = Comment
@@ -335,13 +312,6 @@ class TicketListView(ListView):
 class TicketDetail(DetailView):
     model=Ticket
 
-# class TicketUpload(CreateView):
-#     model = Ticket
-#     fields = ['image','title','detail','date','ex_date','price','quantity']
-
-#     def form_valid(self,form):
-#         form.instance.seller = self.request.user.profile
-#         return super().form_valid(form)
 
 class addTicket(View): 
     def get(self, request):

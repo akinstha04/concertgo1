@@ -40,7 +40,8 @@
                                                     
 
                                                     {% if searched %}
-                                                    <p>you searched</p>
+                                                    <p>you searched for '{{searched}}'</p>
+                                                        {% if results %}
                                                         {% for user in results %}
                                                         <tr>
                                                             <td>
@@ -82,6 +83,9 @@
                                                             </td>
                                                         </tr>
                                                         {% endfor %}
+                                                        {% else %}
+                                                        <p>no users found</p>
+                                                        {% endif %}
                                                     {% endif %}
                                                 </tbody>
                                             </table>

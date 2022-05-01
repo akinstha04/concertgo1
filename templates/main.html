@@ -11,94 +11,99 @@
 <div class="container">
     <div class="row activity">
         <div class="col-md-6">
+            <div class="leftcol">
             <!-- left column -->
             
-            {% for post in posts %}
-            
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img src="{{ post.owner.image.url }}" class="user-profile">
-                        <!-- <div class="pull-right text-right">
-                            <i class="fa fa-calendar"></i><br> {{ post.date_posted }}
-                        </div> -->
-                        <a href="{% url 'profileVisit' post.owner.pk %}">
-                            <div><strong>{{ post.owner }}</strong></div>
-                        </a>
-                        <!-- <div><strong>{{ post.owner }}</strong></div> -->
-                        <div class="small">{{ post.date_posted | naturaltime }}</div>
-                    </div>
-                    <div class="panel-body">
-                        <p>{{ post.detail }}</p>
-                        <div class="video-container mt-n1">
-                            <a href="{% url 'postDetail' post.pk %}">
-                                <image src="{{ post.image.url }}" class="pos" width="524" frameborder="0"></image>
-                            </a>
-                        </div>
-                        
-                        <div class="actions">
-                            <div class="btn-group" style="display: flex;justify-content: space-around;">
-                                <form action = "{% url 'likeUnlikePost' %}" method="POST" class='like-form' id="{{post.id}}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="post_id" value="{{post.id}}">
-                                    <button type="submit" class="btn btn-link like-btn{{post.id}}">
-                                        {% if profile not in post.likes.all %}
-                                        Like
-                                        {% else %}
-                                        Unlike
-                                        {% endif %}
-                                    </button>
-                                </form>
-                                <a href="{% url 'postDetail' post.pk %}">
-                                    <button type="button" class="btn btn-link">
-                                        <!-- <i class="fa fa-comment"></i> -->
-                                         Comment</button>
-                                </a>
-                                <div class="pull-right" style="display: flex;"><strong style="margin-right: 5px;"><div class="like-count{{post.id}}"> {{post.likes.count }} </div></strong>  Likes</div>
-                            </div>
-                        </div>  
-                    </div>
-                </div>
-            {% endfor %}
+                {% for post in posts %}
                 
-        </div>
-        <!--/.col-->
-        <div class="col-md-6">
-            <!-- right column -->
-            <div class="d-flex justify-content-center row">
-                {% for ticket in tickets %}
-                    <div class = "ticket">
-                        <div class="card card-body">
-                            <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
-                                <div class="tp">
-                                    <div class="mr-2 mb-3 mb-lg-0"> <img src="{{ticket.image.url}}" width="150" height="150" alt=""> </div>
-                                </div>
-                                
-                                <div class="media-body">
-                                    <h6 class="media-title font-weight-semibold"> {{ticket.title}} </h6>
-                                    <!-- <ul class="list-inline list-inline-dotted mb-3 mb-lg-2">
-                                        <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Phones</a></li>
-                                        <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Mobiles</a></li>
-                                    </ul> -->
-                                    <p class="text-justify">{{ticket.detail}}</p>
-                                    <ul class="list-inline list-inline-dotted mb-0">
-                                        <li class="list-inline-item">Tickets from <a href="{% url 'profileVisit' ticket.seller.pk %}" data-abc="true">{{ticket.seller}}</a></li>
-                                        <!-- <li class="list-inline-item">Add to <a href="{% url 'ticketDetail' ticket.pk %}" data-abc="true">wishlist</a></li> -->
-                                    </ul>
-                                </div>
-                                <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                    <h3 class="mb-0 font-weight-semibold">${{ticket.price}}</h3>
-                                    <!-- <div> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> -->
-                                    <div class="text-muted">{{ticket.date}}</div>
-                                    <a href="{% url 'ticketDetail' ticket.pk %}">
-                                        <button type="button" class="btn btn-warning mt-4 text-white">See Details</button>
-                                    </a>
-                                    
-                                </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <img src="{{ post.owner.image.url }}" class="user-profile">
+                            <!-- <div class="pull-right text-right">
+                                <i class="fa fa-calendar"></i><br> {{ post.date_posted }}
+                            </div> -->
+                            <a href="{% url 'profileVisit' post.owner.pk %}">
+                                <div><strong>{{ post.owner }}</strong></div>
+                            </a>
+                            <!-- <div><strong>{{ post.owner }}</strong></div> -->
+                            <div class="small">{{ post.date_posted | naturaltime }}</div>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{ post.detail }}</p>
+                            <div class="video-container mt-n1">
+                                <a href="{% url 'postDetail' post.pk %}">
+                                    <image src="{{ post.image.url }}" class="pos" width="524" frameborder="0"></image>
+                                </a>
                             </div>
+                            
+                            <div class="actions">
+                                <div class="btn-group" style="display: flex;justify-content: space-around;">
+                                    <form action = "{% url 'likeUnlikePost' %}" method="POST" class='like-form' id="{{post.id}}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="post_id" value="{{post.id}}">
+                                        <button type="submit" class="btn btn-link like-btn{{post.id}}">
+                                            {% if profile not in post.likes.all %}
+                                            Like
+                                            {% else %}
+                                            Unlike
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                    <a href="{% url 'postDetail' post.pk %}">
+                                        <button type="button" class="btn btn-link">
+                                            <!-- <i class="fa fa-comment"></i> -->
+                                            Comment</button>
+                                    </a>
+                                    <div class="pull-right" style="display: flex;"><strong style="margin-right: 5px;"><div class="like-count{{post.id}}"> {{post.likes.count }} </div></strong>  Likes</div>
+                                </div>
+                            </div>  
                         </div>
                     </div>
                 {% endfor %}
+            </div>
                 
+        </div>
+        <!--/.col-->
+        
+        <div class="col-md-6">
+            <div class="rightcol">
+            <!-- right column -->
+                <div class="d-flex justify-content-center row">
+                    {% for ticket in tickets %}
+                        <div class = "ticket" style="text-align: center;">
+                            <div class="card card-body">
+                                <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
+                                    <div class="tp">
+                                        <div class="mr-2 mb-3 mb-lg-0"> <img src="{{ticket.image.url}}" width="150" height="150" alt=""> </div>
+                                    </div>
+                                    
+                                    <div class="media-body">
+                                        <h6 class="media-title font-weight-semibold"> {{ticket.title}} </h6>
+                                        <!-- <ul class="list-inline list-inline-dotted mb-3 mb-lg-2">
+                                            <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Phones</a></li>
+                                            <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Mobiles</a></li>
+                                        </ul> -->
+                                        <p class="text-justify">{{ticket.detail}}</p>
+                                        <ul class="list-inline list-inline-dotted mb-0">
+                                            <li class="list-inline-item">Tickets from <a href="{% url 'profileVisit' ticket.seller.pk %}" data-abc="true">{{ticket.seller}}</a></li>
+                                            <!-- <li class="list-inline-item">Add to <a href="{% url 'ticketDetail' ticket.pk %}" data-abc="true">wishlist</a></li> -->
+                                        </ul>
+                                    </div>
+                                    <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
+                                        <h3 class="mb-0 font-weight-semibold">${{ticket.price}}</h3>
+                                        <!-- <div> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> -->
+                                        <div class="text-muted">{{ticket.date}}</div>
+                                        <a href="{% url 'ticketDetail' ticket.pk %}">
+                                            <button type="button" class="btn btn-warning mt-4 text-white">See Details</button>
+                                        </a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    
+                </div>
             </div>
             
 

@@ -1,3 +1,4 @@
+from re import template
 from django.urls import path
 from myapp.forms import MyPasswordResetForm
 from . import views
@@ -15,6 +16,9 @@ urlpatterns = [
     path('password-reset/done/',auth_views.PasswordResetDoneView.as_view(template_name='myapp/password_resetdone.html'),name='password_reset_done'),
     path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='myapp/password_resetconfirm.html'),name='password_reset_confirm'),
     path('password-reset-complete/',auth_views.PasswordResetCompleteView.as_view(template_name='myapp/password_resetcomplete.html'),name='password_reset_complete'),
+
+    path('password_change/', auth_views.PasswordChangeView.as_view(template_name='myapp/password_change.html'), name='password_change'),
+    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='myapp/password_change_done.html'), name='password_change_done'),
     # social
     path('search/', views.search, name = "search"),
     path('ticket/', views.ticketPage, name = "ticket"),

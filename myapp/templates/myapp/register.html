@@ -35,10 +35,9 @@
                     <div class="control__indicator"></div>
                   </label>
                 </div>
-                <!-- <input type="submit"  value="Register" class="btn btn-pill text-white btn-block btn-primary"> -->
                 <button class="btn btn-primary btn-block confirm-button">Register</button>
                 <br>
-                <small class = "text-danger" id = "errortext">{{form.errors|striptags}} </small>
+                <small class = "text-danger" id = "errortext">{{form.errors}} </small>
                 <div class=" d-flex flex-column text-center px-5 mt-3 mb-3"> <small class="agree-text">Already have an account?</small> <a href ="{% url 'login' %}" class="terms">Login</a>
               </form>
             </div>

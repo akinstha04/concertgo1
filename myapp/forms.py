@@ -5,10 +5,9 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm, AuthenticationForm, UsernameField
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import password_validation
-# from django.contrib.auth.models import User
 from myapp.models import User
-from userprofile.models import Post, Comment, Ticket
-from django.views.generic import ListView, DetailView, CreateView
+from myapp.validators import validate_email
+from userprofile.models import Ticket
 
 
 class LoginForm(AuthenticationForm):
@@ -24,7 +23,7 @@ class RegisterForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Username'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm Password'}))
-    email = forms.CharField(required= True, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Email'}))
+    email = forms.CharField(required= True, widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Email'}), validators=[validate_email])
     class Meta:
         model=User
         fields = ('username','email','password1','password2','is_manager')
@@ -51,37 +50,6 @@ class MySetPasswordForm(SetPasswordForm):
 
 
 
-        
-        
-        # widgets= {
-        #     'body': forms.TextInput(attrs={'class'})
-        # }
-
-
 class TicketForm(forms.ModelForm):
     model = Ticket
     fields = ['image','title','detail','date','ex_date','price','quantity']
-
-    # date = forms.DateField(widget=forms.DateInput(attrs={'class':'form-control'})),
-    # ex_date = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'class':'form-control'})),
-
-
-    # widgets = {
-    #         'title': forms.TextInput(attrs={'class': 'form-control'}),
-    #         'detail': forms.TextInput(attrs={'class': 'form-control'}),
-    #         'date': forms.DateInput(
-    #             format=('%Y-%m-%d'), attrs={
-    #                 'class': 'form-control', 
-    #                 'placeholder': 'Select a date',
-    #                 'type': 'date'
-    #             }),
-    #         'ex_date': forms.DateTimeInput(
-    #             format=('%Y-%m-%d'), attrs={
-    #                 'class': 'form-control', 
-    #                 'placeholder': 'Select a date',
-    #                 'type': 'date'
-    #             }),
-    #         'price': forms.IntegerField(attrs={'class': 'form-control'}),
-            
-    #         'quantity': forms.IntegerField(attrs={'class': 'form-control'}),
-    #     }

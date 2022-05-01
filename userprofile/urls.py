@@ -15,11 +15,9 @@ urlpatterns = [
     path('post_delete/<int:pk>', views.PostDelete.as_view(), name = 'postDelete'),
     # post actions
     path('likepost/', views.likeUnlikePost,name='likeUnlikePost'),
-    path('post/comment/<int:pk>', views.AddComment.as_view(), name='commentPost'),
     path('<int:pk>/comment/delete', views.CommentDelete.as_view(), name='comment_delete'),
     # ticket
     path('add_ticket/',views.addTicket.as_view(), name='addTicket'),
-    # path('ticket_upload/', views.TicketUpload.as_view(), name = 'ticketUpload'),
     path('ticket/<int:pk>/', views.TicketDetail.as_view(), name = "ticketDetail"),
     path('ticket_update/<int:pk>', views.TicketUpdate.as_view(), name = 'ticketUpdate'),
     path('ticket_delete/<int:pk>', views.TicketDelete.as_view(), name = 'ticketDelete'),
