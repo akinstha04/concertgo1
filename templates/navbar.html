@@ -5,81 +5,13 @@
   <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-<!-- <nav class="navbar navbar-icon-top navbar-expand-lg">
-    <a href="{% url 'main' %}">
-        <img src="{% static 'img/logo.PNG' %}" class="brand-img" alt="" height="50px" width="150px">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        
-      </ul>
-      <ul class="navbar-nav ">
-        <li class="nav-item active">
-            <a class="nav-link" href="#">
-              <i class="fa fa-home"></i>
-              
-              <span class="sr-only">(current)</span>
-              </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-envelope-o">
-                <span class="badge badge-danger">11</span>
-              </i>
-              
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">
-              <i class="fa fa-envelope-o">
-                <span class="badge badge-warning">11</span>
-              </i>
-              
-            </a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fa fa-globe">
-              <span class="badge badge-success">11</span>
-            </i>
-            
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="https://www.tutorialrepublic.com/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"><b class="caret"></b></a>
-              
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-      </ul>
-    </div>
-    <div class="nav-item dropdown">
-        <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="https://www.tutorialrepublic.com/examples/images/avatar/3.jpg" class="avatar" alt="Avatar"><b class="caret"></b></a>
-        <div class="dropdown-menu">
-            <a href="#" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a>
-            <a href="#" class="dropdown-item"><i class="fa fa-calendar-o"></i> Calendar</a>
-            <a href="#" class="dropdown-item"><i class="fa fa-sliders"></i> Settings</a>
-            <div class="divider dropdown-divider"></div>
-            <a href="#" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a>
-        </div>
-  </nav> -->
+
 
   <nav class = "navbar">
     <div class ="nav-wrapper">
         <a href="{% url 'main' %}">
             <img src="{% static 'img/logo.PNG' %}" class="brand-img" alt="logo" height="50px" width="150px">
         </a>
-        <!-- <input type="text" class="search-box" placeholder="search"> -->
         <div class="nav-items d-flex flex-row">
             <a href="{% url 'main' %}"><img src ="{% static 'img/home.PNG' %}" class="icon" alt="home" data-toggle="tooltip" data-placement="bottom" title="Home"></a>
             <a href="{% url 'search' %}">
@@ -90,23 +22,15 @@
               <img src ="{% static 'img/addticket.PNG' %}" class="icon" alt="addticket" data-toggle="tooltip" data-placement="bottom" title="Add Tickets">
             </a>
             {% endif %}
-            <!-- <img src ="{% static 'img/add.PNG' %}" class="icon" alt=""> -->
             <a href="{% url 'postUpload' %}">
                 <img src ="{% static 'img/addpost1.PNG' %}" class="icon" alt="addpost" data-toggle="tooltip" data-placement="bottom" title="Add Post">
             </a>
             <a href="{% url 'ticket' %}">
                 <img src ="{% static 'img/ticket.PNG' %}" class="icon" alt="tickets" data-toggle="tooltip" data-placement="bottom" title="Tickets">
             </a>
-            <!-- <img src ="{% static 'img/notif.PNG' %}" class="icon" alt="notification"> -->
-            <!-- <a href="{% url 'profile' %}">
-              <div class = "icon user-profile">
-                <img src="{{ user.profile.image.url }}" class="icon" alt="">
-              </div>
-            </a> -->
             <div class="nav-items">
               <img src="{{ user.profile.image.url }}" data-toggle="dropdown" class="icon user-profile" alt="profile" data-toggle="tooltip" data-placement="bottom" title="Profile">
                 <div class="dropdown-menu">
-                  <!-- <a href="{% url 'profile' %}" class="dropdown-item"><i class="fa fa-user-o"></i> {{user.username}} profile</a> -->
                   <a href="{% url 'profile' %}" class="dropdown-item">Profile - {{user.username}}</a>
                   <a href="{% url 'myTickets' %}" class="dropdown-item">My tickets</a>
                   {% if request.user.is_manager %}
@@ -114,9 +38,7 @@
                       <button type="button" class="dropdown-item">Check sales</button>
                   </a>
                   {% endif %}
-                  <!-- <a href="{% url 'profile' %}" class="dropdown-item"><img src="{% static 'img/notif.PNG' %}"></i> Notifications</a> -->
                   <div class="divider dropdown-divider"></div>
-                  <!-- <a href="{% url 'logout' %}" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a> -->
                   <a href="{% url 'logout' %}" class="dropdown-item"> Logout</a>
               </div>
             </div>

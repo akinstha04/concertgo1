@@ -19,13 +19,9 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <img src="{{ post.owner.image.url }}" class="user-profile">
-                            <!-- <div class="pull-right text-right">
-                                <i class="fa fa-calendar"></i><br> {{ post.date_posted }}
-                            </div> -->
                             <a href="{% url 'profileVisit' post.owner.pk %}">
                                 <div><strong>{{ post.owner }}</strong></div>
                             </a>
-                            <!-- <div><strong>{{ post.owner }}</strong></div> -->
                             <div class="small">{{ post.date_posted | naturaltime }}</div>
                         </div>
                         <div class="panel-body">
@@ -51,8 +47,7 @@
                                     </form>
                                     <a href="{% url 'postDetail' post.pk %}">
                                         <button type="button" class="btn btn-link">
-                                            <!-- <i class="fa fa-comment"></i> -->
-                                            Comment</button>
+                                            Comment [{{post.comments.count}}]</button>
                                     </a>
                                     <div class="pull-right" style="display: flex;"><strong style="margin-right: 5px;"><div class="like-count{{post.id}}"> {{post.likes.count }} </div></strong>  Likes</div>
                                 </div>
@@ -63,7 +58,7 @@
             </div>
                 
         </div>
-        <!--/.col-->
+
         
         <div class="col-md-6">
             <div class="rightcol">
@@ -79,19 +74,13 @@
                                     
                                     <div class="media-body">
                                         <h6 class="media-title font-weight-semibold"> {{ticket.title}} </h6>
-                                        <!-- <ul class="list-inline list-inline-dotted mb-3 mb-lg-2">
-                                            <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Phones</a></li>
-                                            <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Mobiles</a></li>
-                                        </ul> -->
                                         <p class="text-justify">{{ticket.detail}}</p>
                                         <ul class="list-inline list-inline-dotted mb-0">
                                             <li class="list-inline-item">Tickets from <a href="{% url 'profileVisit' ticket.seller.pk %}" data-abc="true">{{ticket.seller}}</a></li>
-                                            <!-- <li class="list-inline-item">Add to <a href="{% url 'ticketDetail' ticket.pk %}" data-abc="true">wishlist</a></li> -->
                                         </ul>
                                     </div>
                                     <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
                                         <h3 class="mb-0 font-weight-semibold">${{ticket.price}}</h3>
-                                        <!-- <div> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div> -->
                                         <div class="text-muted">{{ticket.date}}</div>
                                         <a href="{% url 'ticketDetail' ticket.pk %}">
                                             <button type="button" class="btn btn-warning mt-4 text-white">See Details</button>
@@ -106,26 +95,6 @@
                 </div>
             </div>
             
-
-            
-
-            <!-- {% for ticket in tickets %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img src="{{ ticket.seller.image.url }}" class="user-profile">
-                        <div class="pull-right text-right">
-                            <div class="Big">Price: {{ ticket.price }}</div>
-                        </div>
-                        <div><strong>{{ ticket.seller }}</strong></div>
-                        <div class="small">{{ ticket.created_at}}</div>
-                        
-                    </div>
-                    <div class="panel-body">
-                        <p>{{ ticket.title }}</p>
-                        <blockquote>{{ ticket.detail }}</blockquote>
-                    </div>
-                </div>
-            {% endfor %} -->
 
         </div><!--/.col-->
         

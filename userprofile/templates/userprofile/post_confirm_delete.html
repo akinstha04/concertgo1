@@ -12,34 +12,19 @@
     <div class="col-lg-7 mx-auto">
       <div class="bg-white rounded-lg shadow-sm p-5">
         <h1>Delete Post</h1>
-        <!-- End -->
-
-
-        <!-- Credit card form content -->
+        
         <div class="tab-content">
-
-          <!-- credit card info-->
           <div id="nav-tab-card" >
-            <!-- <p class="alert alert-success">Some text success or error</p> -->
-            <!-- <p class="body-desc">You can upload the image in JPG, GIF or PNG format.</p> -->
             <form method = "POST" action = "" enctype="multipart/form-data">
               {% csrf_token %}
               <h2>Are you sure you want to delete the post {{ object.detail }}</h2>
-              <!-- <img src="{{object.image.url}}">
-              <br><br> -->
               <div align="center">
                 <button class="btn btn-danger btn-rounded" type="submit">Confirm</button>
-                <a class="btn btn-info btn-rounded" href="{% url 'postDetail' object.pk %" type="submit">Cancel</a>
+                <a class="btn btn-info btn-rounded" href="{% url 'postDetail' object.pk %}" type="submit">Cancel</a>
               </div>
-              
-            <!-- </div> <button class="btn btn-primary btn-block confirm-button">Confirm</button> -->
-                <!-- </div> <button class="btn btn-outline-danger" type="submit">Confirm</button> -->
             </form>
           </div>
-          
-          <!-- End -->
         </div>
-        <!-- End -->
 
       </div>
     </div>

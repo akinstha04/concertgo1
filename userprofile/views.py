@@ -92,27 +92,29 @@ def profileUpdate(request):
     return render(request, 'userprofile/profile_update.html', context)
 
 
-def follow_unfollow_profile(request):
-    if request.method=="POST":
-        my_profile = Profile.objects.get(user=request.user)
-        pk = request.POST.get('profile_pk')
-        obj = Profile.objects.get(pk=pk)
+# def follow_unfollow_profile(request):
+#     if request.method=="POST":
+#         my_profile = Profile.objects.get(user=request.user)
+#         pk = request.POST.get('profile_pk')
+#         obj = Profile.objects.get(pk=pk)
 
-        if obj.user in my_profile.following.all():
-            my_profile.following.remove(obj.user)
-            obj.user.profile.followers.remove(my_profile.user)
-        else:
-            my_profile.following.add(obj.user)
-            obj.user.profile.followers.add(my_profile.user)
-        return redirect(request.META.get('HTTP_REFERER'))
-    return redirect('userprofile/profile_visit.html')
+#         if obj.user in my_profile.following.all():
+#             my_profile.following.remove(obj.user)
+#             obj.user.profile.followers.remove(my_profile.user)
+#         else:
+#             my_profile.following.add(obj.user)
+#             obj.user.profile.followers.add(my_profile.user)
+#         return redirect(request.META.get('HTTP_REFERER'))
+#     return redirect('userprofile/profile_visit.html')
 
 
 def follow(request, pk):
     profile = get_object_or_404(Profile, id = request.POST.get('profile_id'))
     my_profile = Profile.objects.get(user=request.user)
+    u = request.user
     follow = False
-    if profile.followers.filter(id=my_profile.id).exists():
+    if profile.followers.filter(id=u.id).exists():
+    # if follow == True:
         profile.followers.remove(request.user)
         my_profile.following.remove(profile.user)
         follow = False
@@ -120,7 +122,6 @@ def follow(request, pk):
         profile.followers.add(request.user)
         my_profile.following.add(profile.user)
         follow = True
-    # return HttpResponseRedirect(reverse('profileVisit'))
     return HttpResponseRedirect(reverse('profileVisit',args = [str(pk)]))
 
 
@@ -134,7 +135,6 @@ def ticketWishlistPage(request):
     
     
 def addWishlist(request):
-    # ticket = get_object_or_404(Ticket, id = request.POST.get('ticket_id'))
     tid = request.GET['ticket']
     ticket = Ticket.objects.get(pk=tid)
     data = {}

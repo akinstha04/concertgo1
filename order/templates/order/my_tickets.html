@@ -10,7 +10,8 @@
 <link rel="stylesheet" href="{% static 'css/my.css' %}">
 <link rel="stylesheet" href="{% static 'css/profilevisit.css' %}">
 <link rel="stylesheet" href="{% static 'css/ticket.css' %}">
-
+<link href="https://fonts.googleapis.com/css?family=Cabin|Indie+Flower|Inknut+Antiqua|Lora|Ravi+Prakash" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"  />
 
 {% include 'navbar.html' %}
 
@@ -34,37 +35,7 @@
   <br/>
   
   
-  <!-- <div class="gallery_product container mt-5 mb-5 filter category1">
-    <div class="d-flex justify-content-center row">
-      <div class="col-md-10">
-        {% for ticket in tickets %}
-          <div class="row p-2 bg-white border rounded">
-            <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{ticket.ticket.image.url}}"></div>
-              <div class="col-md-6 mt-1">
-                  <h5>{{ticket.ticket.title}}</h5>
-                  <p>{{ticket.ticket.detail}}</p>
-                  <br>
-                  <p>Tickets from <a href="{% url 'profileVisit' ticket.ticket.seller.pk %}">{{ticket.ticket.seller}}</a></p>
-              </div>
-              <div class="align-items-center align-content-center col-md-3 border-left mt-1">
-                <div class="d-flex flex-row align-items-center">
-                    <h4 class="mr-1">{{ticket.quantity}} tickets</h4>
-                </div>
-                <h6 class="text-success">{{ticket.ticket.date}}</h6>
-                <div class="d-flex flex-column mt-4">
-                  <a href="{% url 'ticketDetail' ticket.pk %}">
-                    <button class="btn btn-primary btn-sm" type="button">Details</button>
-                  </a>
-                </div>
-              </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div> -->
-  
-  <link href="https://fonts.googleapis.com/css?family=Cabin|Indie+Flower|Inknut+Antiqua|Lora|Ravi+Prakash" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"  />
+
 
   <div class="container">
     {% for ticket in tickets %}

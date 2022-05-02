@@ -45,20 +45,6 @@ class Profile(models.Model):
     #         img.save(self.image.path)
 
 
-# FOLLOW_CHOICES = (
-#     ('Follow', 'Follow'),
-#     ('Unfollow', 'Unfollow'),
-# )
-
-# class follow(models.Model): 
-#     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
-#     userf = models.ForeignKey(Profile, on_delete=models.CASCADE)
-#     value = models.CharField(choices=FOLLOW_CHOICES, max_length=8)
-#     updated = models.DateTimeField(auto_now=True)
-#     created = models.DateTimeField(auto_now_add=True)
-    
-#     def __str__(self):
-#         return f"{self.user}-{self.userf}-{self.value}"
     
 class Post(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
